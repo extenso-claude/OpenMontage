@@ -606,6 +606,14 @@ Tool rules:
 | `flat-motion-graphics` | Social media, TikTok, startups |
 | `minimalist-diagram` | Technical deep-dives, architecture |
 
+## Visual Design Quality Gate
+
+For any task that produces a **code-driven visual surface** — a Remotion component, a HyperFrames block, a brand asset, kinetic typography, an illustrated SVG, a new scene template, an end card — read **`skills/meta/visual-design-quality.md` first.** That skill routes to `.agents/skills/frontend-design/SKILL.md` (the universal aesthetic engine, mirrored from Anthropic's Claude Design plugin) and layers OpenMontage-specific channel tone commitments, anti-patterns, and the mandatory text stroke + shadow recipe.
+
+This gate exists because the default LLM output for "make me a component" drifts toward generic AI aesthetic — Inter font, purple gradients, predictable layouts. Sleep Network channels can't afford that look (it kills the documentary mood and risks the YouTube AI-slop demonetization signals in `MEMORY.md`). The gate catches it before render time.
+
+The gate is **not** required for AI image-generation prompts (those follow the playbook's `image_prompt_prefix` instead) or for cuts/concat/trim work (no design surface).
+
 ## Layer Map
 
 OpenMontage has three instruction layers:
@@ -637,6 +645,7 @@ The `.agents/skills/` directory is large. When you're not coming in through a to
 
 | Category | Skills |
 |---|---|
+| **Design quality** | `frontend-design` (universal aesthetic engine, mirrored from Anthropic's Claude Design plugin — read before authoring any code-driven visual). OpenMontage routing wrapper at `skills/meta/visual-design-quality.md`. |
 | **Composition runtime** | `remotion`, `remotion-best-practices`, `synthetic-screen-recording` (fake terminal/UI demos via Remotion TerminalScene) |
 | **Animation knowledge (generic)** | `gsap-core`, `gsap-timeline`, `gsap-plugins` (SplitText / MorphSVG / DrawSVG / MotionPath / Flip / CustomEase), `gsap-utils`, `gsap-react`, `gsap-performance`, `gsap-scrolltrigger`, `gsap-frameworks`, `framer-motion` (Disney 12 principles), `lottie-bodymovin` (Lottie export) |
 | **Character animation** | `character-rigging`, `svg-character-animation`, `pose-library-design`, `canvas-procedural-animation`, `character-animation-qa` |
@@ -667,6 +676,7 @@ The `.agents/skills/` directory is large. When you're not coming in through a to
 
 - **Do not bypass the pipeline.** Never write ad-hoc scripts to call tools directly. All production goes through pipeline stages with director skills. See Rule Zero.
 - **Do not call generation tools without reading their Layer 3 skill.** Check the tool's `agent_skills` field, read the referenced skill, then craft your prompts using that guidance.
+- **Do not author code-driven visuals (Remotion components, HyperFrames blocks, kinetic typography, illustrated SVG, brand assets, scene templates, end cards) without reading `skills/meta/visual-design-quality.md` first.** That skill routes to `.agents/skills/frontend-design/SKILL.md` plus the channel tone commitment table — without it, output drifts toward generic AI aesthetic that breaks Sleep Network mood and risks YouTube AI-slop demonetization signals.
 - **Do not skip stage director skills.** Before executing any pipeline stage, read its director skill. The skill contains the quality bar, the workflow, and the review criteria.
 - Do not use deleted legacy names such as `tts_cloud`, `tts_engine`, or `video_gen`.
 - Do not hardcode provider names, API key names, or setup URLs. Read them from the registry's `install_instructions` and `dependencies` fields.

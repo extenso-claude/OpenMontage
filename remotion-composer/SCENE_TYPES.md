@@ -52,6 +52,14 @@ When you add a new component, append it here and in `src/components/index.ts`.
    ```
 5. Document it in this file. That's what makes it discoverable to the next agent.
 
+## Brand components catalog
+
+For brand-themed reusable components (channel-locked themes, single-description rules, multi-channel reuse) see [`src/components/brand/README.md`](src/components/brand/README.md) and [`../brand_assets/catalog.yaml`](../brand_assets/catalog.yaml).
+
+The brand catalog is the source of truth for which channel-themed components exist and what they're for. Recently added:
+
+- `FiveArrowsReveal` — animated origin→N destinations fan motif (Midnight Magnates Five Arrows test episode, 2026-05-07)
+
 ## Existing synthetic-UI components
 
 Currently only `TerminalScene` exists. The pattern generalizes — likely candidates to add next, if a pipeline needs them:

@@ -1,0 +1,179 @@
+# Midnight Magnates — Sleep documentaries on hidden history of power, wealth, and human nature.
+#
+# Visual style: Low-Poly Noir Minimalism — geometric, shadowy, boardroom noir, midnight elegance.
+# Persona: Mr. Calder, older boardroom-veteran gentleman, analytical not prescriptive.
+# Topics: power dynamics, dynasties, empires, institutional behavior, hidden history.
+# Community name: "Midnight Magnates".
+#
+# DERIVED FROM: sleep-network-base.yaml — sleep-safe pacing, music ≤0.06, no em dashes.
+
+identity:
+  name: "Midnight Magnates"
+  category: minimalist
+  mood: "boardroom noir, midnight elegance, dark sophistication — the feeling of being let into a secret about how the world really works"
+  pace: slow
+  best_for: "Hidden history of power, wealth, dynasties, institutions — analytical sleep documentaries (NOT motivational, NOT prescriptive)"
+
+visual_language:
+  color_palette:
+    primary: ["#c9a84c", "#8c6e23"]       # Brass gold + dimmed gold (channel-shared with Huxley)
+    accent: ["#b41e1e", "#4a6fa5"]        # Muted CLASSIFIED red + cool noir blue
+    background: "#080c16"                 # Channel signature deep navy-black (RGB 8,12,22)
+    text: "#f5f0e4"                       # Cream — never raw white
+    muted: "#6a6a7a"                      # Storm gray (AA-large compliant)
+  composition: "low-poly geometric silhouettes, power imagery (vault doors, chess pieces, boardroom tables, skylines, thrones), single shaft of cool blue or warm gold light, silhouette-heavy, dramatic shadow play"
+  texture: "subtle noir grain at low opacity, deep shadow play, geometric clarity, never busy"
+
+typography:
+  headings:
+    font: "Georgia"
+    weight: 700
+    tracking: "0.01em"
+    line_height: 1.2
+  body:
+    font: "Georgia"
+    weight: 400
+    line_height: 1.6
+  code:
+    font: "Courier New"
+    weight: 700
+  stat_card:
+    font: "Georgia"
+    weight: 700
+    size_multiplier: 3.0
+  scale_system: "major_third"
+  weight_matrix:
+    title: 700
+    heading: 700
+    body: 400
+    caption: 400
+
+motion:
+  transitions: ["fade", "dip-to-black", "vault-reveal", "shadow-expand", "shutter-slow"]
+  animation_style: "slow noir reveals, shadows expanding, single-shaft light spreading, never bouncy or playful"
+  pacing_rules:
+    min_scene_hold_seconds: 4.0
+    max_scene_hold_seconds: 25.0
+    text_card_hold_seconds: 5.0
+    stat_card_hold_seconds: 4.5
+    transition_duration_seconds: 1.5
+  entrance: "shadow recedes / light grows from a single point over 1.5s, slight scale 0.97 → 1.0"
+  exit: "fade to black / shadow consumes over 1.5s"
+
+audio:
+  voice_style: "Mr. Calder — older gentleman, boardroom noir, midnight elegance, calm reflective, analytical, dry old-world amused humor (never modern memes), measured pace"
+  music_mood: "dark ambient, cello drone, distant piano, low brass, midnight elegance — sophisticated, never aggressive"
+  music_volume: 0.05
+  sfx_style: "minimal — slow shutter clicks at section breaks, soft vault-door thud at major reveals, distant rain at atmospheric beats"
+  ducking_threshold_db: -3
+  voice_variation_allowed: false
+
+asset_generation:
+  image_prompt_prefix: "Low-poly noir minimalism, geometric silhouettes, single shaft of cool blue or warm gold light, deep navy-black background (rgb 8 12 22), cinematic shadows, power imagery (vaults, thrones, boardrooms, skylines, chess pieces), midnight elegance, sleep-friendly low contrast, 16:9, 1080p, "
+  image_negative_prompt: "warm friendly, bright daylight, motivational, cluttered, generic stock business imagery, exclamation point energy, hustle culture, candlelight philosopher imagery"
+  diagram_style: "low-poly geometric on deep navy plate, brass gold accent lines, sharp angles, never rounded"
+  consistency_anchors:
+    - "Deep navy-black plate #080c16 (rgb 8,12,22) — channel signature background"
+    - "Brass gold #c9a84c for accents, frames, dial needles, underlines"
+    - "Cream text #f5f0e4 — never raw white"
+    - "Single shaft of light, silhouette-heavy compositions"
+    - "Muted red #b41e1e used ONLY for CLASSIFIED / REDACTED stamps — never as a general accent"
+    - "Power-vocabulary imagery: vaults, thrones, chess pieces, boardroom tables, skylines, geometric architecture"
+    - "Never warm earth tones — those belong to Grandpa Huxley"
+
+overlays:
+  stat_card:
+    bg: "#080c16"
+    border: "#c9a84c"
+    text: "#f5f0e4"
+    radius: 2
+    shadow: "0 0 0 2px rgba(0,0,0,0.86)"
+  key_term:
+    bg: "#0d1424"
+    text: "#c9a84c"
+    radius: 2
+  code_block:
+    bg: "#080c16"
+    text: "#f5f0e4"
+    highlight: "#b41e1e"
+
+quality_rules:
+  - "Plate alpha ≥ 225/255 — translucent plates let source pixels shimmer through"
+  - "All on-screen text uses cream #f5f0e4 — never raw white #ffffff"
+  - "Stroked text mandatory: 2px black stroke + soft drop shadow for crisp alpha edges"
+  - "Single shaft of light per scene — no competing highlights"
+  - "CLASSIFIED / REDACTED red used sparingly — channel-unique element, never decorative"
+  - "Music volume capped at 0.06; voiceover dominates"
+  - "Minimum scene hold 4 seconds"
+  - "Maximum overlay opacity 30%"
+  - "Final render must be 1920x1080 minimum at 24fps"
+  - "Never moralize — Calder observes, never lectures or prescribes"
+  - "No em dashes — use commas, periods, or ellipses"
+
+chart_palette:
+  - "#c9a84c"   # Brass gold
+  - "#4a6fa5"   # Cool noir blue
+  - "#f5f0e4"   # Cream
+  - "#b41e1e"   # Muted classified red (data series sparingly)
+  - "#3a3a4a"   # Storm gray
+  - "#8c6e23"   # Dimmed gold
+
+color_rules:
+  harmony_type: "split-complementary"
+  contrast_validation: true
+  colorblind_safe: true
+
+# --- Channel identity (non-schema fields, consumed by script and asset directors) ---
+channel_identity:
+  channel_name: "Midnight Magnates"
+  show_framing: "Hidden history of power, wealth, and human nature"
+  network: "Sleep Network"
+  logo:
+    primary_svg: ""           # TODO: add path to brand_assets/midnight-magnates/logo.svg
+    primary_png_1080: ""      # TODO: add path to brand_assets/midnight-magnates/logo_1080.png
+    monochrome_svg: ""        # Optional — for end-cards on busy backgrounds
+    description: "TODO — add when logo files land"
+  host:
+    name: "Mr. Calder"
+    persona: "Older gentleman who has sat in boardrooms, watched empires rise and fall, and now speaks only at night"
+    tone_pillars:
+      - "boardroom noir, midnight elegance"
+      - "analytical lens — power dynamics, wealth psychology, institutional behavior"
+      - "calm, reflective, immersive — never urgent"
+      - "old-world amused humor (never modern memes)"
+      - "observes consequences, lets the audience decide"
+      - "rhythmic language — quiet drama meets hard reality"
+    elevenlabs_voices:
+      - "Carmelo X"
+      - "Shivank"
+  community:
+    youtube_name: "Midnight Magnates"
+    greeting: "Welcome Midnight Magnates. As the world goes quiet, we step into the shadows to uncover the stories that built our world. If you enjoy listening or falling asleep to the hidden history of power, fortunes made, and the human nature behind the price of greatness, then this is the place for you."
+  taglines:
+    closing: "If these stories speak to you... if you find comfort in the lessons found in the quiet corners of history, tap the follow button to join our circle of dreamers, and let the next story find you when you need it most."
+    cold_open_follow: "If these stories speak to you… if you find comfort in the lessons found in the quiet corners of history. Tap the follow button to join our circle of dreamers, and let the next story find you when you need it most."
+    end_cta: "Sleep now, midnight magnates. And wake up, as always, a little stronger and a little wiser. The story is done. But yours continues."
+  topic_pillars:
+    - "Power dynamics — how power was acquired, maintained, transferred, lost"
+    - "Wealth psychology — accumulation strategies, financial behavior"
+    - "Institutional behavior — how organizations, states, systems acted and reacted"
+    - "Hidden history — surprising moments, reversals, betrayals"
+    - "Reputation management — public image vs private reality"
+    - "Loyalty & betrayal — who stayed, who turned, why"
+    - "Succession & legacy — what survived, what died with founders"
+    - "Information control — knowledge as leverage"
+  brand_lock_elements:
+    classified_stamp:
+      color: "#b41e1e"
+      typography: "Courier New, all caps, 2px stroke"
+      use_for: ["CLASSIFIED", "REDACTED"]
+    plate_color: "#080c16"
+    accent_gold: "#c9a84c"
+    accent_red: "#b41e1e"
+  hard_rules:
+    - "Never moralize — observation only, never prescription"
+    - "Never motivational framing"
+    - "No 'nightlings', no 'Huxley' language, no Sleepy Biographer style"
+    - "Real white #ffffff banned — always cream"
+    - "Translucent plates banned — alpha ≥ 225/255"
+    - "Warm earth tones banned — that's Grandpa Huxley territory"

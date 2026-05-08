@@ -58,3 +58,33 @@ Recommended metadata keys:
 - Good master cut, broken platform variants.
 - Support graphics clipping in vertical exports.
 - Audio loudness shifting between source and generated sections.
+
+## Memory-Check Before HyperFrames (MANDATORY)
+
+`hyperframes doctor` reports system memory. If `free RAM < 1 GB`, do NOT route to HyperFrames even if `render_runtime="hyperframes"` is locked — HF spawns Chrome (~256 MB per worker) and fails non-deterministically at low memory.
+
+Procedure:
+1. Run `hyperframes doctor` and parse the memory line.
+2. If `free RAM < 1 GB`, surface the blocker per AGENT_GUIDE.md "Escalate Blockers Explicitly":
+   - What was attempted: HyperFrames render at locked `render_runtime`
+   - What failed: insufficient memory (specific number)
+   - Options: free memory and retry, OR switch to PIL+FFmpeg keyframe rendering (deterministic, OOM-safe), OR re-render on a higher-memory machine
+   - Recommended option, with rationale
+3. Wait for user approval. Log `render_runtime_selection` decision with `options_considered` and `rejected_because`.
+
+**PIL+FFmpeg keyframe rendering is a legitimate fallback for HyperFrames.** It produces equivalent-quality alpha output (qtrle ARGB intermediates → ProRes 4444 final). What you give up: GSAP timeline syntax convenience and CSS-based scene authoring. What you gain: deterministic output, no memory risk, faster iteration.
+
+## Output Both True-Alpha And Screen-Blend Fallback
+
+Always produce two deliverables from the same composite source:
+
+1. **Primary**: `*_alpha.mov` — ProRes 4444 (yuva444p12le), true alpha. Editor drops at 100% opacity, no blend mode.
+2. **Fallback**: `*_screen.mp4` — H.264 (yuv420p), black background. Editor uses Premiere "Screen" blend mode.
+
+Generate the .mp4 fallback by overlaying the alpha master onto a black canvas and re-encoding. ~10s extra render time, gives the editor format flexibility without you having to re-render anything if their NLE rejects ProRes.
+
+## True-Alpha Text Crispness Requirements
+
+When producing alpha overlays, all text MUST be rendered with a fully-opaque black stroke (PIL: `stroke_width=2, stroke_fill=(0,0,0,255)`). Soft anti-aliased edges blend with source pixels at composite time and read as graininess against bright source frames. See `skills/pipelines/hybrid/asset-director.md` "Crisp Text For Alpha-Channel Overlays" section for the recipe.
+
+Plate alphas behind text must be ≥225 out of 255. Translucent plates (180-200) let source pixel variation shimmer through and degrade text readability frame-by-frame.

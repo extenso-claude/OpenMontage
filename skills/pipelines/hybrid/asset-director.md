@@ -98,3 +98,39 @@ This is especially important for:
 - **Remotion component patterns** — new composition techniques emerge as the framework evolves
 
 Do not rely on stale knowledge. When in doubt, search first.
+
+## Crisp Text For Alpha-Channel Overlays (MANDATORY)
+
+When the deliverable is a true-alpha overlay (ProRes 4444 .mov, transparent WebM, qtrle ARGB MOV) intended to composite over source footage in an editor:
+
+### Text rendering — always stroke, never bare anti-alias
+Anti-aliased text edges have alpha gradients (transparent → opaque over ~2px). When composited at the editor's timeline, those partial-alpha edge pixels mix with whatever is in the source frame underneath. Over bright source pixels (sky, lights, white walls), this reads as graininess or "fuzzy" text.
+
+The fix: render every text glyph with a **fully-opaque black stroke** so the edge becomes a hard binary transition.
+
+```python
+# PIL recipe — stroke_width 2 is enough at 1080p
+draw.text((x, y), text, font=font, fill=WHITE,
+          stroke_width=2, stroke_fill=(0, 0, 0, 255))
+```
+
+Combined with a soft drop shadow (offset 2-3px), this produces broadcast-quality text that holds against any source backdrop.
+
+### Plate alpha — go solid, not translucent
+Backing plates behind text should use alpha ≥ 225 (out of 255). Lower alpha (180-200) lets ~25% of source bleed through, which produces shimmer when source pixels vary frame-to-frame. The savings in "subtle integration" are not worth the readability cost on text.
+
+For lower-thirds, photo-card captions, and pull-quote backings, use alpha 235–240. Reserve fully-opaque (255) for very small body text where every pixel of source bleed is detrimental.
+
+### Photo cards: scrap if photo is bad
+If no public-domain or fair-use editorial photo exists for a named figure, **drop the photo card entirely** and use only a lower-third for identification. Never ship a placeholder ("[no public domain photo]") inside an empty frame — viewers see the literal placeholder text. Generic noir silhouettes can work but only when the silhouette pattern is intentional channel-wide; one-off silhouettes break the design system.
+
+## Word-Anchored Cue Timing (MANDATORY when source has VO)
+
+Never use uniform proportional rescale to align overlays. Always run faster-whisper on the source audio and lock named-entity cues to their actual word timestamps. Drift budget: ±0.4s per cue.
+
+```bash
+# faster-whisper base.en is fast enough for 10-min videos (<3 min on M2 CPU)
+# Output: word-level timestamps that anchor every "Powell" / "Curveball" / "1990" cue.
+```
+
+Uniform rescale drifts hundreds of ms over 9-10 minutes — fine for ambient overlays, fatal for lower-thirds keyed to a specific name. Whisper anchoring eliminates the drift class of bugs entirely.

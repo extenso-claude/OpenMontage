@@ -14,6 +14,12 @@ You are converting the script into a feasible animation plan. This is the stage 
 
 ## Process
 
+### 0. Visual Design Quality Gate (Mandatory)
+
+Before authoring scene templates, kinetic typography, illustrated SVG, end cards, or any other code-driven visual surface, **read `skills/meta/visual-design-quality.md`**. That skill routes to `.agents/skills/frontend-design/SKILL.md` (universal aesthetic rules — anti-patterns, tone-menu commitment, motion principles) and the channel tone commitment table (Midnight Magnates → editorial-magazine + art-deco + luxury · Grandpa Huxley → organic + luxury + soft).
+
+This step is **not** required when the scene plan only declares AI image-generation prompts (those follow the playbook's `image_prompt_prefix` instead) or when scenes reuse existing brand components without modification.
+
 ### 1. Make An Animatic-Minded Plan
 
 For each scene, define:

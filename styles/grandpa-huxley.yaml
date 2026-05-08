@@ -1,0 +1,159 @@
+# Grandpa Huxley — "Wisdom for Sleep" channel playbook.
+#
+# Visual style: Low-Poly Minimalism (NO noir — that differentiates it from Midnight Magnates).
+# Persona: Grandpa Huxley, British, mid-70s, philosophical, warm-but-not-soft.
+# Topics: philosophy (Stoicism, Eastern wisdom), psychology, history-as-wisdom, Japanese aesthetics.
+# Community name (YouTube only): "nightlings".
+#
+# DERIVED FROM: sleep-network-base.yaml — sleep-safe pacing, music ≤0.06, no em dashes.
+
+identity:
+  name: "Grandpa Huxley — Wisdom for Sleep"
+  category: minimalist
+  mood: "warm, philosophical, contemplative — candlelit reading-chair, late evening"
+  pace: slow
+  best_for: "Long-form philosophy and wisdom sleep documentaries — Stoicism, Eastern philosophy, historical thinkers, Japanese aesthetics"
+
+visual_language:
+  color_palette:
+    primary: ["#c9a84c", "#d4a54a"]       # Brass gold + warm amber (warmer than MM)
+    accent: ["#f0e6d2", "#f5ead0"]        # Parchment cream tones
+    background: "#1a1410"                 # Warm dark earth — softer than MM's pure noir
+    text: "#f0e6d2"                       # Parchment cream — never raw white
+    muted: "#8a6e54"                      # Warm earth muted (AA-large compliant)
+  composition: "low-poly geometric philosophical objects (open books, candles, scrolls, philosopher silhouettes), single warm amber light source, miniature contemplative scenes, soft depth of field"
+  texture: "clean low-poly geometry, soft warm fog, candlelight diffusion, no harsh shadows, no noir grain"
+
+typography:
+  headings:
+    font: "Cormorant Garamond"
+    weight: 600
+    tracking: "0.02em"
+    line_height: 1.25
+  body:
+    font: "Georgia"
+    weight: 400
+    line_height: 1.65
+  stat_card:
+    font: "Playfair Display"
+    weight: 700
+    size_multiplier: 2.8
+  scale_system: "major_third"
+  weight_matrix:
+    title: 700
+    heading: 600
+    body: 400
+    caption: 400
+
+motion:
+  transitions: ["fade", "dissolve", "dip-to-black", "soft-vignette", "candle-warm-glow"]
+  animation_style: "very slow ease-in-out, gentle drift, contemplative — like watching a candle flame, never jarring"
+  pacing_rules:
+    min_scene_hold_seconds: 4.5
+    max_scene_hold_seconds: 30.0
+    text_card_hold_seconds: 5.5
+    stat_card_hold_seconds: 5.0
+    transition_duration_seconds: 1.5
+  entrance: "warm fade-in 1.5s, slight scale 0.97 → 1.0, optional subtle ember-particle drift"
+  exit: "fade-out 1.5s — no hard cuts"
+
+audio:
+  voice_style: "Grandpa Huxley — British, mid-70s, warm but not soft, patient, curious, dry smirk humor (never laugh-out-loud), measured pace, never urgent"
+  music_mood: "soft ambient, contemplative — distant piano, gentle solo cello, warm drone pads, occasional breath of wind chimes"
+  music_volume: 0.05
+  sfx_style: "minimal — page turn at chapter starts, candle crackle at long pauses, soft whoosh at major sections"
+  ducking_threshold_db: -3
+  voice_variation_allowed: false
+
+asset_generation:
+  image_prompt_prefix: "Low-poly minimalist night scene, single warm amber candlelight from one direction, philosophical objects (open books, scrolls, candles, philosopher silhouettes, ancient artifacts), warm earth-dark background, soft mist, contemplative mood, miniature diorama feel, sleep-friendly low contrast, 16:9, 1080p, "
+  image_negative_prompt: "noir, harsh shadows, neon, modern UI, cluttered, bright saturated colors, motivational hustle imagery, exclamation point energy, classified stamps, vault imagery, boardroom imagery, dark sophistication"
+  diagram_style: "low-poly geometric on warm parchment plate, brass gold accent lines, hand-drawn-feel imperfections welcome"
+  consistency_anchors:
+    - "Brass gold #c9a84c as the only saturated accent — the philosopher's lamp color"
+    - "Single warm amber light source from one direction (candlelight or sunset, never moonlight cool)"
+    - "Backgrounds warm-dark (#1a1410 or earth tones), never cool noir black"
+    - "Low-poly geometric shapes — never realistic 3D, never photographs"
+    - "Philosopher silhouettes, ancient objects, parchment, books — channel visual vocabulary"
+    - "No noir red — keep palette warm and contemplative; red is for Midnight Magnates only"
+    - "Cream text always — never raw white"
+
+overlays:
+  stat_card:
+    bg: "#1a1410"
+    border: "#c9a84c"
+    text: "#f0e6d2"
+    radius: 4
+    shadow: "0 4px 24px rgba(201,168,76,0.15)"
+  key_term:
+    bg: "#241a14"
+    text: "#d4a54a"
+    radius: 2
+
+quality_rules:
+  - "All on-screen text uses parchment cream #f0e6d2 — never raw white #ffffff"
+  - "No exclamation points anywhere in burned-in text (Huxley hard rule)"
+  - "No em dashes — use commas, periods, or ellipses (Huxley hard rule)"
+  - "Single warm light source per scene — no competing highlights"
+  - "Background remains warm-dark — never the cool noir navy of Midnight Magnates"
+  - "No CLASSIFIED/REDACTED stamps — those are Midnight Magnates only"
+  - "Music volume capped at 0.06; voiceover dominates"
+  - "Minimum scene hold 4.5 seconds — Huxley audience expects extra-slow pacing"
+  - "Maximum overlay opacity 30%"
+  - "Final render must be 1920x1080 minimum at 24fps"
+  - "Avoid 'expert' framing — Huxley speaks from observation, not authority"
+
+chart_palette:
+  - "#c9a84c"   # Brass gold
+  - "#d4a54a"   # Warm amber
+  - "#8c6e23"   # Dimmed gold
+  - "#f0e6d2"   # Parchment
+  - "#5a4a3a"   # Warm earth
+  - "#2e5e4e"   # Sea green (sparing — for "nature" themes)
+
+color_rules:
+  harmony_type: "analogous"
+  contrast_validation: true
+  colorblind_safe: true
+
+# --- Channel identity (non-schema fields, consumed by script and asset directors) ---
+channel_identity:
+  channel_name: "Grandpa Huxley"
+  show_framing: "Wisdom for Sleep"
+  network: "Sleep Network"
+  logo:
+    primary_svg: ""           # TODO: add path to brand_assets/grandpa-huxley/logo.svg
+    primary_png_1080: ""      # TODO: add path to brand_assets/grandpa-huxley/logo_1080.png
+    monochrome_svg: ""        # Optional — for end-cards on busy backgrounds
+    description: "TODO — add when logo files land"
+  host:
+    name: "Grandpa Huxley"
+    persona: "British gentleman in his mid-70s, lifelong reader and listener, spent decades observing people, lives somewhere quiet with a reading chair"
+    tone_pillars:
+      - "warm but not soft"
+      - "curious above all — asks more questions than gives answers"
+      - "patient, never rushed"
+      - "vulnerable when it serves connection"
+      - "opinionated but not combative"
+      - "dry British humor — smirk, not laugh"
+    elevenlabs_voices: []   # TODO: add Huxley's preferred ElevenLabs voice IDs
+  community:
+    youtube_name: "nightlings"   # ONLY used on YouTube — never on social platforms
+    other_platforms: "no community label — speaks as 'a friend stopping by'"
+  taglines:
+    closing: "If these stories speak to you... if you find comfort in the lessons found in the quiet corners of history, tap the subscribe button to join our circle of dreamers, and let the next story find you when you need it most."
+  topic_pillars:
+    - "Stoicism (Marcus Aurelius, Epictetus, Seneca)"
+    - "Eastern philosophy (Zen, Taoism, Buddhism, mindfulness)"
+    - "Psychology (Jungian thought, Frankl's logotherapy, shadow work)"
+    - "History as wisdom (transformation, resilience, reinvention)"
+    - "Japanese aesthetics (wabi-sabi, mono no aware, shokunin)"
+    - "Nature & solitude (walking, wilderness, voluntary simplicity)"
+    - "Literature & storytelling craft"
+  hard_rules:
+    - "Never uses exclamation points"
+    - "Never uses em dashes, en dashes, or double dashes"
+    - "Never calls himself an expert"
+    - "Never expresses outrage — disappointment at most, gently"
+    - "Never makes fun of specific people"
+    - "Never engages in party politics, celebrity gossip, or unkind commentary"

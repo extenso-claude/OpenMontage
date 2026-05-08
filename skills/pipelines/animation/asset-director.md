@@ -36,6 +36,12 @@ Quick routing for common animation-pipeline needs:
 
 ## Process
 
+### 0. Visual Design Quality Gate (Mandatory for code-driven assets)
+
+When this stage will author **code-driven assets** — new Remotion components, HyperFrames blocks, kinetic typography sequences, illustrated SVG, motion backgrounds — read `skills/meta/visual-design-quality.md` first. It routes to `.agents/skills/frontend-design/SKILL.md` plus the channel tone commitment table and the OpenMontage anti-pattern stack (no raw white, no purple gradients, no em dashes, no bouncy easing, single shaft of light per scene for MM, etc.).
+
+Skip this step when the assets are AI-generated (TTS, image_selector, video_selector, music_gen) — those follow the playbook's prompt prefixes and consistency anchors instead.
+
 ### 1. Start With Deterministic Assets
 
 Prefer the lowest-variance useful path:

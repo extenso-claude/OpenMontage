@@ -1,0 +1,106 @@
+# Sleep Network Base — neutral starting point for all Sleep Network channels.
+#
+# This is a valid standalone playbook (validates against schemas/styles/playbook.schema.json).
+# Channel-specific playbooks (grandpa-huxley.yaml, midnight-magnates.yaml) DUPLICATE these
+# values rather than inherit, because the loader doesn't support extends. Treat this file
+# as the canonical reference: if a value here changes, update the channel playbooks too.
+
+identity:
+  name: "Sleep Network Base"
+  category: minimalist
+  mood: "calm, reflective, contemplative — late-night quiet"
+  pace: slow
+  best_for: "Sleep documentaries — long-form, low-stimulation, sleep-safe pacing"
+
+visual_language:
+  color_palette:
+    primary: ["#c9a84c", "#8c6e23"]    # Brass gold + dimmed gold (network signature)
+    accent: ["#f0e6d2", "#f5ead0"]     # Parchment cream tones
+    background: "#0d0d1a"              # Dark night base — channels override
+    text: "#f0e6d2"                    # Parchment cream — never raw white
+    muted: "#6a6a7a"                   # Storm gray (AA-large compliant against dark bg)
+  composition: "single subject, single soft light source, low-contrast for sleep"
+  texture: "soft mist or grain at low opacity (≤30%), clean geometric shapes"
+
+typography:
+  headings:
+    font: "Playfair Display"
+    weight: 700
+    line_height: 1.2
+  body:
+    font: "Georgia"
+    weight: 400
+    line_height: 1.6
+  stat_card:
+    font: "Playfair Display"
+    weight: 700
+    size_multiplier: 2.5
+  scale_system: "major_third"
+  weight_matrix:
+    title: 700
+    heading: 600
+    body: 400
+    caption: 400
+
+motion:
+  transitions: ["fade", "dissolve", "dip-to-black", "soft-vignette"]
+  animation_style: "slow ease-in-out, no bounce, gentle drift, sleep-safe — never jarring"
+  pacing_rules:
+    min_scene_hold_seconds: 4.0
+    max_scene_hold_seconds: 30.0
+    text_card_hold_seconds: 5.0
+    stat_card_hold_seconds: 4.5
+    transition_duration_seconds: 1.5
+  entrance: "fade-in over 1.5s with slight scale (0.97 → 1.0)"
+  exit: "fade-out over 1.5s"
+
+audio:
+  voice_style: "calm, reflective, measured, sleep-pacing — never urgent"
+  music_mood: "ambient, contemplative, low-energy — distant piano, soft strings, drone pads"
+  music_volume: 0.05
+  sfx_style: "minimal — soft whooshes only at major section breaks"
+  ducking_threshold_db: -3
+  voice_variation_allowed: false
+
+asset_generation:
+  image_prompt_prefix: "Sleep documentary aesthetic, low-contrast, single soft light source, dark background, contemplative mood, calm composition, "
+  image_negative_prompt: "bright saturated colors, harsh shadows, jarring contrast, motivational hustle imagery, frenetic motion, neon, modern UI elements"
+  diagram_style: "low-contrast, soft strokes, parchment-cream lines on dark"
+  consistency_anchors:
+    - "Brass gold #c9a84c as the only saturated accent across the network"
+    - "All text uses parchment cream #f0e6d2 — never raw white #ffffff"
+    - "Single soft light source per scene — no competing highlights"
+    - "Backgrounds remain dark (≤ 15% lightness) for sleep-safe viewing"
+    - "Sleep-safe motion only — minimum 4s scene holds, no fast cuts"
+
+quality_rules:
+  - "All burned-in text uses parchment cream #f0e6d2 — never raw white"
+  - "Music volume capped at 0.06 — voiceover must dominate"
+  - "Minimum scene hold 4 seconds — sleep audience cannot tolerate fast cuts"
+  - "No exclamation points in any on-screen text"
+  - "No em dashes (—) — use commas, periods, or ellipses (Huxley hard rule, applied network-wide for consistency)"
+  - "Maximum overlay opacity 30% — preserve background readability"
+  - "Final render must be 1920x1080 minimum at 24fps"
+
+chart_palette:
+  - "#c9a84c"   # Brass gold (primary)
+  - "#8c6e23"   # Dimmed gold
+  - "#f0e6d2"   # Parchment
+  - "#4a6fa5"   # Cool blue (secondary accent)
+  - "#3a3a4a"   # Storm gray
+  - "#d4a54a"   # Warm amber
+
+color_rules:
+  harmony_type: "analogous"
+  contrast_validation: true
+  colorblind_safe: true
+
+# --- Network-shared identity (additional non-schema fields, kept for downstream stages) ---
+network:
+  name: "Sleep Network"
+  closing_tagline: "If these stories speak to you... if you find comfort in the lessons found in the quiet corners of history, tap [subscribe/follow] to join our circle of dreamers, and let the next story find you when you need it most."
+  delivery_constraints:
+    final_resolution: "1080p"
+    aspect_ratio: "16:9"
+    fps: 24
+    audience: "sleep listener — eyes-closed-friendly, voice-led"

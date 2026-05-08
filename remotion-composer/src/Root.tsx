@@ -16,6 +16,69 @@ import { ProductReveal, ProductRevealProps } from "./components/ProductReveal";
 import { CaptionOverlay, WordCaption } from "./components/CaptionOverlay";
 import { CollageBurst, CollageBurstProps } from "./CollageBurst";
 import { LyricOverlay, LyricOverlayProps } from "./LyricOverlay";
+import { BrandDemo, BRAND_DEMO_DURATION_FRAMES } from "./BrandDemo";
+import { BrandDemo2, BRAND_DEMO_2_DURATION_FRAMES } from "./BrandDemo2";
+import { BrandDemo3, BRAND_DEMO_3_DURATION_FRAMES } from "./BrandDemo3";
+import {
+  MidnightMagnatesStyleReel,
+  MIDNIGHT_MAGNATES_REEL_DURATION_FRAMES,
+} from "./MidnightMagnatesStyleReel";
+import {
+  FiveArrowsEpisode,
+  FIVE_ARROWS_EPISODE_DURATION_FRAMES,
+} from "./FiveArrowsEpisode";
+import { LetterDynastyHook, LETTER_HOOK_DURATION_FRAMES } from "./LetterDynastyHook";
+import { LetterDynastyColdOpen, LETTER_COLD_OPEN_DURATION_FRAMES } from "./LetterDynastyColdOpen";
+import { LetterDynastyChapter1, LETTER_CHAPTER1_DURATION_FRAMES } from "./LetterDynastyChapter1";
+import { LetterDynastyChapter2, LETTER_CHAPTER2_DURATION_FRAMES } from "./LetterDynastyChapter2";
+import {
+  LetterDynastyHookV2,
+  LETTER_HOOK_V2_DURATION_FRAMES,
+} from "./letter-dynasty/HookV2";
+import {
+  LetterDynastyColdOpenV2,
+  LETTER_COLD_OPEN_V2_DURATION_FRAMES,
+} from "./letter-dynasty/ColdOpenV2";
+import {
+  LetterDynastyChapter1V2,
+  LETTER_CHAPTER1_V2_DURATION_FRAMES,
+} from "./letter-dynasty/Chapter1V2";
+import {
+  LetterDynastyChapter2V2,
+  LETTER_CHAPTER2_V2_DURATION_FRAMES,
+} from "./letter-dynasty/Chapter2V2";
+import {
+  LetterDynastyFullV2,
+  LETTER_DYNASTY_FULL_V2_DURATION_FRAMES,
+} from "./letter-dynasty/FullEpisodeV2";
+import {
+  LetterDynastyHookV3,
+  LETTER_HOOK_V3_DURATION_FRAMES,
+} from "./letter-dynasty/v3/HookV3";
+import {
+  LetterDynastyColdOpenV3,
+  LETTER_COLD_OPEN_V3_DURATION_FRAMES,
+} from "./letter-dynasty/v3/ColdOpenV3";
+import {
+  LetterDynastyChapter1V3,
+  LETTER_CHAPTER1_V3_DURATION_FRAMES,
+} from "./letter-dynasty/v3/Chapter1V3";
+import {
+  LetterDynastyChapter2V3,
+  LETTER_CHAPTER2_V3_DURATION_FRAMES,
+} from "./letter-dynasty/v3/Chapter2V3";
+import {
+  LetterDynastyFullV3,
+  LETTER_DYNASTY_FULL_V3_DURATION_FRAMES,
+} from "./letter-dynasty/v3/FullEpisodeV3";
+import {
+  WildWestParallax,
+  WILD_WEST_PARALLAX_DURATION_FRAMES,
+} from "./WildWestParallax";
+import {
+  WildWestRidingTogether,
+  WILD_WEST_RIDING_TOGETHER_DURATION_FRAMES,
+} from "./WildWestRidingTogether";
 
 // ---------------------------------------------------------------------------
 // Theme System — prevents every video from looking like dark fintech
@@ -329,6 +392,183 @@ export const Root: React.FC = () => {
           fadeOutSeconds: 1.5,
           overlay: true,
         } as EndTagProps}
+      />
+      <Composition
+        id="BrandDemo"
+        component={BrandDemo}
+        durationInFrames={BRAND_DEMO_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          channel: "grandpa_huxley" as const,
+        }}
+      />
+      <Composition
+        id="BrandDemo2"
+        component={BrandDemo2}
+        durationInFrames={BRAND_DEMO_2_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          channel: "grandpa_huxley" as const,
+        }}
+      />
+      <Composition
+        id="BrandDemo3"
+        component={BrandDemo3}
+        durationInFrames={BRAND_DEMO_3_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          channel: "grandpa_huxley" as const,
+        }}
+      />
+      <Composition
+        id="MidnightMagnatesStyleReel"
+        component={MidnightMagnatesStyleReel}
+        durationInFrames={MIDNIGHT_MAGNATES_REEL_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="FiveArrowsEpisode"
+        component={FiveArrowsEpisode}
+        durationInFrames={FIVE_ARROWS_EPISODE_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyHook"
+        component={LetterDynastyHook}
+        durationInFrames={LETTER_HOOK_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyColdOpen"
+        component={LetterDynastyColdOpen}
+        durationInFrames={LETTER_COLD_OPEN_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyChapter1"
+        component={LetterDynastyChapter1}
+        durationInFrames={LETTER_CHAPTER1_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyChapter2"
+        component={LetterDynastyChapter2}
+        durationInFrames={LETTER_CHAPTER2_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyHookV2"
+        component={LetterDynastyHookV2}
+        durationInFrames={LETTER_HOOK_V2_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyColdOpenV2"
+        component={LetterDynastyColdOpenV2}
+        durationInFrames={LETTER_COLD_OPEN_V2_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyChapter1V2"
+        component={LetterDynastyChapter1V2}
+        durationInFrames={LETTER_CHAPTER1_V2_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyChapter2V2"
+        component={LetterDynastyChapter2V2}
+        durationInFrames={LETTER_CHAPTER2_V2_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyFullV2"
+        component={LetterDynastyFullV2}
+        durationInFrames={LETTER_DYNASTY_FULL_V2_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyHookV3"
+        component={LetterDynastyHookV3}
+        durationInFrames={LETTER_HOOK_V3_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyColdOpenV3"
+        component={LetterDynastyColdOpenV3}
+        durationInFrames={LETTER_COLD_OPEN_V3_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyChapter1V3"
+        component={LetterDynastyChapter1V3}
+        durationInFrames={LETTER_CHAPTER1_V3_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyChapter2V3"
+        component={LetterDynastyChapter2V3}
+        durationInFrames={LETTER_CHAPTER2_V3_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="LetterDynastyFullV3"
+        component={LetterDynastyFullV3}
+        durationInFrames={LETTER_DYNASTY_FULL_V3_DURATION_FRAMES}
+        fps={24}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="WildWestParallax"
+        component={WildWestParallax}
+        durationInFrames={WILD_WEST_PARALLAX_DURATION_FRAMES}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="WildWestRidingTogether"
+        component={WildWestRidingTogether}
+        durationInFrames={WILD_WEST_RIDING_TOGETHER_DURATION_FRAMES}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );

@@ -41,6 +41,9 @@ music_library/
 .env.local
 *.env
 .youtube-token.json
+*.pem
+**/last_tokens.json
+tools/integrations/*/last_tokens.json
 
 # Stray media downloads (test/scratch clips left in repo root)
 pexels_video_*.mp4
@@ -50,6 +53,12 @@ scratch/
 
 # Internal docs (strategy, handoffs, playbooks — not shipped)
 internal/
+
+# Local scratch — experiments, brand asset binaries, QA renders/frames.
+# These accumulate large media (mp4/png) that's regenerable.
+experiments/
+brand_assets/
+qa/
 
 # Local agent config (user-specific)
 .claude/memory/

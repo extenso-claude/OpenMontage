@@ -53,3 +53,32 @@ Recommended metadata keys:
 - Trying to fix a weak cut with extra graphics.
 - Letting support layers compete with the source.
 - Building each platform variant as a separate editorial philosophy.
+
+## Whisper-Anchored Timing (when overlay aligns to existing source VO)
+
+For overlay-on-edited-video runs, every cue with a name/date/figure trigger must be anchored to the actual word timestamp from a faster-whisper transcript of the source audio:
+
+1. Extract source audio: `ffmpeg -i source.mp4 -ac 1 -ar 16000 -c:a pcm_s16le source.wav`
+2. Run faster-whisper base.en with `word_timestamps=True` → produces JSON with start/end per word
+3. Build a `_anchors` map in the cuelist mapping cue triggers to their first-occurrence word time
+4. Set cue `t_in` to the anchor time (or anchor − 0.2s for fade-in lead)
+
+**Drift budget: ±0.4s per cue.** Anything more drifts the cue out of sync with what the narrator is actually saying — viewers register "wrong word on screen" within 600ms.
+
+## Concurrent-Cue Resolution
+
+Before locking edit decisions, programmatically check every pair of cues for time overlap. For pairs ≥0.5s overlapping:
+- Same subject? Drop one, merge text.
+- Same anchor zone (both lower-band, both upper-right)? Stagger or reposition.
+- Different zones + different subjects? Approved — keep both.
+
+## True-Alpha vs Screen-Blend Decision (overlay deliverables)
+
+If the editor's NLE supports ProRes 4444 import (Premiere Pro, Resolve, FCPX, Avid all do), output the overlay as **ProRes 4444 .mov with true alpha**. The editor drops it on a track at 100% opacity, no blend mode. Cleanest output, no artifacts.
+
+If the NLE only accepts H.264 .mp4 (rare; older toolchains, web-first pipelines), output **black-background .mp4** for "Screen" blend mode. Caveats:
+- Chroma subsampling (yuv420p) smears italic serif edges
+- Screen blend math amplifies any encoding noise
+- Prefer ProRes 4444 whenever possible; only ship .mp4 as a fallback
+
+Encode both formats from the same alpha master so the user has the choice without a re-render.
