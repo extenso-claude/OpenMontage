@@ -60,9 +60,14 @@ experiments/
 brand_assets/
 qa/
 
+# Map basemap tile cache (regenerable from Carto) + stray redirect artifacts
+_tile_cache/
+/0
+
 # Local agent config (user-specific)
 .claude/memory/
 .claude/settings.local.json
+.claude/launch.json
 
 # Agent skills lock (local install tracking)
 skills-lock.json
@@ -90,3 +95,7 @@ remotion-composer/public/*
 remotion-composer/public/demo-props/test-*
 remotion-composer/public/demo-props/talking-head-*
 remotion-composer/public/demo-props/caption-burn-*
+
+# Google OAuth (do not commit)
+credentials.json
+token.json

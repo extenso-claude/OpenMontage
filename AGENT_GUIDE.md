@@ -163,6 +163,23 @@ This applies especially to:
 - prompt-only substitutes for reference-driven generation,
 - still-image animatics in place of true motion.
 
+## Sleep Network Overlay-Postproduction — HARD RULE
+
+For **every** overlay-postproduction run on any Sleep Network channel (Midnight Magnates, Grandpa Huxley, Sleepy Biographer, future channels), the agent MUST:
+
+1. **Read [`skills/core/asset-coverage-gates.md`](skills/core/asset-coverage-gates.md) in the assets stage.** It defines the nine mandatory cue-type gates: 1–6 cover cue-type diversity (named-figure photo cards, animated maps, charts, chapter animations, transformative-use clips, stock footage); 7 covers positioning + no-overlap; 8 covers sound-design drift + density; 9 covers subjective fit (the only human-judgment drop gate). The gates make broken or thin overlay-postproduction physically impossible to ship.
+2. **Read [`skills/core/overlay-positioning-rules.md`](skills/core/overlay-positioning-rules.md) in the cue-design stage.** The 5 positioning rules: (1) frame-bounds via `qa_card_bounds.py`, (2) no overlay-vs-overlay overlap via `qa_element_overlap.py`, (3) source-aware placement via `qa_source_collision.py` + per-cue source-frame inspection, (4) min-readable-hold via `qa_min_hold.py`, (5) drift-anchored timing via the existing `qa_*_timing.py` family. Chapter-title source-bake plate-mask + map-label collision avoidance are in this skill.
+3. **Read [`skills/core/sound-design-rules.md`](skills/core/sound-design-rules.md) in the audio stage.** Music rules: first 10 minutes full density; after 10:00 sparse + period-appropriate (NOT zero). SFX rules: dense throughout for immersion / emotion / world-building; after 10:00 NEVER alarming (no sirens / booms / crashes / klaxons / explosions). Drift audit (`qa_audio_drift.py`) is mandatory.
+4. **Read [`skills/core/clip-treatments.md`](skills/core/clip-treatments.md)** for transformative-use of copyrighted/iconic material — locked filters, 8 approved frames, audio role tags, NO-EXTRA-CHYRON rule, period-appropriate frame selection, reference to the shared Google Sheet animation library at `1v1pI_x1s7ermhkG1ryNxhNxelDQuliCM6l-3hHRwwY8`.
+5. **Read [`skills/core/local-review-tool.md`](skills/core/local-review-tool.md) before presenting the preview to the user.** Use the canonical review tool at `framework-videos/execution/review/` for every overlay-postproduction preview — `setup_review.py` bootstraps a project's `review/` directory with the universal HTML + server + per-project `config.json`. The tool provides A/B source-vs-composite toggle, zoomable multi-lane timeline, comment-with-severity system, and submit-to-disk endpoint. After the user clicks "Submit to Claude," read `<project>/review/submitted_comments/latest.json` and map each comment to a concrete cuelist edit before any re-render.
+6. **Run the FULL QA gate suite BEFORE compose.** The orchestrator must call ALL of: `qa_asset_coverage.py`, `qa_card_bounds.py`, `qa_element_overlap.py`, `qa_source_collision.py`, `qa_min_hold.py`, `qa_card_timing.py`, `qa_avatar_sync.py`, `qa_audio_drift.py`, `qa_clip_no_extra_chyron.py`. Any non-zero exit blocks compose. Reference implementations: `projects/vatican-entity-mm/scripts/qa_*.py`. Adapt the NAMED_FIGURES / NAMED_PLACES / COMPARISONS / ICONIC_MOMENTS sets per video; the gate signatures stay constant across runs.
+7. **Dispatch the archival sourcing agents in parallel** during the asset stage:
+   - Wikimedia PD photo agent (Wikipedia REST API → photo cards)
+   - Pexels/Pixabay free stock agent (atmospheric establishers)
+   - Internet Archive clip-treatment agent (Universal Newsreels + Prelinger collections, applied with locked filter + frame wrap)
+
+These rules exist because the 2026-05-21 Vatican Entity v4 review pass found 23 issues across 6 distinct bug classes (force-fit assets, overlay-vs-overlay overlap, overlay-vs-source-content collision, redundant chyrons stacked on frame-wrapped clips, drift on music + SFX in addition to visual cues, animations on screen too briefly to read). Each rule above maps to a class of bug. The QA scripts make those bugs physically impossible to ship.
+
 ## Orchestrator
 
 The agent itself orchestrates the production state machine:
@@ -608,11 +625,20 @@ Tool rules:
 
 ## Visual Design Quality Gate
 
-For any task that produces a **code-driven visual surface** — a Remotion component, a HyperFrames block, a brand asset, kinetic typography, an illustrated SVG, a new scene template, an end card — read **`skills/meta/visual-design-quality.md` first.** That skill routes to `.agents/skills/frontend-design/SKILL.md` (the universal aesthetic engine, mirrored from Anthropic's Claude Design plugin) and layers OpenMontage-specific channel tone commitments, anti-patterns, and the mandatory text stroke + shadow recipe.
+For any task that produces a **code-driven visual surface** OR runs **AI image generation** — read **`skills/meta/visual-design-quality.md` first.** That skill routes to `.agents/skills/frontend-design/SKILL.md` (the universal aesthetic engine) and layers OpenMontage-specific channel tone commitments, anti-patterns, and the **AI Image Generation Rules** + **manual-QA rules** that catch issues lint and validate can't.
+
+**Highlights of what the gate covers (May 2026 lock):**
+
+- **Midnight Magnates channel style v2:** `"night colors, noir atmosphere, moonlit, flat segmented color illustration"` (auto-applied via theme; override "moonlit" in scene prompts for indoor / non-moonlit shots)
+- **Recraft V4.1 is the default model.** Use `recraftv4_1_vector` ($0.08) for backgrounds, `recraftv4_1` raster ($0.04) for animated subjects. V4+ schema drops `style`/`substyle`/`style_id`/`negative_prompt` — bake exclusions into positive prompt.
+- **Seven AI Image Generation Rules** including: never ask AI to render text, free options over AI when both exist, one AI BG + one AI subject max per Type A shot, motion finalized after image lands.
+- **Manual-QA rules** for every render: text containment in containers, motion direction matches facing, never ship placeholder portraits (`lib/asset_sourcing/portraits.py` handles autonomous PD sourcing), geographic pin accuracy via `lib/mapkit_subjects.py`.
+- **GSAP filter:brightness gotcha** — don't animate `filter: brightness()` (causes black frames); use a flash-overlay div with opacity tween instead.
+- **Gap-coverage QA** for sequenced master compositions: `python lib/hf_coverage_qa.py <project>/hyperframes/index.html` — lint+validate don't catch timeline gaps.
 
 This gate exists because the default LLM output for "make me a component" drifts toward generic AI aesthetic — Inter font, purple gradients, predictable layouts. Sleep Network channels can't afford that look (it kills the documentary mood and risks the YouTube AI-slop demonetization signals in `MEMORY.md`). The gate catches it before render time.
 
-The gate is **not** required for AI image-generation prompts (those follow the playbook's `image_prompt_prefix` instead) or for cuts/concat/trim work (no design surface).
+The gate is **not** required for cuts/concat/trim work (no design surface) or for `ffmpeg`-only post-processing.
 
 ## Layer Map
 

@@ -66,7 +66,7 @@ audio:
   voice_variation_allowed: false
 
 asset_generation:
-  image_prompt_prefix: "Low-poly minimalist night scene, single warm amber candlelight from one direction, philosophical objects (open books, scrolls, candles, philosopher silhouettes, ancient artifacts), warm earth-dark background, soft mist, contemplative mood, miniature diorama feel, sleep-friendly low contrast, 16:9, 1080p, "
+  image_prompt_prefix: "Simple gentle flat segmented colors illustration, soft sleep-documentary mood, night scene, single warm amber candlelight from one direction, philosophical objects (open books, scrolls, candles, philosopher silhouettes, ancient artifacts), warm earth-dark background, soft mist, contemplative mood, miniature diorama feel, avoid bright whites in large areas, sleep-friendly low contrast, 16:9, 1080p, "
   image_negative_prompt: "noir, harsh shadows, neon, modern UI, cluttered, bright saturated colors, motivational hustle imagery, exclamation point energy, classified stamps, vault imagery, boardroom imagery, dark sophistication"
   diagram_style: "low-poly geometric on warm parchment plate, brass gold accent lines, hand-drawn-feel imperfections welcome"
   consistency_anchors:
@@ -157,3 +157,29 @@ channel_identity:
     - "Never expresses outrage — disappointment at most, gently"
     - "Never makes fun of specific people"
     - "Never engages in party politics, celebrity gossip, or unkind commentary"
+
+# --- Clip treatment for potentially copyrighted third-party material (LOCKED 2026-05-21) ---
+# Mirror of styles/sleep-network-base.yaml — loader doesn't support extends.
+# Full skill: skills/core/clip-treatments.md
+# Canonical config: projects/iran-us-history-clip-toolkit-v1/toolkit/approved_toolkit.json
+clip_treatment:
+  defaults:
+    copyrighted_video:
+      filter: grade_cyan_orange
+      audio_treatment: pitch_up_1st     # only if audio kept (vo-pause)
+      wrap_in_frame: true
+    copyrighted_image:
+      filter: grade_crushed_warm
+      wrap_in_frame: true
+    copyrighted_audio:
+      filter: pitch_up_1st              # standalone or kept-from-clip
+    character_image:
+      route_to: character_cards
+  # GH-preferred frames first (cozy/storyteller), then the universal options.
+  approved_frames_priority: [fireside, library, tv-vintage, newspaper, magnifier]
+  hard_rules:
+    - "Source files capped at 5 minutes on disk"
+    - "Frame-by-frame fit check before any transformation"
+    - "Tag each clip audio role: vo-pause / vo-over / mixed"
+    - "Output composited inside an approved frame — never bare"
+    - "No substitution of locked filter recipes without explicit user override"

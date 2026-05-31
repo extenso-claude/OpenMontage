@@ -1,5 +1,11 @@
 # Asset Director - Hybrid Pipeline
 
+## Visual Design Quality Gate (mandatory)
+
+Before any image/video generation or code-driven visual authoring in this stage, read **`skills/meta/visual-design-quality.md`**. That skill encodes the locked channel styles (MM v2, GH), Recraft V4.1 model defaults (`recraftv4_1_vector` BGs / `recraftv4_1` raster subjects), the AI Image Generation Rules, and the manual-QA rules (text containment, motion direction, never-placeholder portraits, geographic pin accuracy).
+
+Hybrid pipelines especially need this — the support kit (lower-thirds, stat cards, diagrams, overlays) often relies on AI image generation, and without the gate the support kit drifts off channel tone.
+
 ## When To Use
 
 This stage prepares the support kit around the anchor edit: subtitles, diagrams, generated inserts, narration, music, and reusable overlay systems.

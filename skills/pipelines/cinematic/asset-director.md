@@ -1,5 +1,16 @@
 # Asset Director - Cinematic Pipeline
 
+## Visual Design Quality Gate (mandatory)
+
+Before any image/video generation or code-driven visual authoring in this stage, read **`skills/meta/visual-design-quality.md`**. That skill encodes:
+
+- The locked channel style addendums (Midnight Magnates v2: `"night colors, noir atmosphere, moonlit, flat segmented color illustration"`; Grandpa Huxley equivalent)
+- Recraft V4.1 model defaults — `recraftv4_1_vector` for backgrounds, `recraftv4_1` raster for animated subjects
+- The seven AI Image Generation Rules (no AI-rendered text, free-over-AI, one BG + one subject max, motion-after-image, etc.)
+- The three manual-QA rules (text containment, motion direction, never-placeholder portraits) + the geographic pin accuracy rule for any map shot
+
+Skipping this read produces off-brand cinematic shots that won't pass review.
+
 ## When To Use
 
 This stage prepares the usable media for the final cinematic edit: source selects, title-card assets, optional support inserts, music, ambience, and subtitle assets when needed.

@@ -5,6 +5,20 @@
 Produce `asset_manifest` with character parts, backgrounds, props, audio, music,
 and preview artifacts.
 
+## Visual Design Quality Gate (mandatory)
+
+Before any image generation or character-card authoring, read
+**`skills/meta/visual-design-quality.md`**. Especially relevant for this pipeline:
+
+- **Rule: Never ship placeholder portraits.** Any CharacterCard MUST have a real
+  PD photo sourced before render. Use `lib/asset_sourcing/portraits.py` (Wikipedia
+  REST → Commons API → LoC search fallback chain) to source autonomously. Memory:
+  `never_placeholder_portraits`.
+- **Recraft V4.1 defaults** — `recraftv4_1` raster for character props/subjects
+  (via `tools/graphics/recraft_image.py` or `tools/animation/catalog/recraft_gen.py`).
+- **Motion direction QA** — character facing must match direction of travel; if
+  the source asset faces wrong way, flip with `transform: scaleX(-1)`.
+
 ## Layer 3 Gate
 
 Before authoring or generating animation assets, read the relevant Layer 3 skills:

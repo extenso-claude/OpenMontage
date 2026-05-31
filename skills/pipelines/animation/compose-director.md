@@ -233,4 +233,21 @@ Recommended metadata keys:
 - Scene cadence changing between preview and final.
 - **Skipping `composition_validator`** — catches missing files, bad timings, audio mismatches before you waste render time.
 - **Not extracting frames for self-review** — a rendered video is not "done" until frames are visually inspected. Black frames, missing particles, or invisible images are not always obvious from file size alone.
+- **Skipping placement QA on image-led renders** — a silent CSS / composition mistake can render the hero image into a band (top/bottom strip stays pure black) instead of filling the canvas. Visual review misses this when the image's sky/floor happens to be dim. **Run `lib/render_placement_qa.py` on every render of an image-led clip:** it extracts a mid-frame and flags any clip with ≥85% near-black pixels in the top/bottom 80 rows. Should always return 0 flagged for a healthy batch.
+
+```python
+# In your compose-stage post-render block:
+from lib.render_placement_qa import check_dir, format_summary
+findings = check_dir(Path("renders"))
+print(format_summary(findings))
+flagged = [f for f in findings if f.get("flag")]
+if flagged:
+    # Block checkpoint — placement bug must be fixed before presenting.
+    raise RuntimeError(f"Placement QA failed on {len(flagged)} clips")
+```
+
+Common causes when this fires:
+- `<img>` with `width:%; height:%` on a parent without explicit height ⇒ image collapses to intrinsic height. Anchor with `top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center` instead.
+- A darkening overlay applied at >0.4 opacity covering the upper third of the canvas — makes the image read as cropped even when correctly placed. Cap top-band overlay opacity at ≤0.20.
+- Aspect mismatch where the composed canvas (e.g., 1920×1080) doesn't match the image's natural aspect (1820×1024). With `object-fit:cover` the crop should be invisible — but with `object-fit:contain` or no fit at all, you get the band.
 - **Using `durationInFrames` from `useVideoConfig()` for scene-level timing** — this returns the FULL composition duration, not the scene's Sequence duration. See `skills/core/remotion.md` Critical Constraints.

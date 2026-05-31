@@ -63,7 +63,7 @@ audio:
   voice_variation_allowed: false
 
 asset_generation:
-  image_prompt_prefix: "Sleep documentary aesthetic, low-contrast, single soft light source, dark background, contemplative mood, calm composition, "
+  image_prompt_prefix: "Simple flat segmented colors illustration, sleep documentary aesthetic, night scene, low-contrast, single soft light source, dark background, contemplative mood, calm composition, avoid bright whites in large areas, "
   image_negative_prompt: "bright saturated colors, harsh shadows, jarring contrast, motivational hustle imagery, frenetic motion, neon, modern UI elements"
   diagram_style: "low-contrast, soft strokes, parchment-cream lines on dark"
   consistency_anchors:
@@ -104,3 +104,36 @@ network:
     aspect_ratio: "16:9"
     fps: 24
     audience: "sleep listener — eyes-closed-friendly, voice-led"
+
+# --- Clip treatment for potentially copyrighted third-party material (LOCKED 2026-05-21) ---
+# Full skill: skills/core/clip-treatments.md
+# Canonical config: projects/iran-us-history-clip-toolkit-v1/toolkit/approved_toolkit.json
+# Shared sheet rows 22-33: 1v1pI_x1s7ermhkG1ryNxhNxelDQuliCM6l-3hHRwwY8
+clip_treatment:
+  defaults:
+    copyrighted_video:
+      filter: grade_cyan_orange
+      audio_treatment: pitch_up_1st     # only if audio kept (vo-pause)
+      wrap_in_frame: true
+    copyrighted_image:
+      filter: grade_crushed_warm
+      wrap_in_frame: true
+    copyrighted_audio:
+      filter: pitch_up_1st              # standalone or kept-from-clip
+    character_image:
+      route_to: character_cards         # exempt from copyright wrap rule
+  approved_frames:
+    - {name: tv-vintage,   channels: [midnight_magnates, grandpa_huxley], best_for: "retro broadcast / archival news"}
+    - {name: dossier,      channels: [midnight_magnates],                 best_for: "classified document reveal"}
+    - {name: newspaper,    channels: [midnight_magnates, grandpa_huxley], best_for: "breaking news / headline"}
+    - {name: fireside,     channels: [grandpa_huxley],                    best_for: "cozy storytelling"}
+    - {name: surveillance, channels: [midnight_magnates],                 best_for: "spy / intelligence"}
+    - {name: boardroom,    channels: [midnight_magnates],                 best_for: "power meeting / executive"}
+    - {name: magnifier,    channels: [midnight_magnates, grandpa_huxley], best_for: "investigation / evidence detail"}
+    - {name: library,      channels: [grandpa_huxley],                    best_for: "historical knowledge / reflection"}
+  hard_rules:
+    - "Source files capped at 5 minutes on disk"
+    - "Frame-by-frame fit check before any transformation"
+    - "Tag each clip audio role: vo-pause / vo-over / mixed"
+    - "Output composited inside an approved frame — never bare"
+    - "No substitution of locked filter recipes without explicit user override"

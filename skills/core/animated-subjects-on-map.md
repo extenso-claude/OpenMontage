@@ -19,10 +19,20 @@ Trigger conditions — pick this method whenever the brief calls for:
 - Multiple animated subjects placed at strategic / historical / canonical points
 - A focal "action" subject — usually a moving formation (group of riders, fleet, caravan) — that the camera follows
 - Period or themed styling (noir, parchment, illuminated, minimalist) — NOT photoreal satellite imagery
+- A **multi-stop "world tour"** with camera zooming in/out of each location and crossfading to per-location imagery — see **Variant: Guided world-tour zoom (multi-stop)** below
+- A **historical-event sequence** (battles, expeditions, founding events) where each stop deserves its OWN animated mini-scene with multiple sprites — see **Variant: Themed-battle scenes** below
 
 If the brief just needs a still map or a static slide, use the simpler
 `flat-motion-graphics` playbook with a single image. This method earns its
 complexity when the *map is the scene*, not a backdrop.
+
+### Picking a variant
+
+| Brief shape | Variant |
+|---|---|
+| Campaign / movement / journey across a single map view | **Default formation variant** (knights, ships, caravan, procession) — sprites move, camera stays |
+| World tour, "across-the-globe" sequence, hitting N specific places one at a time | **Guided world-tour zoom (multi-stop)** — sprites stay put, camera moves and crossfades to per-location posters |
+| Historical events / battles / decisive moments, where each location needs ITS OWN mini-scene with multiple animated sprites | **Themed-battle scenes** — guided zoom + per-stop populated combat scene + per-stop climax + winner-marker stamp + closing stats card |
 
 ## Reference implementation
 
@@ -405,15 +415,323 @@ this method supports out of the box:
 For any of these, the basemap + anchor + camera + SFX patterns are identical
 — only the formation specification and the per-sprite micro-motion changes.
 
+## Variant: Guided world-tour zoom (multi-stop)
+
+Same basemap + anchor pipeline, but the camera *moves* — sequentially zooming
+into each anchor and crossfading to a "poster card" image of that location,
+then panning a route through all stops, and ending on a synchronised bounce.
+Use this when the brief is **"world tour" / "across-the-world journey"**
+rather than **"a campaign moves through this landscape"**.
+
+Reference impl: `projects/world-tour-zoom-test/` — 28s @ 1080p, 5 stops
+(Japan / Egypt / Iceland / Brazil / Australia), brass-framed flag medallions
++ hand-authored noir poster cards. Cost: $0 (no AI generation).
+
+### Camera math (transform-origin: 0 0)
+
+The `.stage` uses `transform: translate3d(tx, ty, 0) scale(s)` with
+`transform-origin: 0 0`. To center pin `(px, py)` on the 1920×1080 viewport
+at scale `s`:
+
+```
+tx = 960 - px * s
+ty = 540 - py * s
+```
+
+Helper:
+
+```js
+const VW = 1920, VH = 1080, CX = VW/2, CY = VH/2;
+function camWorld() { return { x: 0, y: 0, scale: 1 }; }
+function camFocus(pin, scale) {
+  return { x: CX - pin.px * scale, y: CY - pin.py * scale, scale };
+}
+```
+
+### Four-phase timeline
+
+Default 28s @ 30fps for a 5-stop tour. Adjust `STOP_DUR` only — the rest
+falls out of it. `STOP_DUR ≥ 3.5s` is the readable minimum.
+
+| Phase | Window | Action |
+|---|---|---|
+| 1 — Intro | 0–3s | World map fades in; N pins burst-in with brass flares (`back.out(2.2)`, stagger 0.18s); optional title plate fades in 0.4s and out 2.4s |
+| 2 — Sequential tour | 3 → 3 + N·3.5 | Per stop: zoom in (0.8s) → poster crossfade in (0.4s @ t0+0.65) → hold (~0.9s) → poster fade out (0.4s @ t0+2.10) → zoom out (0.8s @ t0+2.50) → buffer (0.2s) |
+| 3 — Continuous pan | Phase 2 end → +5s | Partial zoom into first stop at scale ≈2.4×, then chained `tl.to(STAGE, ...)` with `"sine.inOut"` through the route, final leg `"power2.inOut"` |
+| 4 — Pull back + bounce | last 2.5–3s | Tween back to `camWorld()` (1.0s), then synced `y:-8` `sine.inOut yoyo` on every icon (3 cycles ≈ 1.5s) with brass-burst pulse |
+
+### Layout / DOM contract
+
+```html
+<div id="comp" data-composition-id="..." data-width="1920" data-height="1080"
+     data-start="0" data-duration="28">
+
+  <!-- Camera. transform-origin: 0 0. -->
+  <div id="stage" class="stage clip" data-start="0" data-duration="28" data-track-index="0">
+    <img class="basemap" src="basemap.png" />
+    <!-- N sprite-anchors with .burst + .icon + .pin-label, lat/lon-derived px positions -->
+    <div class="vignette"></div>
+  </div>
+
+  <!-- Posters OUTSIDE .stage so they don't inherit camera zoom. -->
+  <div class="posters-layer clip" data-start="0" data-duration="28" data-track-index="5">
+    <div class="poster" id="poster-japan"> <img src="posters/japan.svg"/> </div>
+    <!-- ... one .poster per stop, opacity:0 initially, animated by GSAP -->
+  </div>
+
+  <!-- Fixed outer brass frame + title plate (don't scale with camera) -->
+  <div class="outer-frame"></div>
+  <div class="titleplate" id="titleplate">A WORLD TOUR</div>
+</div>
+```
+
+Key: **posters live OUTSIDE `.stage`** as a sibling `.clip` wrapper. If they
+were inside `.stage` they'd be scaled by the camera (4× during focus phases =
+4× larger posters spilling off-frame). Outside the stage they cover the
+viewport at native size regardless of zoom.
+
+### Asset layer
+
+- **Icons** — small (80×80) brass-framed flag / symbol medallions per stop.
+  Hand-authored SVGs — `feedback_free_over_ai` says no AI here.
+- **Poster cards** — 1280×720 noir landscape illustrations. Hand-authored
+  SVGs work great ($0). If you'd rather have higher-fidelity scene art,
+  route to `recraftv4_1` raster ($0.04 each) — but ask the user first per
+  the `feedback_recraft_no_palette_lock` rule and don't pre-lock palette.
+
+### OOB-pixel patch (mandatory when the world doesn't fill the viewport)
+
+`mapkit_subjects.render_basemap()` fills any tile-range overflow with
+`(200, 220, 230, 255)` light gray. The noir filter's highlight-lift then
+pushes those pixels to pure white, producing a bright vertical band where
+the world ends. At zoom 3 with width 1920 there is always ~110 px of OOB
+on one side; at zoom 2 it's roughly half the frame.
+
+Patch after `build_basemap()` and before saving:
+
+```python
+import numpy as np
+from PIL import Image as _Image
+
+arr = np.array(img.convert("RGB"))
+near_white = (arr[..., 0] > 235) & (arr[..., 1] > 235) & (arr[..., 2] > 235)
+arr[near_white] = [12, 18, 30]   # noir dark navy
+img = _Image.fromarray(arr).convert("RGBA")
+```
+
+(This should eventually migrate into `lib/mapkit_subjects.style_noir`
+itself; documenting at the variant level until that happens.)
+
+### Variant-specific QA additions
+
+On top of the standard collision rules in this skill:
+
+1. **Geographic pin accuracy** — every pin position MUST come from
+   `compute_anchor_pixels()`; never eyeballed CSS percentages
+   (`geographic_pin_accuracy_required` memory).
+2. **OOB-pixel check** — sample per-column luminance on the rendered
+   basemap; any column with mean luma > 235 is a bug.
+3. **Poster-layer position** — confirm posters are siblings of `.stage`,
+   not children, by inspecting the DOM.
+4. **Pan-route smoothness** — at draft FPS=2 extraction, the camera should
+   not jump between phase-3 legs. Look for visible "snaps" at leg
+   transitions — usually fixed by adding a 0.1s overlap into the next leg.
+5. **Bounce magnitude** — `y:-8` at scale 1 is the right amount. `y:-16`
+   reads jittery; `y:-4` is imperceptible.
+6. **No `filter: brightness()` on the burst-pulse during bounce** — use
+   opacity/scale on a separate `.burst` element (the
+   `gsap_filter_brightness_gotcha` memory).
+
+## Variant: Themed-battle scenes
+
+Extends the guided-zoom mechanism into a documentary-style sequence: each
+location gets its own *populated* mini-scene with multiple animated combat
+sprites, a unique climax, and a persistent winner marker. Use when the brief
+is a **historical-event sequence** — battles, decisive moments, expedition
+landings, founding events — where each stop deserves more than a single
+poster card.
+
+Reference impl: `projects/europe-ww2-battles-test/` — 62s @ 1080p, 5 WWII
+battles (Britain, Stalingrad, Monte Cassino, D-Day, Berlin) on a wartime
+parchment Europe map with period country labels (`GERMAN REICH` / `USSR` /
+`POLAND` etc., not modern Carto labels). Color coding: navy Allied, red
+Soviet, iron-grey Axis. Cost: $0 (hand-authored SVG sprites + Freesound
+royalty-free SFX).
+
+### What this variant adds on top of the guided-zoom mechanism
+
+1. **Custom basemap palette** — beyond the 4 default style filters
+   (`noir` / `warm` / `illuminated` / `light_minimal`). Post-process the
+   basemap in the per-project build script to re-tone land + water by
+   luma+chroma masks, add a soft radial vignette. See
+   `projects/europe-ww2-battles-test/scripts/build_basemap.py
+   ::_post_process_basemap` for the worked wartime-parchment example.
+2. **Period-overlay labels** — historical country names positioned by
+   lat/lon (same `compute_anchor_pixels` math as battle pins). Always
+   use a `*_nolabels` tile provider so the modern labels baked into
+   the tile imagery don't conflict.
+3. **Reusable sprite library per theme** — top-down silhouettes of every
+   unit type that appears in the scenes. For WWII: plane (Spitfire / Bf 109),
+   tank (T-34 / Panzer), soldier (red / grey / khaki, per faction),
+   landing craft, building markers (monastery / Reichstag).
+4. **Scripted multi-sprite combat** per stop — see "Combat-event scheduler"
+   below.
+5. **Per-stop unique climax animation dispatched by kind** — flag rise,
+   faction-stamp, advance arrow, building capture.
+6. **Winner markers** that persist after each stop resolves.
+7. **Closing stats card** — victor + duration + outcome metadata.
+8. **Layered SFX bed** — ambient war drone + per-stop accent + victory
+   horn at each climax + outro fanfare. Mixed with ffmpeg `amix`.
+
+### Combat-event scheduler
+
+Each stop's scene config declares a sprite layout (file + class + dx/dy
+offset from anchor + initial rotation + side + deploy position). The
+scheduler then plays a fixed sequence of beats:
+
+```
+sceneBaseT = t0 + ZOOM_IN_DUR
+  + 0.0  to + 0.5   sprite opacity fade-in (stagger 0.04s)
+  + 0.5  to + 1.7   sprites translate from start position to deploy position
+  + 1.7  to + COMBAT_DUR
+        - per-sprite idle bob (sine.inOut yoyo, ~0.6-1.2s cycle)
+          amplitude: plane 4px, tank 1.5px, soldier 2px
+        - 6-10 firing events distributed across the window:
+            * muzzle flash at midpoint between shooter & target
+              (0.1s fade in, 0.25s fade out, scale 0.4 → 1.4 → 0.8)
+            * smoke puff at target (0.6s grow, 0.9s fade-up)
+            * 1.2px recoil on shooter
+          Use a seeded mulberry32 for deterministic flash positions.
+        - 2 axis casualties fade to opacity 0.35 in second half
+          plus a persistent big smoke puff at their position
+  + COMBAT_DUR  to + COMBAT_DUR + CLIMAX_DUR
+        - climax animation dispatched by `kind` string in scene config
+```
+
+### Climax dispatcher
+
+A switch on a single `climax` string per stop — keep all the climax
+recipes in one place so they're easy to scan and reuse:
+
+| `kind` | What it does |
+|---|---|
+| `flag-rise` (red / Allied / etc.) | flag sprite fades + rises + yoyos a small rotation |
+| `faction-stamp` | giant faction icon (RAF roundel, hammer-sickle, eagle) stamps in with `back.out(2.4)` overshoot, then fades |
+| `advance-arrow` | bold directional SVG arrow appears + translates inland (per arrow direction) |
+| `building-capture` | flag sprite rises on a building marker (Reichstag / monastery / capitol) |
+| `pulse-explosion` | central `explosion.svg` scales 0 → 1.4 + fades over 0.8s |
+
+Add new kinds by extending the `addClimax(tl, battleId, kind, t0, dur)`
+function. Each kind appends DOM + tweens to the timeline at `t0` and stays
+fully contained.
+
+### Winner-marker pattern
+
+Each anchor has a hidden `winner-marker` sprite (flag of the winning side)
+positioned just above and to the right of the anchor's icon. The marker
+fades in during the stop's zoom-out and persists for the rest of the run.
+
+**Crucial:** during ANY focused-battle phase, fade out ALL battle icons +
+labels + winner markers (past AND current), not just the current battle's.
+At scale 3.5×, geographically close pins (e.g. Britain ↔ D-Day, ~1° apart
+at zoom 5) WILL occlude each other otherwise. Bring them all back during
+zoom-out via:
+
+```js
+tl.to(".battle-icon, .battle-pin-label, .winner-marker",
+  { opacity: 0, duration: 0.35 }, t0 + ZOOM_IN_DUR - 0.3);
+// ...later, during zoom-out...
+tl.to(".battle-icon",       { opacity: 0.85, duration: 0.5 }, zoomOutT + 0.6);
+tl.to(".battle-pin-label",  { opacity: 0.92, duration: 0.4 }, zoomOutT + 0.6);
+// Past winners back to full opacity:
+ORDER.slice(0, idx).forEach(pid => {
+  tl.to("#winner-" + pid, { opacity: 1, duration: 0.5 }, zoomOutT + 0.6);
+});
+// New winner stamps in fresh:
+tl.fromTo("#winner-" + battleId,
+  { opacity: 0, scale: 0.4, y: 10 },
+  { opacity: 1, scale: 1.0, y: 0, duration: 0.6, ease: "back.out(2.4)" },
+  zoomOutT + 0.8);
+```
+
+### Closing stats card
+
+Full-frame `outro-card` div outside `.stage`, dimmed background over the
+last-seen world view, with:
+
+- Small Cinzel "crown" line (e.g. `— VICTOR OF THE WAR —`)
+- Large winner name (Cinzel 120px)
+- Year (Cinzel 56px brass)
+- Stats block in Special Elite typewriter font — `KEY · VALUE` rows with
+  the value in brass
+
+Fade in over 0.8s after the final zoom-out. Hold for ~5s. Optional gentle
+pulse on the winner text via `sine.inOut yoyo`.
+
+### SFX layering
+
+Per the `sound_design_rules_locked` memory, the per-cue stacking is:
+
+| Track | Volume | Notes |
+|---|---|---|
+| Ambient war bed | 0.18 (~-15dB) | continuous, fade in 2s, fade out 4s |
+| Per-stop accent | 0.40 - 0.46 (~-8dB) | aligned to combat window, fade in/out 0.4s/1.0s |
+| Victory horn at climax | 0.50 (~-6dB) | trimmed to 3s, panned center, reused per stop |
+| Outro fanfare | 0.55 (~-5dB) | starts 2s before card fade-in |
+
+Source SFX from **Freesound** via the search script in the reference impl
+(`scripts/fetch_sfx.py`) — CC0 / CC-BY catalog, free for non-commercial.
+Mix with `ffmpeg amix=inputs=N:duration=first` + `alimiter=limit=0.95`. Pad
+the ambient bed with `apad` if shorter than the comp duration.
+
+### Sensitive-period iconography
+
+For WWII (and WW1) briefs use **historically-accurate non-provocative
+iconography** for the Axis units:
+
+- Axis ground/air = **Balkenkreuz** (the Wehrmacht military cross on tanks
+  and planes) and **iron grey** — NOT the swastika
+- Allied = RAF roundel, white Allied star, US/UK national flags
+- Soviet = red star, hammer-and-sickle, Soviet flag
+
+The military cross is sufficient for visual identification and avoids
+YouTube AI-slop / inauthentic-content enforcement signals
+(`youtube_ai_slop_signals` memory). Same logic for any sensitive period —
+choose the most-iconic-but-least-provocative emblem available.
+
+### Variant-specific QA additions
+
+On top of the standard checks in this skill:
+
+1. **Sprite scale awareness** — sprites inside `.stage` scale with the
+   camera. A 50px-native sprite renders at 175px on screen at scale 3.5×.
+   Author small (25-60px native) for tactical-map clarity.
+2. **Sprites must feel alive** — every sprite gets idle bob; verify by
+   scrubbing frame extraction — no sprite should sit perfectly still for
+   more than ~0.5s.
+3. **Pin-occlusion check** — at the focused scale, identify which other
+   pins fall inside the viewport (compute viewport box, list pins inside).
+   Confirm they're all faded out, not just the current battle's pin.
+4. **Custom basemap OOB check** — same as the world-tour variant: any
+   near-white column from tile overflow is a bug, patch with the
+   theme-appropriate dark fill (see `mapkit_oob_pixel_patch` memory).
+5. **Sensitive-iconography sweep** — open every sprite SVG and confirm no
+   provocative imagery (swastikas, specific ethnic caricatures, etc.).
+6. **Audio sync** — extract the rendered audio with
+   `ffmpeg -map 0:a -c:a pcm_s16le ...wav`, find peak energy windows,
+   confirm victory-horn peaks land within ±100ms of each scripted climax
+   timestamp.
+
 ## What this method does NOT cover
 
-- Multiple connected map scenes (zoom from continent → city → street). Use
-  the `documentary-montage` pipeline for that — it's a different beast and
-  needs scene transitions, not a single composition.
-- Real-time interactive maps. This is a one-shot rendered video; for interactive
-  output use a different toolchain.
-- Stat-card overlays on top of the map. Add a Remotion overlay pass post-render
-  if a brief needs that — don't try to inline stat cards into HyperFrames.
+- Continent → city → street zoom levels with *different basemaps* per
+  level. This variant zooms into a single basemap at higher CSS scale; it
+  doesn't swap tiles at higher Mercator zoom levels. For true progressive
+  zoom across basemaps, use the `documentary-montage` pipeline — it does
+  scene transitions across multiple HF compositions.
+- Real-time interactive maps. This is a one-shot rendered video.
+- Stat-card overlays on top of the map. Add a Remotion overlay pass
+  post-render if a brief needs that.
 
 ## File locations
 
@@ -422,6 +740,8 @@ For any of these, the basemap + anchor + camera + SFX patterns are identical
 | Python library | [lib/mapkit_subjects.py](../../lib/mapkit_subjects.py) |
 | This skill | `skills/core/animated-subjects-on-map.md` |
 | HyperFrames authoring contract | [skills/core/hyperframes.md](hyperframes.md) |
-| Reference project | `projects/medieval-europe-opener-test/` (gitignored — regenerate from this skill) |
+| Reference project (formation variant) | `projects/medieval-europe-opener-test/` (gitignored — regenerate from this skill) |
+| Reference project (guided world-tour zoom variant) | `projects/world-tour-zoom-test/` (gitignored — regenerate from this skill) |
+| Reference project (themed-battle scenes variant) | `projects/europe-ww2-battles-test/` (gitignored — regenerate from this skill) |
 | Channel styles | `styles/midnight-magnates.yaml`, `styles/grandpa-huxley.yaml` |
 | Tile cache (per project) | `projects/<name>/scripts/_tile_cache/` (gitignored) |

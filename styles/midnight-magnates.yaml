@@ -69,7 +69,10 @@ audio:
   voice_variation_allowed: false
 
 asset_generation:
-  image_prompt_prefix: "Low-poly noir minimalism, geometric silhouettes, single shaft of cool blue or warm gold light, deep navy-black background (rgb 8 12 22), cinematic shadows, power imagery (vaults, thrones, boardrooms, skylines, chess pieces), midnight elegance, sleep-friendly low contrast, 16:9, 1080p, "
+  # Style locked May 2026 per user direction. "moonlit" is the default; for
+  # indoor / daytime / non-moon scenes, the scene prompt should override
+  # with phrases like "interior scene, no moonlight" or "deep shadow indoors".
+  image_prompt_prefix: "night colors, noir atmosphere, moonlit, flat segmented color illustration, single shaft of cool blue or warm gold light, deep navy-black background, cinematic shadows, power imagery (vaults, thrones, boardrooms, skylines, chess pieces), midnight elegance, avoid bright whites in large areas, 16:9, 1080p, "
   image_negative_prompt: "warm friendly, bright daylight, motivational, cluttered, generic stock business imagery, exclamation point energy, hustle culture, candlelight philosopher imagery"
   diagram_style: "low-poly geometric on deep navy plate, brass gold accent lines, sharp angles, never rounded"
   consistency_anchors:
@@ -177,3 +180,29 @@ channel_identity:
     - "Real white #ffffff banned — always cream"
     - "Translucent plates banned — alpha ≥ 225/255"
     - "Warm earth tones banned — that's Grandpa Huxley territory"
+
+# --- Clip treatment for potentially copyrighted third-party material (LOCKED 2026-05-21) ---
+# Mirror of styles/sleep-network-base.yaml — loader doesn't support extends.
+# Full skill: skills/core/clip-treatments.md
+# Canonical config: projects/iran-us-history-clip-toolkit-v1/toolkit/approved_toolkit.json
+clip_treatment:
+  defaults:
+    copyrighted_video:
+      filter: grade_cyan_orange
+      audio_treatment: pitch_up_1st     # only if audio kept (vo-pause)
+      wrap_in_frame: true
+    copyrighted_image:
+      filter: grade_crushed_warm
+      wrap_in_frame: true
+    copyrighted_audio:
+      filter: pitch_up_1st              # standalone or kept-from-clip
+    character_image:
+      route_to: character_cards
+  # MM-preferred frames first (intrigue/power), then the universal options.
+  approved_frames_priority: [dossier, surveillance, boardroom, tv-vintage, newspaper, magnifier]
+  hard_rules:
+    - "Source files capped at 5 minutes on disk"
+    - "Frame-by-frame fit check before any transformation"
+    - "Tag each clip audio role: vo-pause / vo-over / mixed"
+    - "Output composited inside an approved frame — never bare"
+    - "No substitution of locked filter recipes without explicit user override"
