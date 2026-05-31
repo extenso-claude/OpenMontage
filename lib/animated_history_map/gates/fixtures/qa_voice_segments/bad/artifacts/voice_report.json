@@ -1,0 +1,8 @@
+{
+  "voice": { "voice_id": "Tyler", "delivery_mode": "BALANCED", "model_id": "inworld-tts-2" },
+  "segments": [
+    { "id": "s1", "status": "fail", "human_approved": false, "fix_iterations": 3,
+      "metrics": { "wer": 0.40, "min_word_prob": 0.18, "mos": 2.8, "wps": 4.2, "clipping": true, "dropout": false } }
+  ],
+  "track": { "lufs": -9.0, "true_peak_db": 0.5 }
+}

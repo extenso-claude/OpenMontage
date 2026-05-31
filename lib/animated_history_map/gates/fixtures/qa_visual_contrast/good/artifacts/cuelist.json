@@ -1,0 +1,18 @@
+{
+  "cues": [
+    {
+      "id": "year_stamp_1861",
+      "kind": "time_stamp",
+      "start_s": 0.5,
+      "end_s": 1.8,
+      "layer": 7,
+      "text": "1861",
+      "bbox": {
+        "x": 60,
+        "y": 90,
+        "w": 200,
+        "h": 60
+      }
+    }
+  ]
+}

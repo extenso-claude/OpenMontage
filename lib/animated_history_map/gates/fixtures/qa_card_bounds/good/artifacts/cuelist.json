@@ -1,0 +1,8 @@
+{
+  "cues": [
+    {"id": "c1_title_card", "kind": "title_card", "text": "Presidential Assassinations", "start_s": 1.0, "end_s": 6.0, "layer": 5, "bbox": {"x": 360, "y": 120, "w": 1200, "h": 220}},
+    {"id": "c2_lower_left_photo", "kind": "photo_card", "text": "Abraham Lincoln eighteen sixty five", "start_s": 8.0, "end_s": 16.0, "layer": 6, "bbox": {"x": 80, "y": 900, "w": 520, "h": 140}},
+    {"id": "c3_lower_right_chyron", "kind": "lower_third", "text": "Ford's Theatre", "start_s": 9.0, "end_s": 15.0, "layer": 6, "bbox": {"x": 1240, "y": 860, "w": 600, "h": 180}},
+    {"id": "c4_pin_sfx", "kind": "sfx_accent", "start_s": 5.0, "end_s": 5.2, "layer": 11}
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "scene_id": "ch01_lincoln_b12_manhunt",
+  "duration_s": 18.49,
+  "fps": 12,
+  "ground": {
+    "width": 1920,
+    "height": 1080,
+    "geo": {
+      "map_info": { "zoom": 9, "center_lat": 38.52, "center_lon": -77.05, "extent_id": "manhunt_regional" }
+    }
+  },
+  "props": [
+    { "id": "pin_surratt_tavern", "kind": "stop_pin", "layer": 3, "geo_footprint": { "lat": 38.7645, "lon": -76.8974, "w": 22, "h": 22 } }
+  ],
+  "actors": [
+    {
+      "id": "booth_dot",
+      "kind": "lantern_dot",
+      "size": { "w": 28, "h": 28 },
+      "layer": 4,
+      "geo_path": [
+        { "t": 0.0, "lat": 38.8767, "lon": -76.9905 },
+        { "t": 1.11, "lat": 38.7645, "lon": -76.8974 },
+        { "t": 18.49, "lat": 38.1398, "lon": -77.2287 }
+      ]
+    },
+    {
+      "id": "cavalry_picket_static",
+      "kind": "cavalry",
+      "size": { "w": 34, "h": 34 },
+      "layer": 2,
+      "facing_follows_path": true,
+      "path": [
+        { "t": 0.0, "x": 1195, "y": 716 },
+        { "t": 4.0, "x": 1188, "y": 716 },
+        { "t": 8.0, "x": 1188, "y": 716 }
+      ]
+    },
+    {
+      "id": "cavalry_pursuit_anchored",
+      "kind": "cavalry",
+      "size": { "w": 34, "h": 34 },
+      "layer": 2,
+      "facing_follows_path": true,
+      "anchor_phrase": "cavalry close in",
+      "path": [
+        { "t": 15.16, "x": 1180, "y": 300 },
+        { "t": 18.49, "x": 985, "y": 560 }
+      ]
+    }
+  ]
+}

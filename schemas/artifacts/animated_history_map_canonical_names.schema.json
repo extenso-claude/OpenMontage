@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "animated_history_map_canonical_names.schema.json",
+  "title": "Per-Project Canonical Names Dictionary",
+  "type": "object",
+  "required": ["project_id"],
+  "properties": {
+    "project_id": { "type": "string" },
+    "people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "canonical_full"],
+        "properties": {
+          "id": { "type": "string" },
+          "canonical_full": { "type": "string" },
+          "canonical_short": { "type": "string" },
+          "first_mention_form": { "type": "string" },
+          "title_at_event": { "type": "string" },
+          "role_at_event": { "type": "string" },
+          "lifespan": { "type": "string" },
+          "phonetic_for_tts": { "type": "string" },
+          "spelling_variations_rejected": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "places": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "canonical"],
+        "properties": {
+          "id": { "type": "string" },
+          "canonical": { "type": "string" },
+          "period_appropriate": { "type": "object", "description": "Year-keyed map of period-appropriate names" },
+          "modern_reference": { "type": "string" },
+          "spelling_variations_rejected": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "dates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "format_in_visuals", "format_in_VO"],
+        "properties": {
+          "id": { "type": "string" },
+          "format_in_visuals": { "type": "string" },
+          "format_in_VO": { "type": "string" },
+          "alternate_formats_allowed": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "canonical_short"],
+        "properties": {
+          "id": { "type": "string" },
+          "canonical_short": { "type": "string" },
+          "canonical_long": { "type": "string" },
+          "date_id": { "type": "string" }
+        }
+      }
+    }
+  }
+}

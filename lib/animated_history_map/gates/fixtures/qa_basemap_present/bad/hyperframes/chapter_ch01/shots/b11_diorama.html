@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="animated_history_map.compiler@0.1.0" />
+<meta name="shot-id" content="ch01.b11_diorama" />
+<!-- This shot is a MAP only via its scene-graph (which has a geo ground). It
+     carries no map-tier meta and no inline geo tokens, yet it must still paint a
+     basemap. It does NOT — only a flat fill — so it is the blank-cream bug found
+     purely through the geo scene-graph. -->
+<meta name="scene-graph" content="shots/b11_diorama.graph.json" />
+<style>
+  html,body { width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+              background:#efe6cf; color:#2b2015; font-family:Georgia,serif; }
+  #root { position:absolute; inset:0; background:#efe6cf; }
+  .clip { position:absolute; box-sizing:border-box; }
+  #dot { position:absolute; left:982px; top:374px; width:28px; height:28px;
+         border-radius:50%; background:#b08626; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01.b11_diorama"
+     data-start="0" data-duration="18.0" data-width="1920" data-height="1080">
+  <div id="dot" class="clip" data-start="0" data-duration="18.0"></div>
+</div>
+</body>
+</html>

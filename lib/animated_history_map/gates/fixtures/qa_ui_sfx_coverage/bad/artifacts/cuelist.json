@@ -1,0 +1,9 @@
+{
+  "_note": "BAD: high-priority UI cues firing with no paired SFX. b02.character_card has no card sound; b11.pin_drop drops in dead silence; b13.pin_drop's only overlap is a chapter-transition swell (wrong family). b02.pin_drop IS covered (proves the gate is per-cue, not a blanket fail).",
+  "cues": [
+    { "id": "ch01.b02.pin_drop.2",       "kind": "pin_drop",       "start_s": 11.7,   "end_s": 24.1 },
+    { "id": "ch01.b02.character_card.4", "kind": "character_card", "start_s": 11.7,   "end_s": 24.1 },
+    { "id": "ch01.b11.pin_drop.2",       "kind": "pin_drop",       "start_s": 103.98, "end_s": 112.57 },
+    { "id": "ch01.b13.pin_drop.0",       "kind": "pin_drop",       "start_s": 138.26, "end_s": 147.75 }
+  ]
+}

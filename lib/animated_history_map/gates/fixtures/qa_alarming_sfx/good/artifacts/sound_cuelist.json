@@ -1,0 +1,50 @@
+{
+  "cues": [
+    {
+      "id": "s02_air_raid_siren",
+      "category": "sfx",
+      "asset": "sfx/air_raid_siren_distant.wav",
+      "t_in": 124.0,
+      "t_out": 131.5,
+      "alarming": true
+    },
+    {
+      "id": "s05_artillery_boom",
+      "category": "sfx",
+      "asset": "sfx/artillery_boom_low.wav",
+      "t_in": 372.4,
+      "t_out": 374.0,
+      "alarming": true
+    },
+    {
+      "id": "m01_main_bed",
+      "category": "music",
+      "asset": "music/nocturne_bed_loop.wav",
+      "t_in": 0.0,
+      "t_out": 600.0
+    },
+    {
+      "id": "s31_wind_over_ruins",
+      "category": "ambient",
+      "asset": "ambient/wind_over_ruins_soft.wav",
+      "t_in": 642.0,
+      "t_out": 708.0,
+      "alarming": false
+    },
+    {
+      "id": "s33_clock_tick",
+      "category": "sfx",
+      "asset": "sfx/mantel_clock_tick.wav",
+      "t_in": 910.5,
+      "t_out": 922.0,
+      "alarming": false
+    },
+    {
+      "id": "m04_sparse_pad",
+      "category": "music",
+      "asset": "music/sparse_pad_air_raid_era_theme.wav",
+      "t_in": 720.0,
+      "t_out": 1080.0
+    }
+  ]
+}

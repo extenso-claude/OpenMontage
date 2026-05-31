@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "animated_history_map_geography.schema.json",
+  "title": "Per-Project Geography (anchors + sub-anchors + regions, with provenance)",
+  "type": "object",
+  "required": ["project_id", "map_extents", "anchors"],
+  "properties": {
+    "project_id": { "type": "string" },
+    "map_extents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "tier", "center_lat", "center_lon", "zoom"],
+        "properties": {
+          "id": { "type": "string" },
+          "tier": { "enum": ["continental", "regional", "urban", "scene", "building"] },
+          "center_lat": { "type": "number" },
+          "center_lon": { "type": "number" },
+          "zoom": { "type": "integer" },
+          "width": { "type": "integer", "default": 1920 },
+          "height": { "type": "integer", "default": 1080 },
+          "provider": { "type": "string", "default": "carto_dark" },
+          "style": { "type": "string", "default": "noir" }
+        }
+      }
+    },
+    "anchors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "lat", "lon", "tier", "provenance"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+          "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+          "tier": { "enum": ["continental", "regional", "urban", "scene", "building"] },
+          "year_range": { "type": "array", "items": { "type": "integer" } },
+          "provenance": {
+            "type": "object",
+            "required": ["source"],
+            "properties": {
+              "source": { "type": "string" },
+              "url": { "type": "string" },
+              "verified_by": { "type": "string" },
+              "confidence": { "enum": ["high", "medium", "low"] }
+            }
+          },
+          "sub_anchors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "x_pct", "y_pct", "provenance"],
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "x_pct": { "type": "number", "minimum": 0, "maximum": 1 },
+                "y_pct": { "type": "number", "minimum": 0, "maximum": 1 },
+                "provenance": { "type": "object", "required": ["source"], "properties": { "source": { "type": "string" }, "url": { "type": "string" } } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "tier", "polygon_latlon", "provenance"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "tier": { "enum": ["continental", "regional", "urban", "scene", "building"] },
+          "polygon_latlon": {
+            "type": "array",
+            "minItems": 3,
+            "items": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 }
+          },
+          "provenance": { "type": "object", "required": ["source"], "properties": { "source": { "type": "string" }, "url": { "type": "string" } } },
+          "default_palette_role": { "type": "string" },
+          "period": { "type": "array", "items": { "type": "integer" } }
+        }
+      }
+    }
+  }
+}

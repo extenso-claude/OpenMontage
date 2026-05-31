@@ -1,0 +1,21 @@
+{
+  "voice": {
+    "voice_id": "inworld_narrator_grave",
+    "delivery_mode": "narration",
+    "model_id": "inworld-tts-2"
+  },
+  "segments": [
+    {
+      "id": "seg_01_hook",
+      "text_markup": "[somber] On a humid morning in eighteen sixty-five, <break time=\"400ms\"/> the President of the United States walked into a theater\nhe would NEVER walk out of."
+    },
+    {
+      "id": "seg_02_setup",
+      "text_markup": "[measured] Washington was a city of mud and ambition.\n<break time=\"650ms\"/>\nThe war had ended only days before, and the streets were still LOUD with celebration."
+    },
+    {
+      "id": "seg_03_turn",
+      "text_markup": "[ominous] But one man in the crowd was not celebrating.\nHe had a plan, <break time=\"300ms\"/> a pistol, <break time=\"300ms\"/> and a grievance that history would never FORGET."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "chapter_id": "ch01_demo",
+  "phases": [
+    {
+      "phase_id": "p1",
+      "phase_kind": "climax",
+      "beats": [
+        {
+          "beat_id": "h1",
+          "shot_tier": "medium_diorama",
+          "layers": [
+            {
+              "layer": "L8",
+              "primitive": "experimental"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

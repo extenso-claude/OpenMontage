@@ -1,0 +1,18 @@
+{
+  "scene_id": "ch01_b11_diorama",
+  "ground": {
+    "width": 1920,
+    "height": 1080,
+    "geo": {
+      "map_info": {
+        "zoom": 9,
+        "center_lat": 38.52,
+        "center_lon": -77.05,
+        "provider": "carto_dark",
+        "extent_id": "manhunt_regional"
+      }
+    }
+  },
+  "props": [],
+  "actors": []
+}

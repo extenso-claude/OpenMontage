@@ -1,0 +1,13 @@
+{
+  "voice": {
+    "voice_id": "Ashley",
+    "delivery_mode": "NEUTRAL",
+    "model_id": "inworld-tts-2"
+  },
+  "segments": [
+    {
+      "id": "seg_01_hook",
+      "text_markup": "[grave, measured] The year is eighteen sixty-five. <break time=\"650ms\"/>\nAcross a nation still bleeding from war, a single shot [say sadly] would change everything.\n<break time=\"12000ms\"/> No one in that theater knew it yet."
+    }
+  ]
+}

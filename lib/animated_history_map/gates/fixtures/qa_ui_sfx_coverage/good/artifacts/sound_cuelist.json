@@ -1,0 +1,10 @@
+{
+  "_note": "Each high-priority UI cue above has a matching, overlapping SFX: pin_drop -> pin_drop.wav; character_card -> card_whoosh.wav; character_card_pop -> card_chime.wav.",
+  "cues": [
+    { "id": "music_bed", "category": "music", "asset": "music_bed_main.mp3", "t_in": 0.0, "t_out": 200.0 },
+    { "id": "pin_drop_13s",   "category": "sfx", "asset": "pin_drop.wav",    "t_in": 12.94, "t_out": 13.57, "anchor_phrase": "on the stage", "loudness_lufs": -16.0, "bed_lufs_at": -22.0 },
+    { "id": "card_whoosh_14s","category": "sfx", "asset": "card_whoosh.wav", "t_in": 13.9,  "t_out": 14.7,  "anchor_phrase": "His name is", "loudness_lufs": -15.0, "bed_lufs_at": -22.0 },
+    { "id": "card_chime_27s", "category": "sfx", "asset": "card_chime.wav",  "t_in": 27.3,  "t_out": 28.2,  "anchor_phrase": "John Wilkes", "loudness_lufs": -15.0, "bed_lufs_at": -22.0 },
+    { "id": "pin_tock_104s",  "category": "sfx", "asset": "pin_tock.wav",    "t_in": 104.2, "t_out": 104.8, "anchor_phrase": "stops at", "loudness_lufs": -16.0, "bed_lufs_at": -22.0 }
+  ]
+}

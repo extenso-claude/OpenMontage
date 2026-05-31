@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="animated_history_map.compiler@0.1.0" />
+<meta name="shot-id" content="ch01.b07_conspiracy" />
+<meta name="shot-tier" content="macro_map" />
+<!--
+  GEO NOTE: all three targets project via lib.mapkit_subjects.latlon_to_local_pixel
+  onto the manhunt_regional basemap (zoom 9). The staircase rises from the single
+  DC anchor.  *** BUG: this map shot paints NO basemap — #root is a flat parchment
+  fill, so the plates float over blank cream. ***
+-->
+<style>
+  html,body { width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+              background:#efe6cf; color:#2b2015; font-family:Georgia,serif; }
+  /* Flat parchment fill ONLY — no raster basemap is ever painted. */
+  #root { position:absolute; inset:0; background:#efe6cf; }
+  .clip { position:absolute; box-sizing:border-box; }
+  #dc-pin { position:absolute; left:957px; top:352px; width:24px; height:24px;
+            border-radius:50%; background:#8c2026; }
+  .stair { height:64px; background:linear-gradient(180deg,#f6efdc,#efe6cf);
+           border:1px solid #b08626; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01.b07_conspiracy"
+     data-start="0" data-duration="17.69" data-width="1920" data-height="1080">
+  <div id="dc-pin" class="clip" data-start="0" data-duration="17.69"></div>
+  <div class="clip stair" data-start="0" data-duration="17.69"
+       style="left:1024px; top:296px; width:452px;"></div>
+</div>
+</body>
+</html>

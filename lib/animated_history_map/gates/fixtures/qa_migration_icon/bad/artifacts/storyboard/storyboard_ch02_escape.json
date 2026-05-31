@@ -1,0 +1,35 @@
+{
+  "chapter_id": "ch02_escape",
+  "chapter_index": 2,
+  "duration_s": 40,
+  "outgoing_state": {
+    "basemap_tier": "regional",
+    "active_pins": ["pin_fords_theatre", "pin_garrett_barn"],
+    "year_display": 1865
+  },
+  "phases": [
+    {
+      "phase_id": "p_escape",
+      "phase_kind": "aftermath",
+      "duration_s": 40,
+      "beats": [
+        {
+          "beat_id": "b_flight",
+          "intent": "Booth's escape route drawn as a bare dashed line — no rider, no rationale.",
+          "start_anchor": {"phrase": "Booth fled"},
+          "end_anchor": {"phrase": "Maryland night"},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "migration_arrow",
+              "params": {
+                "path": ["pin_fords_theatre", "pin_surratt_tavern", "pin_garrett_barn"],
+                "label": "Booth's flight south"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

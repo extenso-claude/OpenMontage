@@ -1,0 +1,58 @@
+{
+  "project_id": "fixture-asset-sourcing-good",
+  "assets": [
+    {
+      "asset_id": "lincoln_portrait",
+      "category": "portrait",
+      "path": "assets/portraits/portrait_lincoln.jpg",
+      "copyright_status": "pd",
+      "license": "PD (pre-1929)",
+      "sourcing": {
+        "searched_free": true,
+        "searched_copyright": true,
+        "queries": ["abraham lincoln 1865 portrait gardner"]
+      }
+    },
+    {
+      "asset_id": "fords_theatre_exterior",
+      "category": "stock",
+      "path": "assets/stock/fords_theatre.mp4",
+      "copyright_status": "free_license",
+      "license": "PEXELS",
+      "sourcing": {
+        "searched_free": true,
+        "searched_copyright": true,
+        "queries": ["ford's theatre washington dc exterior"]
+      }
+    },
+    {
+      "asset_id": "booth_escape_route_map_inset",
+      "category": "illustration",
+      "path": "assets/scenes/booth_escape_generated.png",
+      "copyright_status": "generated",
+      "treatment": "sepia_archive",
+      "frame": "civil-war-portrait",
+      "sourcing": {
+        "searched_free": true,
+        "searched_copyright": true,
+        "queries": ["booth escape route maryland 1865 illustration"],
+        "generation_reason": "No PD or copyright-cleared period illustration of Booth's specific escape route exists; searched Wikimedia, LoC, Internet Archive, and reverse image of the few copyright candidates — none usable. Generated with Nano Banana (user-approved), no baked text."
+      }
+    },
+    {
+      "asset_id": "gunshot_sfx",
+      "category": "sfx",
+      "path": "assets/sfx/derringer_shot.wav",
+      "copyright_status": "free_license",
+      "license": "CC0 (Freesound)",
+      "note": "non-imagery -> no copyright-search obligation; gate skips it"
+    },
+    {
+      "asset_id": "theatre_sprite",
+      "category": "sprite",
+      "path": "assets/sprites/theatre.svg",
+      "copyright_status": "free_license",
+      "note": "procedural svg -> not an imagery beat; skipped"
+    }
+  ]
+}

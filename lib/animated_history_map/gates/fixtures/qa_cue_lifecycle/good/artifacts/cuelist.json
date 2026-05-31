@@ -1,0 +1,19 @@
+{
+  "cues": [
+    {"id": "paper_bg", "kind": "paper_texture", "start_s": 0.0, "end_s": 120.0, "layer": 0},
+    {"id": "vignette", "kind": "vignette_breath", "start_s": 0.0, "end_s": 120.0, "layer": 1},
+    {"id": "timeline_ui", "kind": "chapter_timeline_update", "start_s": 0.5, "end_s": 120.0, "layer": 2, "label_count": 1},
+    {"id": "year_card", "kind": "year_card_update", "start_s": 0.5, "end_s": 119.5, "layer": 2, "text": "1865"},
+
+    {"id": "title_dc", "kind": "chapter_title", "text": "Washington, April 1865", "start_s": 2.0, "end_s": 9.0, "layer": 4, "bbox": {"x": 200, "y": 80, "w": 640, "h": 120}, "anchor_id": "w0"},
+    {"id": "card_lincoln", "kind": "character_card", "text": "Abraham Lincoln", "start_s": 12.0, "end_s": 28.0, "layer": 5, "asset_id": "portrait_lincoln", "bbox": {"x": 100, "y": 600, "w": 400, "h": 300}},
+    {"id": "card_booth", "kind": "character_card", "text": "John Wilkes Booth", "start_s": 30.0, "end_s": 45.0, "layer": 5, "asset_id": "portrait_booth", "bbox": {"x": 100, "y": 600, "w": 400, "h": 300}},
+
+    {"id": "map_route", "kind": "map_label", "text": "Ford's Theatre", "start_s": 48.0, "end_s": 56.0, "layer": 4, "label_count": 2, "bbox": {"x": 900, "y": 470, "w": 280, "h": 70}},
+    {"id": "stock_b1", "kind": "stock_insert", "start_s": 60.0, "end_s": 88.0, "layer": 3, "asset_id": "stock_capitol"},
+
+    {"id": "pin_sfx", "kind": "sfx_accent", "start_s": 48.0, "end_s": 48.2, "layer": 0, "is_audio": true},
+
+    {"id": "outro_card", "kind": "chapter_title", "text": "The Aftermath", "start_s": 100.0, "end_s": 119.0, "layer": 4, "bbox": {"x": 200, "y": 80, "w": 600, "h": 120}}
+  ]
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="animated_history_map.compiler@0.1.0" />
+<meta name="shot-id" content="ch01.b08_diagram" />
+<!-- A side-elevation leap DIAGRAM (not a map). It uses the physics-graph system
+     like every shot, but its scene-graph has NO geographic ground, so it has no
+     basemap obligation. This is the b08_leap case that must NOT be flagged. -->
+<meta name="scene-graph" content="shots/b08_diagram.graph.json" />
+<style>
+  html,body { width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+              background:#efe6cf; color:#2b2015; font-family:Georgia,serif; }
+  #root { position:absolute; inset:0;
+          background:radial-gradient(140% 120% at 60% 30%, rgba(255,247,230,0.6), rgba(239,230,207,0) 60%), #e9dec0; }
+  .clip { position:absolute; box-sizing:border-box; }
+  #booth { position:absolute; left:1286px; top:452px; width:26px; height:26px;
+           border-radius:50%; background:#2b2015; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01.b08_diagram"
+     data-start="0" data-duration="16.0" data-width="1920" data-height="1080">
+  <div id="booth" class="clip" data-start="0" data-duration="16.0"></div>
+</div>
+</body>
+</html>

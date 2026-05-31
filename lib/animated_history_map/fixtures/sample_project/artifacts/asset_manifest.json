@@ -1,0 +1,8 @@
+{
+  "assets": [
+    { "id": "lincoln_portrait", "path": "assets/portraits/lincoln.jpg", "category": "portrait", "required": true },
+    { "id": "ford_interior", "path": "assets/scene/ford_interior.jpg", "category": "stock", "required": true },
+    { "id": "garfield_portrait", "path": "assets/portraits/garfield.jpg", "category": "portrait", "required": true },
+    { "id": "depot_interior", "path": "assets/scene/depot_interior.jpg", "category": "stock", "required": true }
+  ]
+}

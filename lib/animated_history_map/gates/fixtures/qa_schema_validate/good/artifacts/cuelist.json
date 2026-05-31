@@ -1,0 +1,6 @@
+{
+  "cues": [
+    {"id": "c1_booth_card", "kind": "character_card", "text": "John Wilkes Booth", "start_s": 4.0, "end_s": 11.0, "layer": 6, "asset_id": "portrait_booth"},
+    {"id": "c2_panel", "kind": "panel_illustration", "start_s": 12.0, "end_s": 20.0, "layer": 5, "panel_path": "assets/panels/derringer_pistol.png"}
+  ]
+}

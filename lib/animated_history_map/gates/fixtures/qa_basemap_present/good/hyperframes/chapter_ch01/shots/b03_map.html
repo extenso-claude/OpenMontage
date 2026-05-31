@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="animated_history_map.compiler@0.1.0" />
+<meta name="shot-id" content="ch01.b03_map" />
+<meta name="shot-tier" content="macro_map" />
+<meta name="scene-graph" content="shots/b03_map.graph.json" />
+<style>
+  html,body { width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+              background:#efe6cf; color:#2b2015; font-family:Georgia,serif; }
+  #root { position:absolute; inset:0; background:#efe6cf; }
+  .clip { position:absolute; box-sizing:border-box; }
+  /* A REAL raster basemap layer is painted under the overlay. */
+  .mapimg { position:absolute; left:0; top:0; width:1920px; height:1080px;
+            background-size:1920px 1080px; background-repeat:no-repeat;
+            filter:sepia(0.28) saturate(0.85); }
+  #map_region { background-image:url("assets/maps/manhunt_regional.png");
+                transform-origin:969px 364px; }
+  #pin { position:absolute; left:957px; top:352px; width:24px; height:24px;
+         border-radius:50%; background:#8c2026; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01.b03_map"
+     data-start="0" data-duration="12.0" data-width="1920" data-height="1080">
+  <div id="map_region" class="mapimg clip" data-start="0" data-duration="12.0"></div>
+  <div id="pin" class="clip" data-start="0" data-duration="12.0"></div>
+</div>
+</body>
+</html>

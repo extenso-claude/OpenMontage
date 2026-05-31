@@ -1,0 +1,7 @@
+{
+  "cues": [
+    {"id": "c1_jackson_card", "kind": "character_card", "text": "Andrew Jackson eighteen thirty five", "start_s": 2.0, "end_s": 8.0},
+    {"id": "c2_dc_map", "kind": "map_label", "text": "Washington DC", "label_count": 3, "start_s": 10.0, "end_s": 17.0},
+    {"id": "c3_pin_sfx", "kind": "sfx_accent", "start_s": 5.0, "end_s": 5.2}
+  ]
+}

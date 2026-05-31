@@ -1,0 +1,14 @@
+{
+  "words": [
+    {"word": "Booth", "start": 0.10, "end": 0.50},
+    {"word": "fled", "start": 0.50, "end": 0.85},
+    {"word": "south", "start": 0.85, "end": 1.20},
+    {"word": "on", "start": 1.20, "end": 1.32},
+    {"word": "horseback,", "start": 1.32, "end": 1.95},
+    {"word": "galloping", "start": 1.95, "end": 2.55},
+    {"word": "into", "start": 2.55, "end": 2.80},
+    {"word": "the", "start": 2.80, "end": 2.92},
+    {"word": "Maryland", "start": 2.92, "end": 3.45},
+    {"word": "night.", "start": 3.45, "end": 3.95}
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "openmontage/artifacts/animated_history_map_qa_report",
+  "title": "Animated History Map — QA Report (machine-written)",
+  "description": "Emitted ONLY by lib/animated_history_map/runner.py. Records real gate exit codes + input hashes. An agent must never hand-author this file; the render-lock validates it against this schema and rejects reports whose input_hashes are stale.",
+  "type": "object",
+  "required": ["pipeline", "stage", "ran_at", "runner_signature", "gates", "all_passed"],
+  "properties": {
+    "pipeline": { "type": "string" },
+    "stage": { "type": "string", "description": "Stage name, or 'ALL' when the whole pipeline's gates were run." },
+    "ran_at": { "type": "string", "description": "ISO-8601 timestamp the runner stamped." },
+    "runner_signature": {
+      "type": "string",
+      "description": "e.g. 'animated_history_map.runner@<version>' — proves a process, not an agent, wrote this.",
+      "pattern": "^animated_history_map\\.runner@"
+    },
+    "input_hashes": {
+      "type": "object",
+      "description": "sha256 of every artifact the gates read, at run time. The render-lock recomputes these and rejects the report if any differ (a stale green from old inputs fails).",
+      "additionalProperties": { "type": "string" }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "cmd", "exit_code", "expected", "passed", "blocks"],
+        "properties": {
+          "name": { "type": "string" },
+          "cmd": { "type": "string" },
+          "exit_code": { "type": "integer" },
+          "expected": { "type": "integer" },
+          "passed": { "type": "boolean" },
+          "blocks": { "type": "boolean" },
+          "duration_ms": { "type": "number" },
+          "stdout_tail": { "type": "string" },
+          "stderr_tail": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "all_passed": {
+      "type": "boolean",
+      "description": "True iff every BLOCKING gate has passed == true."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,384 @@
+name: animated-history-map
+version: "2.1.0"
+pipeline_id: animated-history-map
+description: |
+  Documentary-style YouTube videos with animated maps as the core visual identity.
+  Map-led storytelling alternating macro/medium/micro views with off-map story dives.
+  Per-project theme adapts visuals + voice to the video's time period(s).
+  Runtime locked to HyperFrames.
+
+  See docs/animated-history-map-rebuild-plan.md for the canonical design + the
+  load-bearing enforcement model (gates inside the only sanctioned output path;
+  a deterministic runner — not the agent — decides "done").
+
+stability: production
+category: animation
+render_runtime: hyperframes  # LOCKED — Remotion not used in this pipeline
+
+# Capability extensions: hand-rolled project-level scripts are FORBIDDEN.
+# This is what makes the 2,076-line monolith impossible — qa_no_custom_scripts
+# wires lib/pipeline_loader.check_extension_permitted into the run path.
+extensions:
+  custom_scripts: false
+  custom_playbooks: false
+  custom_skills: false
+  custom_tools: false
+
+stages:
+
+  - name: research
+    id: research
+    skill: skills/pipelines/animated-history-map/research-director.md
+    produces: research_brief
+    artifact_path: artifacts/research_brief.json
+    tools_available: [WebFetch, WebSearch, Agent]
+    review_focus:
+      - canonical_names_dictionary_built
+      - geography_with_provenance_per_anchor
+      - canonical_dates_format_consistent
+    requires_human_approval: true   # G0/G1 scope + facts
+    hard_gates: []   # TODO: qa_schema_validate (geography, canonical_names), qa_canonical_closure
+
+  - name: theme
+    id: theme
+    skill: skills/pipelines/animated-history-map/theme-director.md
+    produces: theme
+    artifact_path: artifacts/theme.json
+    requires_human_approval: false
+    hard_gates: []   # TODO: qa_schema_validate (theme)
+
+  - name: script
+    id: script
+    skill: skills/pipelines/animated-history-map/script-director.md
+    produces: script
+    artifact_path: artifacts/script.json
+    tools_available: [inworld_tts]
+    review_focus:
+      - hook_first_payoff_before_0_20s
+      - canonical_names_used_no_variations
+      - inworld_emotion_tags_only_at_major_beats
+    requires_human_approval: true   # G1: approve final script text
+    hard_gates:
+      - name: qa_vo_content_unchanged
+        cmd: python3 -m lib.animated_history_map.gates.qa_vo_content_unchanged --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: The TTS-formatted script must not change a single WORD of the human-approved VO (tags/breaks/CAPS/line-breaks only).
+      - name: qa_voice_markup
+        cmd: python3 -m lib.animated_history_map.gates.qa_voice_markup --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: InWorld TTS-2 markup limits — <=20 breaks/segment, steering tags lead the segment, CREATIVE + locked voice/model.
+
+  - name: voice
+    id: voice
+    skill: skills/pipelines/animated-history-map/voice-director.md
+    produces: voice_report
+    artifact_path: artifacts/voice_report.json
+    tools_available: [inworld_tts, Agent]
+    review_focus:
+      - per_segment_qa_loop_ran
+      - track_loudness_minus_16_lufs
+    requires_human_approval: true   # G-voice: review + flag words to regenerate
+    hard_gates:
+      - name: qa_voice_segments
+        cmd: python3 -m lib.animated_history_map.gates.qa_voice_segments --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: The voice lock — every VO segment passes (WER/MOS/rate/clipping/dropout + track loudness) or is human-approved at G-voice; an unfixed, unapproved segment blocks the build.
+
+  - name: geography
+    id: geography
+    skill: skills/pipelines/animated-history-map/geography-director.md
+    produces: geography
+    artifact_path: artifacts/geography.json
+    requires_human_approval: false
+    hard_gates:
+      - name: qa_geo
+        cmd: python3 -m lib.animated_history_map.gates.qa_geo --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Pin pixels must be DERIVED from lat/lon via mapkit (no hand-edited CSS-% positions); anchors must project inside their tier's extent.
+
+  - name: storyboard
+    id: storyboard
+    skill: skills/pipelines/animated-history-map/storyboard-director.md
+    produces: storyboard
+    artifact_path: artifacts/storyboard/*.json   # one per chapter
+    tools_available: [Agent]
+    review_focus:
+      - binding_vs_intent_fields_present
+      - phase_state_contract_per_phase_boundary
+    requires_human_approval: true   # G2: approve storyboard + assets
+    hard_gates:
+      - name: qa_continuity
+        cmd: python3 -m lib.animated_history_map.gates.qa_continuity --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Each chapter's outgoing_state must equal the next chapter's incoming_state (no map jump / vanished pin between chapters).
+      - name: qa_drift
+        cmd: python3 -m lib.animated_history_map.gates.qa_drift --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every beat anchor (start+end) resolves to a Whisper word or a fallback time; a NOT_FOUND anchor is a hard fail (the drift guarantee).
+      - name: qa_render_directive
+        cmd: python3 -m lib.animated_history_map.gates.qa_render_directive --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: HARD RULE — every hero shot (shot_tier=medium_diorama or hero=true) must carry a complete Render Directive (BINDING + PHYSICS + LOCKED/IMPROVISE + camera/environment/subject/pacing). This is the rich per-shot brief handed to the animator agents; motion is determined per shot from it (no canned library), and qa_physics verifies the result.
+      - name: qa_beat_visual_coverage
+        cmd: python3 -m lib.animated_history_map.gates.qa_beat_visual_coverage --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: ADVISORY micro-beat coverage (WARN) — a beat that lingers >=3s on a high-intent VO line (most-famous-actor / the-loudest-laugh / Our-American-Cousin / born / letter) with ZERO off-map visual gets a suggested visual; PLUS a HARD precondition (qa_shot_plan_exists) that the animator emitted artifacts/animation_shot_plan/<chapter_id>.md (non-empty) before render.
+      - name: qa_migration_icon
+        cmd: python3 -m lib.animated_history_map.gates.qa_migration_icon --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: HARD RULE — a migration_arrow the narration frames as travel (horseback/ride/carriage/ship/sail/flee/escape/march/slips-across/disappears/crosses, OR a >=3-waypoint route) MUST declare params.character_icon (a rider/transportation icon that travels the polyline) or document params.no_icon_rationale; a bare dashed escape line with no traveler is a FAIL.
+      - name: qa_spine_consistency
+        cmd: python3 -m lib.animated_history_map.gates.qa_spine_consistency --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: The recurring all-presidents spine map — every chapter-close phase (return_to_map / chapter_outro) MUST carry an all_presidents_pins beat (subject in color via params.current, others dimmed) with a well-formed roster; across chapters the pin-id SET and each pin POSITION (anchor_id or lat/lon) must be identical (no roster/position drift).
+
+  - name: assets
+    id: assets
+    skill: skills/pipelines/animated-history-map/asset-director.md
+    produces: asset_manifest
+    artifact_path: artifacts/asset_manifest.json
+    tools_available: [WebFetch, WebSearch, Agent, find_assets]
+    requires_human_approval: false
+    hard_gates:
+      - name: qa_schema_validate
+        cmd: python3 -m lib.animated_history_map.gates.qa_schema_validate --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Validate theme/geography/canonical_names/storyboard against their registered schemas + existence-check every asset_manifest path (catches dangling refs).
+      - name: qa_face_visibility
+        cmd: python3 -m lib.animated_history_map.gates.qa_face_visibility --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Character portraits/cutouts are real images >=200x200 with the face in-bounds (optional cv2 detection); catches cut-off / placeholder faces.
+      - name: qa_map_contrast
+        cmd: python3 -m lib.animated_history_map.gates.qa_map_contrast --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every rendered basemap PNG under assets/maps/ has real land/water contrast — distinct theme-hue water (>=1.5% pixels), land<->water perceptual separation >= theme contrast_min, and frame variance >= theme variance_min. Catches the carto_dark->style_warm monochrome-parchment collapse (no blue water, no coast).
+      - name: qa_asset_sourcing
+        cmd: python3 -m lib.animated_history_map.gates.qa_asset_sourcing --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every imagery beat's asset record proves the copyright/potential-copyright space was searched (sourcing.searched_copyright) OR carries a documented sourcing.generation_reason (Nano Banana fallback) — catches PD/free-only sourcing that never looked for the better copyright asset.
+      - name: qa_clip_treatment
+        cmd: python3 -m lib.animated_history_map.gates.qa_clip_treatment --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every third-party copyright/potential-copyright image OR video used in the project has a REAL clip_treatment grade applied AND is composited inside a frame (8 approved + era frames); kept clip audio carries a real audio recipe. Raw/untreated third-party media = FAIL; character-card images exempt.
+
+  - name: animation
+    id: animation
+    skill: skills/pipelines/animated-history-map/animation-director.md
+    produces: hyperframes_master
+    artifact_path: hyperframes/index.html
+    tools_available: [Agent]
+    review_focus:
+      - per_chapter_html_compiled_from_storyboard_via_compiler
+      - no_freehand_no_monolith
+    requires_human_approval: false
+    hard_gates:
+      - name: qa_no_custom_scripts
+        cmd: python3 -m lib.animated_history_map.gates.qa_no_custom_scripts --project {project_dir} --pipeline {pipeline}
+        expect_exit: 0
+        blocks: true
+        description: Forbids hand-rolled project-level .py compositors (wires check_extension_permitted — the anti-monolith guarantee).
+
+  - name: qa_visual
+    id: qa_visual
+    skill: skills/pipelines/animated-history-map/qa-director.md
+    produces: qa_report
+    artifact_path: artifacts/qa_report.json
+    tools_available: [Agent]
+    review_focus:
+      - all_hard_gates_pass
+      - breadth_swarm_zero_findings
+    requires_human_approval: false
+    hard_gates:
+      - name: qa_no_custom_scripts
+        cmd: python3 -m lib.animated_history_map.gates.qa_no_custom_scripts --project {project_dir} --pipeline {pipeline}
+        expect_exit: 0
+        blocks: true
+        description: Anti-monolith guard (also run here as a belt-and-suspenders check).
+      - name: qa_min_hold
+        cmd: python3 -m lib.animated_history_map.gates.qa_min_hold --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every text-bearing cue must stay on screen long enough to read (hold >= max(2.5, ceil(words/3)+2)).
+      - name: qa_element_overlap
+        cmd: python3 -m lib.animated_history_map.gates.qa_element_overlap --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: No two cues on the same/adjacent layer overlap in BOTH time and space unless they declare interaction_with (catches text-on-text collisions).
+      - name: qa_card_bounds
+        cmd: python3 -m lib.animated_history_map.gates.qa_card_bounds --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every cue bbox lies fully within the 1920x1080 frame (catches lower-third cards anchored from the top).
+      - name: qa_asset_reference_closure
+        cmd: python3 -m lib.animated_history_map.gates.qa_asset_reference_closure --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every sourced asset is referenced by >=1 cue (or formally scrapped w/ evidence); no dangling asset_id; <=30% scrapped.
+      - name: qa_physics
+        cmd: python3 -m lib.animated_history_map.gates.qa_physics --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Diorama motion-path scene-graphs — actors don't clip through props or each other, stay in-frame, and face their travel direction. (Passes for chapters with no diorama.)
+      - name: qa_cue_lifecycle
+        cmd: python3 -m lib.animated_history_map.gates.qa_cue_lifecycle --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: No overlay is left on screen past the timeline or lingers >40s (non-UI) — catches the "missed its exit" bug.
+      - name: qa_primitive_utilization
+        cmd: python3 -m lib.animated_history_map.gates.qa_primitive_utilization --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: The storyboard actually USES its vocabulary — >=12 distinct primitives spanning MAP_BOUND + OFF_MAP + PERSISTENT_UI (catches the 7-of-64 / 16% collapse).
+      - name: qa_no_reimplementation
+        cmd: python3 -m lib.animated_history_map.gates.qa_no_reimplementation --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Anti-bypass lint — every HF composition must be compiler-stamped (no hand-authored HTML) and no hand-rolled Web-Mercator (use lib.mapkit_subjects). The check the audit named as the only thing that would have caught the monolith.
+      - name: qa_character_presence
+        cmd: python3 -m lib.animated_history_map.gates.qa_character_presence --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every named figure is PRESENT, not a postage stamp — a character beat (character_card / character_card_pop) must be a HERO_CUTOUT (bbox >=30% frame height + a cutout sprite asset_id), a FULL_SCREEN_CARD (>=85%x85%), or a LOWER_CORNER scene-anchored over a full-frame panel/map; a small lone card on empty parchment FAILS (the b04_booth bug).
+      - name: qa_chapter_ui
+        cmd: python3 -m lib.animated_history_map.gates.qa_chapter_ui --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: No "Chapter N" badge bleeding into a narrative shot — a chapter-label element (text "Chapter <ordinal>" or data-qa-role=chapter-label) visible on a non-chapter-card shot fails (caught the "Chapter I" badge-sub baked over b01_b02_open). A dedicated chapter-intro card opts in via data-qa-shot-kind="chapter_card".
+      - name: qa_duplicate_face
+        cmd: python3 -m lib.animated_history_map.gates.qa_duplicate_face --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: One portrait must not appear at two on-screen locations at once — same <img src>/background-image portrait shown in two clips with overlapping windows fails (caught Lincoln's face in both the card and the subject badge, 17.4-24.1s). Reuse across shots or staggered windows is fine.
+      - name: qa_pin_label_pulse_align
+        cmd: python3 -m lib.animated_history_map.gates.qa_pin_label_pulse_align --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: A map pin, its pulse halo/ring, and its leader-line endpoint must be co-located (pulse <=3px, leader <=4px from the pin head). Caught Ford's halo 34px / ring 22px off the head and the Garrett pin ring 22px off in b13_spine; also flags a Zekiah-Swamp leader 6px off its pin in b12_manhunt.
+      - name: qa_basemap_present
+        cmd: python3 -m lib.animated_history_map.gates.qa_basemap_present --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: A map-family shot must actually paint a basemap (geo-grounded tiles under assets/maps/), not a flat parchment fill — catches the blank-cream "map" with no land/water under the pins. LINT — non-map diagram shots are exempt.
+      - name: qa_stray_mover
+        cmd: python3 -m lib.animated_history_map.gates.qa_stray_mover --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: No actor travels a long raw-pixel path with no narrative/geo anchor — a sprite racing >18% of the frame (or exiting frame) without a geo_path or anchor_phrase is an unmotivated stray mover (caught b12_manhunt cavalry). Settle-into-formation motion + geo-grounded travel are exempt.
+      - name: qa_ui_sfx_coverage
+        cmd: python3 -m lib.animated_history_map.gates.qa_ui_sfx_coverage --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every high-priority UI cue (pin_drop / character_card pop) has a taxonomy-matching SFX overlapping its window — a pin dropping in dead silence (real b11) fails. Missing sound_cuelist is a blocking fail.
+
+  - name: render
+    id: render
+    skill: skills/pipelines/animated-history-map/render-director.md
+    produces: render_report
+    artifact_path: artifacts/render_report.json
+    tools_available: [Bash]
+    requires_human_approval: false
+    hard_gates:
+      - name: qa_black_frame
+        cmd: python3 -m lib.animated_history_map.gates.qa_black_frame --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Sample rendered frames (ffmpeg) — fail on any black/near-black frame (timeline gap, dropped basemap, brightness glitch). (qa_render_existence_duration runs at final_render.)
+      - name: qa_placement
+        cmd: python3 -m lib.animated_history_map.gates.qa_placement --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: No hero/image rendered into a letterbox band — samples multiple timestamps via lib.render_placement_qa.check_clip.
+      - name: qa_visual_contrast
+        cmd: python3 -m lib.animated_history_map.gates.qa_visual_contrast --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Rendered text/labels must read against their background (WCAG >= 3:1) and stay on-canvas — samples each text cue's bbox in the render (memory map_legibility_rule / overlay_positioning_locked).
+      - name: qa_visual_completeness
+        cmd: python3 -m lib.animated_history_map.gates.qa_visual_completeness --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: No dead/blank frame mid-timeline (black OR flat-uniform no-content) AND every declared visible cue carries geometry (bbox or anchor pixel) so downstream placement/overlap/alignment gates don't silently skip it.
+      - name: qa_visual_alignment
+        cmd: python3 -m lib.animated_history_map.gates.qa_visual_alignment --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: A rendered pin's actual pixel must sit within ~28px of its declared lat/lon pixel — closes the gap between "we computed the right spot" (qa_geo) and "the dot is on the right spot" (memory geographic_pin_accuracy_required).
+      - name: qa_creature_animation
+        cmd: python3 -m lib.animated_history_map.gates.qa_creature_animation --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Any cue tagged as a living creature (is_creature / subject_kind / tags) must MOVE across rendered frames (subject-silhouette change or centroid travel) — a static creature rendered a frozen cardboard cutout (medium_diorama LIVING-CREATURES-ANIMATE rule).
+
+  - name: review
+    id: review
+    skill: skills/core/local-review-tool.md
+    produces: review_setup
+    artifact_path: review/config.json
+    requires_human_approval: true   # G3: scrub + comment on frames
+    hard_gates: []
+
+  - name: sound_design
+    id: sound_design
+    skill: skills/pipelines/animated-history-map/sound-design-director.md
+    produces: sound_design_report
+    artifact_path: artifacts/sound_design_report.json
+    tools_available: [Agent]
+    requires_human_approval: false
+    hard_gates:
+      - name: qa_alarming_sfx
+        cmd: python3 -m lib.animated_history_map.gates.qa_alarming_sfx --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: No alarming SFX (siren/boom/crash/klaxon/explosion/...) after 10:00 (locked sound rule).
+      - name: qa_sfx_audibility
+        cmd: python3 -m lib.animated_history_map.gates.qa_sfx_audibility --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Every SFX is audible — >= -40 LUFS and >= 3 LU above the VO+music bed (catches "SFX too quiet to hear").
+      - name: qa_audio_drift
+        cmd: python3 -m lib.animated_history_map.gates.qa_audio_drift --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: Sound cues anchored to the VO — sfx must carry an anchor_phrase that resolves in Whisper; drift beyond the per-category budget (sfx 0.15s / music 0.5s / ambient 2s) fails. (qa_loudness runs at final_render on the muxed master.)
+
+  - name: final_render
+    id: final_render
+    skill: skills/pipelines/animated-history-map/final-render-director.md
+    produces: final_render_report
+    artifact_path: artifacts/final_render_report.json
+    requires_human_approval: true   # G4: human initiates final render (then asked re: OTIO handoff)
+    hard_gates:
+      - name: qa_render_existence_duration
+        cmd: python3 -m lib.animated_history_map.gates.qa_render_existence_duration --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: renders/final.mp4 must exist and its duration must match the planned VO within tolerance (catches a fabricated / empty / wrong-length deliverable).
+      - name: qa_loudness
+        cmd: python3 -m lib.animated_history_map.gates.qa_loudness --project {project_dir}
+        expect_exit: 0
+        blocks: true
+        description: The muxed master hits broadcast loudness — integrated LUFS in [-17,-13] and true-peak <= -1.0 dBFS (ffmpeg ebur128).
+      # NOTE: the render-lock (runner.assert_green_and_fresh) is the additional precondition — ALL gates green AND fresh before a final render is legal.
+
+quality_rules:
+  - render_runtime: hyperframes
+  - resolution: "1920x1080"
+  - fps: 24
+  - nano_banana_cap_per_video: 50
+  - recraft_forbidden: true
+  - elevenlabs_music_forbidden: true

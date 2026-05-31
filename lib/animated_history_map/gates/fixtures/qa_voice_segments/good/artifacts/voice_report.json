@@ -1,0 +1,12 @@
+{
+  "voice": { "voice_id": "Tyler", "delivery_mode": "CREATIVE", "model_id": "inworld-tts-2" },
+  "segments": [
+    { "id": "s1", "status": "pass", "fix_iterations": 0,
+      "metrics": { "wer": 0.0, "min_word_prob": 0.95, "mos": 4.1, "wps": 2.8, "clipping": false, "dropout": false } },
+    { "id": "s2", "status": "pass", "fix_iterations": 1,
+      "metrics": { "wer": 0.03, "min_word_prob": 0.71, "mos": 3.7, "wps": 3.0, "clipping": false, "dropout": false } },
+    { "id": "s3", "status": "approved", "human_approved": true, "fix_iterations": 3,
+      "metrics": { "wer": 0.22, "min_word_prob": 0.40, "mos": 3.05, "wps": 3.2, "clipping": false, "dropout": false } }
+  ],
+  "track": { "lufs": -15.6, "true_peak_db": -1.4 }
+}

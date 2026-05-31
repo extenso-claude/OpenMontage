@@ -1,0 +1,7 @@
+{
+  "cues": [
+    {"id": "c1_title_card", "kind": "title_card", "text": "Presidential Assassinations", "start_s": 1.0, "end_s": 6.0, "layer": 5, "bbox": {"x": 360, "y": 120, "w": 1200, "h": 220}},
+    {"id": "c2_lower_left_photo", "kind": "photo_card", "text": "Abraham Lincoln eighteen sixty five", "start_s": 8.0, "end_s": 16.0, "layer": 6, "bbox": {"x": 80, "y": 980, "w": 520, "h": 140}},
+    {"id": "c3_pin_sfx", "kind": "sfx_accent", "start_s": 5.0, "end_s": 5.2, "layer": 11}
+  ]
+}

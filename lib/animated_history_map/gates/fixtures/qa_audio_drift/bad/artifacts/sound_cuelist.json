@@ -1,0 +1,34 @@
+{
+  "cues": [
+    {
+      "id": "m01_nocturne_bed",
+      "category": "music",
+      "asset": "music/nocturne_bed_loop.wav",
+      "t_in": 0.0,
+      "t_out": 16.0
+    },
+    {
+      "id": "s02_pistol_cock",
+      "category": "sfx",
+      "asset": "sfx/flintlock_cock.wav",
+      "t_in": 11.62,
+      "t_out": 12.10,
+      "anchor_phrase": "raised a pistol"
+    },
+    {
+      "id": "s09_cannon_fire",
+      "category": "sfx",
+      "asset": "sfx/cannon_fire_distant.wav",
+      "t_in": 9.0,
+      "t_out": 10.2,
+      "anchor_phrase": "cannon fire roared"
+    },
+    {
+      "id": "a07_wind_over_capital",
+      "category": "ambient",
+      "asset": "ambient/cold_wind_soft.wav",
+      "t_in": 0.5,
+      "t_out": 16.0
+    }
+  ]
+}

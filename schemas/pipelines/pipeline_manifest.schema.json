@@ -8,7 +8,14 @@
   "properties": {
     "name": { "type": "string" },
     "version": { "type": "string" },
+    "pipeline_id": { "type": "string", "description": "Stable pipeline id (alias of name)" },
     "description": { "type": "string" },
+    "render_runtime": { "type": "string", "description": "Locked composition runtime, e.g. hyperframes | remotion | ffmpeg" },
+    "quality_rules": {
+      "type": "array",
+      "description": "Free-form locked quality constraints (advisory metadata; hard enforcement lives in stage hard_gates)",
+      "items": { "type": "object" }
+    },
     "category": {
       "type": "string",
       "enum": ["talking_head", "generated", "hybrid", "screen_recording", "animation", "cinematic", "custom"]
@@ -45,6 +52,8 @@
         "required": ["name"],
         "properties": {
           "name": { "type": "string" },
+          "id": { "type": "string", "description": "Stable stage id (alias of name in some pipelines)" },
+          "artifact_path": { "type": "string", "description": "Primary canonical artifact path this stage writes" },
           "agent": { "type": "string", "description": "Legacy: class name for Python-driven stages" },
           "skill": { "type": "string", "description": "Skill path for instruction-driven stages (e.g., pipelines/explainer/idea-director)" },
           "required_artifacts_in": {
@@ -57,9 +66,11 @@
             "items": { "type": "string" }
           },
           "produces": {
-            "type": "array",
-            "items": { "type": "string" },
-            "description": "Artifact names this stage produces"
+            "oneOf": [
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" } }
+            ],
+            "description": "Artifact name(s) this stage produces"
           },
           "preferred_tools": {
             "type": "array",
@@ -95,6 +106,16 @@
           "success_criteria": {
             "type": "array",
             "items": { "type": "string" }
+          },
+          "requires_human_approval": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, the runner refuses to advance past this stage until artifacts/approvals/<stage>.json with approved:true exists."
+          },
+          "hard_gates": {
+            "type": "array",
+            "description": "Executable gates that BLOCK stage completion. The runner shells each cmd and refuses to advance unless its exit code == expect_exit.",
+            "items": { "$ref": "#/$defs/hard_gate" }
           },
           "sub_stages": {
             "type": "array",
@@ -157,5 +178,19 @@
       "additionalProperties": false
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "hard_gate": {
+      "type": "object",
+      "required": ["name", "cmd"],
+      "properties": {
+        "name": { "type": "string" },
+        "cmd": { "type": "string", "description": "Shell command. Tokens {project_dir} and {pipeline} are substituted by the runner before execution." },
+        "expect_exit": { "type": "integer", "default": 0 },
+        "blocks": { "type": "boolean", "default": true, "description": "If false the gate is advisory: recorded in qa_report.json but does not block." },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
 }

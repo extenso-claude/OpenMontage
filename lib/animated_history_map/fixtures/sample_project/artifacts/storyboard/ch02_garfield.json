@@ -1,0 +1,47 @@
+{
+  "chapter_id": "ch02_garfield",
+  "chapter_index": 1,
+  "title_display": "Garfield, 1881",
+  "year_range": [1881],
+  "duration_s": 60,
+  "vo_start_offset_in_master_s": 60,
+  "geography": { "map_extent_id": "dc_urban", "primary_anchor_id": "baltimore_depot" },
+  "incoming_state": { "basemap_tier": "urban", "active_pins": ["ford_theatre"], "year_display": 1865 },
+  "outgoing_state": { "basemap_tier": "urban", "active_pins": ["baltimore_depot"], "year_display": 1881 },
+  "phases": [
+    {
+      "phase_id": "ph01_approach",
+      "phase_kind": "approach",
+      "duration_s": 30,
+      "beats": [
+        {
+          "beat_id": "b01_card",
+          "intent": "Introduce Garfield at the depot.",
+          "start_anchor": { "phrase": "july second", "fallback_absolute_s": 2.0 },
+          "end_anchor": { "phrase": "the depot", "fallback_absolute_s": 12.0 },
+          "layers": [
+            { "layer": "L4", "primitive": "character_card", "asset_id": "garfield_portrait", "params": { "text": "James A Garfield", "name": "James A Garfield" } },
+            { "layer": "L2", "primitive": "pin_drop", "anchor_id": "baltimore_depot" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "ph02_dive",
+      "phase_kind": "story_dive",
+      "duration_s": 30,
+      "beats": [
+        {
+          "beat_id": "b02_dive",
+          "intent": "The shooting at the station.",
+          "start_anchor": { "phrase": "two shots", "fallback_absolute_s": 14.0 },
+          "end_anchor": { "phrase": "he fell", "fallback_absolute_s": 28.0 },
+          "layers": [
+            { "layer": "L6", "primitive": "story_dive", "asset_id": "depot_interior" },
+            { "layer": "L0", "primitive": "sfx_accent" }
+          ]
+        }
+      ]
+    }
+  ]
+}

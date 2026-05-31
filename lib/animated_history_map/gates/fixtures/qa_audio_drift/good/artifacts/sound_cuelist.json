@@ -1,0 +1,42 @@
+{
+  "cues": [
+    {
+      "id": "m01_nocturne_bed",
+      "category": "music",
+      "asset": "music/nocturne_bed_loop.wav",
+      "t_in": 0.0,
+      "t_out": 16.0
+    },
+    {
+      "id": "s02_pistol_cock",
+      "category": "sfx",
+      "asset": "sfx/flintlock_cock.wav",
+      "t_in": 10.70,
+      "t_out": 11.20,
+      "anchor_phrase": "raised a pistol"
+    },
+    {
+      "id": "s03_misfire_snap",
+      "category": "sfx",
+      "asset": "sfx/flintlock_misfire_snap.wav",
+      "t_in": 11.95,
+      "t_out": 12.80,
+      "anchor_phrase": "the weapon misfired"
+    },
+    {
+      "id": "m02_dread_swell",
+      "category": "music",
+      "asset": "music/low_dread_swell.wav",
+      "t_in": 15.40,
+      "t_out": 16.0,
+      "anchor_phrase": "fell silent"
+    },
+    {
+      "id": "a07_wind_over_capital",
+      "category": "ambient",
+      "asset": "ambient/cold_wind_soft.wav",
+      "t_in": 0.5,
+      "t_out": 16.0
+    }
+  ]
+}

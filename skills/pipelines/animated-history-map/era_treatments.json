@@ -1,0 +1,50 @@
+{
+  "$comment": "Era-appropriate transformative-treatment presets for the animated-history-map (maps) channel. The maps channel is NOT Midnight Magnates noir — each video's grade + frame derive from the SUBJECT'S era/culture (see memory video_specific_coloring). These presets REUSE the shared clip_treatment engine (tools/clip_treatment/): every `filter` is a real recipe in tools/clip_treatment/filters.py, every `audio` is a real recipe in tools/clip_treatment/audio_recipes.py, every `frame` is either one of the 8 approved frames or an era frame HTML shipped beside the engine in tools/clip_treatment/frames/. DO NOT duplicate the engine — call ClipTreatment(operation=apply_filter|apply_audio|wrap_in_frame).",
+
+  "selection_rule": "Pick the era preset whose [year_min, year_max] window contains the asset's source year AND whose culture matches the subject. If no preset fits, propose a new one (new frame HTML beside the engine + a row here) rather than defaulting to MM noir.",
+
+  "presets": {
+    "lincoln_1865": {
+      "label": "American Civil War / 1865 parchment",
+      "year_min": 1855,
+      "year_max": 1880,
+      "culture": "us_civil_war",
+      "subjects": ["abraham_lincoln", "john_wilkes_booth", "fords_theatre", "petersen_house", "1865"],
+      "video_filter": "sepia_archive",
+      "image_filter": "sepia_archive",
+      "audio": "pitch_up_1st",
+      "frame": "civil-war-portrait",
+      "frame_html": "tools/clip_treatment/frames/frame-civil-war-portrait.html",
+      "rationale": "1865 has NO film and NO recorded audio, so any third-party media is a still engraving/photo (Currier & Ives, Gardner) or a modern reenactment clip. sepia_archive (desaturated, warm-shifted, grainy) reads period-true; the aged-parchment Civil-War frame (oval gilt mat, foxed paper, telegraph-bar caption slot) matches 1865 print culture. tv-vintage CRT scanlines on an 1865 engraving would read anachronistic / AI-slop (clip-treatments.md period rule). Use grade_cyan_orange/noir frames ONLY for modern-era maps videos, never for 1865.",
+      "caption_slot": "telegraph_bar_bottom"
+    },
+
+    "gilded_age_1880_1905": {
+      "label": "Gilded Age / early-broadcast-adjacent",
+      "year_min": 1880,
+      "year_max": 1905,
+      "culture": "us_gilded_age",
+      "subjects": ["james_garfield", "william_mckinley", "pan_american_expo"],
+      "video_filter": "halftone_coarse",
+      "image_filter": "sepia_archive",
+      "audio": "pitch_up_1st",
+      "frame": "newspaper",
+      "rationale": "Garfield (1881) / McKinley (1901) sit in the newsprint-halftone era; coarse halftone on motion + sepia on stills + a period broadsheet frame. Still no synced film/audio, so treat as stills unless a verified reenactment clip is used.",
+      "caption_slot": "headline_top"
+    },
+
+    "broadcast_1945_1989": {
+      "label": "Mid-century broadcast (CRT-true)",
+      "year_min": 1945,
+      "year_max": 1989,
+      "culture": "us_broadcast",
+      "subjects": ["jfk", "kennedy", "zapruder", "rfk", "reagan_attempt_1981"],
+      "video_filter": "grade_cyan_orange",
+      "image_filter": "grade_crushed_warm",
+      "audio": "pitch_up_1st",
+      "frame": "tv-vintage",
+      "rationale": "The ONLY maps-channel era where tv-vintage CRT scanlines are period-true. JFK/Zapruder (1963), Reagan attempt (1981) are genuine broadcast/film, so the MM locked video default (grade_cyan_orange + tv-vintage) applies here. Earlier eras must NOT borrow this look.",
+      "caption_slot": "bottom_bar_headline"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "cues": [
+    {
+      "id": "pin_dc",
+      "kind": "pin_drop",
+      "start_s": 0.2,
+      "end_s": 1.9,
+      "layer": 5,
+      "anchor_px": 200,
+      "anchor_py": 120,
+      "anchor_color": [
+        235,
+        90,
+        70
+      ],
+      "bbox": {
+        "x": 192,
+        "y": 112,
+        "w": 16,
+        "h": 16
+      }
+    }
+  ]
+}

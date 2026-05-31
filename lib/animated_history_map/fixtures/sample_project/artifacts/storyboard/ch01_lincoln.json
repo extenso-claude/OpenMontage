@@ -1,0 +1,46 @@
+{
+  "chapter_id": "ch01_lincoln",
+  "chapter_index": 0,
+  "title_display": "Lincoln, 1865",
+  "year_range": [1865],
+  "duration_s": 60,
+  "vo_start_offset_in_master_s": 0,
+  "geography": { "map_extent_id": "dc_urban", "primary_anchor_id": "ford_theatre" },
+  "outgoing_state": { "basemap_tier": "urban", "active_pins": ["ford_theatre"], "year_display": 1865 },
+  "phases": [
+    {
+      "phase_id": "ph01_approach",
+      "phase_kind": "approach",
+      "duration_s": 30,
+      "beats": [
+        {
+          "beat_id": "b01_card",
+          "intent": "Introduce Lincoln at the theatre.",
+          "start_anchor": { "phrase": "april fourteenth", "fallback_absolute_s": 2.0 },
+          "end_anchor": { "phrase": "fords theatre", "fallback_absolute_s": 12.0 },
+          "layers": [
+            { "layer": "L4", "primitive": "character_card", "asset_id": "lincoln_portrait", "params": { "text": "Abraham Lincoln", "name": "Abraham Lincoln" } },
+            { "layer": "L2", "primitive": "pin_drop", "anchor_id": "ford_theatre" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "ph02_dive",
+      "phase_kind": "story_dive",
+      "duration_s": 30,
+      "beats": [
+        {
+          "beat_id": "b02_dive",
+          "intent": "Inside the presidential box.",
+          "start_anchor": { "phrase": "the box", "fallback_absolute_s": 14.0 },
+          "end_anchor": { "phrase": "a single shot", "fallback_absolute_s": 28.0 },
+          "layers": [
+            { "layer": "L6", "primitive": "story_dive", "asset_id": "ford_interior" },
+            { "layer": "L0", "primitive": "music_swell" }
+          ]
+        }
+      ]
+    }
+  ]
+}

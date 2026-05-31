@@ -1,0 +1,24 @@
+{
+  "assets": [
+    {
+      "id": "portrait_booth",
+      "path": "assets/portraits/john_wilkes_booth.png",
+      "category": "portrait",
+      "required": true,
+      "face_bbox": {"x": 105, "y": 80, "w": 190, "h": 215}
+    },
+    {
+      "id": "character_garfield_cutout",
+      "kind": "character_cutout",
+      "path": "assets/portraits/john_wilkes_booth.png",
+      "category": "sprite",
+      "required": true
+    },
+    {
+      "id": "map_basemap_dc",
+      "path": "assets/stock/dc_basemap.mp4",
+      "category": "stock",
+      "required": true
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "_note": "GOOD: every sfx EVENT ACCENT is audible — above the -40 LUFS floor and >=3 LU over the simultaneous bed (the music was ducked under it, never the VO). NO sfx is flagged subliminal. The only subliminal cue is a true AMBIENT bed (heartbeat texture), which is the one category allowed to be subliminal.",
+  "cues": [
+    {
+      "id": "m01_main_bed",
+      "category": "music",
+      "asset": "music/nocturne_bed_loop.wav",
+      "t_in": 0.0,
+      "t_out": 600.0,
+      "loudness_lufs": -23.0,
+      "bed_lufs_at": -23.0
+    },
+    {
+      "id": "s02_gunshot",
+      "category": "sfx",
+      "asset": "sfx/derringer_shot.wav",
+      "t_in": 51.56,
+      "t_out": 53.30,
+      "anchor_phrase": "fires once",
+      "alarming": false,
+      "loudness_lufs": -14.0,
+      "bed_lufs_at": -24.0
+    },
+    {
+      "id": "s04_carriage_door_thud",
+      "category": "sfx",
+      "asset": "sfx/carriage_door_thud.wav",
+      "t_in": 88.2,
+      "t_out": 89.0,
+      "alarming": false,
+      "loudness_lufs": -18.0,
+      "bed_lufs_at": -24.5
+    },
+    {
+      "id": "s17_pin_drop",
+      "category": "sfx",
+      "asset": "sfx/pin_drop.wav",
+      "t_in": 112.92,
+      "t_out": 113.55,
+      "anchor_phrase": "stops at",
+      "alarming": false,
+      "loudness_lufs": -17.0,
+      "bed_lufs_at": -22.0
+    },
+    {
+      "id": "s33_mantel_clock_tick",
+      "category": "sfx",
+      "asset": "sfx/mantel_clock_tick.wav",
+      "t_in": 912.0,
+      "t_out": 922.0,
+      "alarming": false,
+      "loudness_lufs": -33.0,
+      "bed_lufs_at": -38.5
+    },
+    {
+      "id": "a20_subliminal_heartbeat_bed",
+      "category": "ambient",
+      "asset": "ambient/heartbeat_sub_layer.wav",
+      "t_in": 410.0,
+      "t_out": 470.0,
+      "subliminal": true,
+      "loudness_lufs": -52.0,
+      "bed_lufs_at": -22.0
+    },
+    {
+      "id": "a07_wind_over_ruins",
+      "category": "ambient",
+      "asset": "ambient/wind_over_ruins_soft.wav",
+      "t_in": 642.0,
+      "t_out": 708.0,
+      "alarming": false,
+      "loudness_lufs": -41.0,
+      "bed_lufs_at": -22.0
+    }
+  ]
+}

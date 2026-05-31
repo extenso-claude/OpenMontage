@@ -1,0 +1,30 @@
+{
+  "project_id": "presidential_assassinations",
+  "video_title": "The Men Who Killed Presidents",
+  "target_duration_min": 22,
+  "map_posture": "canvas",
+  "camera_language": "continuous_drift",
+  "pacing_target": "broadcast",
+  "hook_engine": "rolling_payoff",
+  "palette_master": {
+    "basemap_filter": "noir",
+    "primary_accent": "#c8a24a",
+    "secondary_accent": "#4a6fa5",
+    "ui_dark": "#10141c",
+    "ui_light": "#e6e2d8"
+  },
+  "typography": {
+    "map_labels": { "family": "Cinzel", "weight": "500", "style": "normal", "transform": "uppercase" },
+    "ui_chrome": { "family": "Inter", "weight": "400" },
+    "year_stamp": { "family": "Cinzel", "weight": "700" }
+  },
+  "sprite_style": "noir_lithograph_silhouette",
+  "voice_persona": {
+    "provider": "inworld_tts_v2",
+    "voice_id": "ashley",
+    "delivery_mode": "stable",
+    "wpm_target": 145,
+    "caps_emphasis": "climactic_words_only",
+    "break_tags_after": "key_beats_and_chapter_ends"
+  }
+}

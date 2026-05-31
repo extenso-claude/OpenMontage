@@ -1,0 +1,5 @@
+{
+  "cues": [
+    {"id": "c1_ok", "kind": "character_card", "text": "Abraham Lincoln eighteen sixty five", "start_s": 2.0, "end_s": 9.0}
+  ]
+}

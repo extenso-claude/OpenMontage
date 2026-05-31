@@ -1,0 +1,53 @@
+{
+  "chapter_id": "ch02_escape",
+  "chapter_index": 2,
+  "duration_s": 40,
+  "outgoing_state": {
+    "basemap_tier": "regional",
+    "active_pins": ["pin_fords_theatre", "pin_garrett_barn"],
+    "year_display": 1865
+  },
+  "phases": [
+    {
+      "phase_id": "p_escape",
+      "phase_kind": "aftermath",
+      "duration_s": 40,
+      "beats": [
+        {
+          "beat_id": "b_flight",
+          "intent": "Booth's escape route — a rider icon travels the polyline.",
+          "start_anchor": {"phrase": "Booth fled"},
+          "end_anchor": {"phrase": "Maryland night"},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "migration_arrow",
+              "params": {
+                "path": ["pin_fords_theatre", "pin_surratt_tavern", "pin_garrett_barn"],
+                "label": "Booth's flight south",
+                "character_icon": {"asset_id": "icon_booth_horseback", "label": "Booth"}
+              }
+            }
+          ]
+        },
+        {
+          "beat_id": "b_armies",
+          "intent": "Abstract troop summary — legitimately icon-less, with a documented rationale.",
+          "start_anchor": {"phrase": "Far to the west"},
+          "end_anchor": {"phrase": "the frontier"},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "migration_arrow",
+              "params": {
+                "path": ["pin_st_louis", "pin_frontier"],
+                "label": "westward army movement",
+                "no_icon_rationale": "abstract aggregate troop-movement summary, not a single named traveler"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

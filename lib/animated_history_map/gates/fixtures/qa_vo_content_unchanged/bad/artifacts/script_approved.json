@@ -1,0 +1,16 @@
+{
+  "segments": [
+    {
+      "id": "seg_01_hook",
+      "text": "On a humid morning in eighteen sixty-five, the President of the United States walked into a theater he would never walk out of."
+    },
+    {
+      "id": "seg_02_setup",
+      "text": "Washington was a city of mud and ambition. The war had ended only days before, and the streets were still loud with celebration."
+    },
+    {
+      "id": "seg_03_turn",
+      "text": "But one man in the crowd was not celebrating. He had a plan, a pistol, and a grievance that history would never forget."
+    }
+  ]
+}

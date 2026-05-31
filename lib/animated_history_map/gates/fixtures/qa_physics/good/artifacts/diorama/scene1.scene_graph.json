@@ -1,0 +1,21 @@
+{
+  "scene_id": "good_scene",
+  "diorama_version": "animated_history_map.diorama@0.1.0",
+  "bounds": { "w": 1920, "h": 1080 },
+  "fps": 4,
+  "props": [
+    { "id": "theatre", "layer": 1, "walkable": false, "footprint": { "x": 800, "y": 380, "w": 300, "h": 200 } }
+  ],
+  "actors": [
+    {
+      "id": "buggy", "layer": 2, "facing": "right", "facing_follows_path": true, "can_overlap": [],
+      "net_dx": 600, "net_dy": 0,
+      "samples": [
+        { "t": 0.0, "cx": 200, "cy": 740, "bbox": { "x": 160, "y": 700, "w": 80, "h": 80 }, "heading_deg": 0.0 },
+        { "t": 1.0, "cx": 400, "cy": 740, "bbox": { "x": 360, "y": 700, "w": 80, "h": 80 }, "heading_deg": 0.0 },
+        { "t": 2.0, "cx": 600, "cy": 740, "bbox": { "x": 560, "y": 700, "w": 80, "h": 80 }, "heading_deg": 0.0 },
+        { "t": 3.0, "cx": 800, "cy": 740, "bbox": { "x": 760, "y": 700, "w": 80, "h": 80 }, "heading_deg": 0.0 }
+      ]
+    }
+  ]
+}

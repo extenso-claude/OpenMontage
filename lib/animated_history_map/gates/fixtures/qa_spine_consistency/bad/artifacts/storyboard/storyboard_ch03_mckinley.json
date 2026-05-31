@@ -1,0 +1,44 @@
+{
+  "chapter_id": "ch03_mckinley",
+  "chapter_index": 3,
+  "duration_s": 100,
+  "incoming_state": {
+    "basemap_tier": "continental",
+    "active_pins": ["pin_baltimore_potomac"],
+    "year_display": 1881
+  },
+  "outgoing_state": {
+    "basemap_tier": "continental",
+    "active_pins": ["pin_temple_of_music"],
+    "year_display": 1901
+  },
+  "phases": [
+    {
+      "phase_id": "p_return",
+      "phase_kind": "return_to_map",
+      "duration_s": 6,
+      "beats": [
+        {
+          "beat_id": "b_spine",
+          "intent": "Spine map but the roster DRIFTED: pin_kennedy dropped, pin_mckinley moved.",
+          "start_anchor": {"phrase": "the map again", "fallback_absolute_s": 90.0},
+          "end_anchor": {"phrase": "one more", "fallback_absolute_s": 96.0},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "all_presidents_pins",
+              "params": {
+                "current": "pin_mckinley",
+                "pins": [
+                  {"id": "pin_lincoln", "anchor_id": "anc_dc"},
+                  {"id": "pin_garfield", "anchor_id": "anc_dc"},
+                  {"id": "pin_mckinley", "anchor_id": "anc_dc"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

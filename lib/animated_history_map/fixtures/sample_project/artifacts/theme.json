@@ -1,0 +1,10 @@
+{
+  "project_id": "sample",
+  "palette_master": {
+    "basemap_filter": "noir",
+    "primary_accent": "#c9a84c",
+    "secondary_accent": "#b41e1e",
+    "ui_dark": "#0a0f1a",
+    "ui_light": "#f5f0e4"
+  }
+}

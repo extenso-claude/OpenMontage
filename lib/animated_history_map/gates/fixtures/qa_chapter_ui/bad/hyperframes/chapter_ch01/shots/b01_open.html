@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="animated_history_map.compiler@0.1.0" />
+<style>
+  html,body{ width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+             background:#efe6cf; color:#2b2015; font-family:Georgia,serif; }
+  #root{ position:absolute; inset:0; }
+  .clip{ position:absolute; box-sizing:border-box; }
+  /* top-right subject badge — persistent narrative UI */
+  #subject_badge{ position:absolute; right:40px; top:40px; width:312px; height:96px; opacity:0; }
+  .badge-plate{ position:absolute; inset:0; background:rgba(243,236,216,0.94);
+                border:1px solid #20406a; border-radius:4px;
+                display:flex; align-items:center; gap:14px; padding:10px 14px; }
+  .badge-name{ font-size:23px; color:#2b2015; }
+  /* BUG: the chapter marker is baked into the badge during a narrative map shot */
+  .badge-sub{ font-style:italic; font-size:15px; color:#5a4a36; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01_b01_open"
+     data-start="0" data-duration="24.000" data-width="1920" data-height="1080" data-track-index="0">
+  <div id="subject_badge" class="clip" data-start="1.200" data-duration="22.800" data-track-index="10">
+    <div class="badge-plate">
+      <div>
+        <div class="badge-name">Abraham Lincoln</div>
+        <div class="badge-sub">Chapter II</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  /* GSAP fades the badge UP and holds it for the whole shot. */
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#subject_badge", { opacity: 0 }, { opacity: 1, duration: 0.7 }, 1.2);
+  window.__timelines["ch01_b01_open"] = tl;
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "chapter_id": "ch01_lincoln",
+  "chapter_index": 1,
+  "duration_s": 70,
+  "outgoing_state": {
+    "basemap_tier": "continental",
+    "active_pins": ["pin_fords_theatre"],
+    "year_display": 1865
+  },
+  "phases": [
+    {
+      "phase_id": "p_climax",
+      "phase_kind": "climax",
+      "duration_s": 8,
+      "beats": [
+        {
+          "beat_id": "b_shot",
+          "start_anchor": {"phrase": "the shot", "fallback_absolute_s": 2.0},
+          "end_anchor": {"phrase": "fell silent", "fallback_absolute_s": 6.0},
+          "layers": [
+            {"layer": "L9", "primitive": "gunshot_freeze"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p_return",
+      "phase_kind": "return_to_map",
+      "duration_s": 6,
+      "beats": [
+        {
+          "beat_id": "b_spine",
+          "intent": "Return to the all-presidents map; Lincoln in color, the rest dimmed.",
+          "start_anchor": {"phrase": "one pin", "fallback_absolute_s": 60.0},
+          "end_anchor": {"phrase": "not yet drawn", "fallback_absolute_s": 66.0},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "all_presidents_pins",
+              "params": {
+                "current": "pin_lincoln",
+                "pins": [
+                  {"id": "pin_lincoln", "anchor_id": "anc_dc"},
+                  {"id": "pin_garfield", "anchor_id": "anc_dc"},
+                  {"id": "pin_mckinley", "anchor_id": "anc_buffalo"},
+                  {"id": "pin_kennedy", "anchor_id": "anc_dallas"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

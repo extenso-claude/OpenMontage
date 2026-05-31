@@ -1,0 +1,60 @@
+{
+  "chapter_id": "ch00_cold_open",
+  "chapter_index": 0,
+  "title_display": "Cold Open",
+  "year_range": [1835],
+  "duration_s": 45,
+  "incoming_state": {
+    "basemap_tier": "off_map",
+    "active_pins": [],
+    "dimmed_pins": [],
+    "year_display": "",
+    "weather": null,
+    "time_of_day": "night",
+    "active_ui_furniture": [],
+    "chapter_subject_id": null
+  },
+  "outgoing_state": {
+    "basemap_tier": "continental",
+    "active_pins": ["pin_washington_dc"],
+    "dimmed_pins": [],
+    "year_display": 1835,
+    "weather": "clear",
+    "time_of_day": "night",
+    "active_ui_furniture": ["year_card"],
+    "chapter_subject_id": "subj_jackson"
+  },
+  "phases": [
+    {
+      "phase_id": "p0_cold_open",
+      "phase_kind": "cold_open",
+      "duration_s": 20,
+      "beats": [
+        {
+          "beat_id": "b0",
+          "start_anchor": {"phrase": "eighteen thirty five"},
+          "end_anchor": {"phrase": "the capital"},
+          "layers": [
+            {"layer": "L0", "primitive": "basemap_swap"},
+            {"layer": "L4", "primitive": "pin_drop", "anchor_id": "pin_washington_dc"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p1_map_breath",
+      "phase_kind": "map_breath",
+      "duration_s": 25,
+      "beats": [
+        {
+          "beat_id": "b1",
+          "start_anchor": {"phrase": "a young nation"},
+          "end_anchor": {"phrase": "watching"},
+          "layers": [
+            {"layer": "L10", "primitive": "year_card_update"}
+          ]
+        }
+      ]
+    }
+  ]
+}

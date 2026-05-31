@@ -1,0 +1,24 @@
+{
+  "cues": [
+    {
+      "id": "pin_capital",
+      "kind": "pin_drop",
+      "start_s": 0.3,
+      "end_s": 1.9,
+      "layer": 5,
+      "bbox": {
+        "x": 150,
+        "y": 110,
+        "w": 24,
+        "h": 24
+      }
+    },
+    {
+      "id": "label_orphan",
+      "kind": "map_label",
+      "start_s": 0.4,
+      "end_s": 1.5,
+      "layer": 7
+    }
+  ]
+}

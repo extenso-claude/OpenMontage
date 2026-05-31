@@ -1,0 +1,37 @@
+{
+  "project_id": "fixture-asset-sourcing-bad",
+  "assets": [
+    {
+      "asset_id": "lincoln_portrait",
+      "category": "portrait",
+      "path": "assets/portraits/portrait_lincoln.jpg",
+      "copyright_status": "pd",
+      "license": "PD (pre-1929)",
+      "note": "BUG: only PD/free space searched — copyright space never searched, no generation reason",
+      "sourcing": {
+        "searched_free": true,
+        "queries": ["lincoln portrait"]
+      }
+    },
+    {
+      "asset_id": "booth_escape_route_map_inset",
+      "category": "illustration",
+      "path": "assets/scenes/booth_escape_generated.png",
+      "copyright_status": "generated",
+      "treatment": "sepia_archive",
+      "frame": "civil-war-portrait",
+      "note": "BUG: generated with no documented generation_reason",
+      "sourcing": {
+        "searched_free": true,
+        "searched_copyright": true
+      }
+    },
+    {
+      "asset_id": "gunshot_sfx",
+      "category": "sfx",
+      "path": "assets/sfx/derringer_shot.wav",
+      "copyright_status": "free_license",
+      "license": "CC0 (Freesound)"
+    }
+  ]
+}

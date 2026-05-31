@@ -1,0 +1,33 @@
+{
+  "project_id": "fixture-clip-treatment-bad",
+  "assets": [
+    {
+      "asset_id": "lincoln_portrait",
+      "category": "portrait",
+      "path": "assets/portraits/portrait_lincoln.jpg",
+      "copyright_status": "pd",
+      "license": "PD (pre-1929)",
+      "sourcing": {"searched_free": true, "searched_copyright": true}
+    },
+    {
+      "asset_id": "booth_leap_raw",
+      "category": "illustration",
+      "path": "assets/scenes/booth_leap_RAW.jpg",
+      "copyright_status": "potential_copyright",
+      "original_source": "Currier & Ives reproduction, 1865",
+      "note": "BUG: raw third-party image with no treatment + no frame — ships copyright exposure",
+      "sourcing": {"searched_free": true, "searched_copyright": true}
+    },
+    {
+      "asset_id": "reagan_attempt_clip",
+      "category": "archival_video",
+      "path": "assets/archival_video/reagan_1981.mp4",
+      "copyright_status": "copyright",
+      "treatment": "vintage_glow_9000",
+      "frame": "tv-vintage",
+      "audio_role": "vo_pause",
+      "note": "BUG: treatment names a recipe that does not exist in the engine -> never actually applied; also kept audio has no recipe",
+      "sourcing": {"searched_free": true, "searched_copyright": true}
+    }
+  ]
+}

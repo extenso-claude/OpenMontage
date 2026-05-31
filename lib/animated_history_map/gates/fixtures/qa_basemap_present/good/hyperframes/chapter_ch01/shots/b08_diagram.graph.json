@@ -1,0 +1,10 @@
+{
+  "scene_id": "ch01_b08_diagram",
+  "ground": {
+    "width": 1920,
+    "height": 1080,
+    "bg": "#e9dec0"
+  },
+  "props": [],
+  "actors": []
+}

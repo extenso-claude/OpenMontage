@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "animated_history_map_storyboard.schema.json",
+  "title": "Animated History Map — Chapter Storyboard",
+  "type": "object",
+  "required": ["chapter_id", "duration_s", "phases", "outgoing_state"],
+  "properties": {
+    "chapter_id": { "type": "string", "pattern": "^ch\\d{2}_[a-z0-9_]+$" },
+    "chapter_index": { "type": "integer", "minimum": 0 },
+    "title_display": { "type": "string" },
+    "year_range": { "type": "array", "items": { "type": "integer" }, "minItems": 1, "maxItems": 2 },
+    "duration_s": { "type": "number", "minimum": 30, "maximum": 300 },
+    "vo_start_offset_in_master_s": { "type": "number", "minimum": 0 },
+    "geography": {
+      "type": "object",
+      "required": ["map_extent_id", "primary_anchor_id"],
+      "properties": {
+        "map_extent_id": { "type": "string" },
+        "primary_anchor_id": { "type": "string" },
+        "secondary_anchor_ids": { "type": "array", "items": { "type": "string" } },
+        "scene_anchor_id": { "type": ["string", "null"] },
+        "building_anchor_id": { "type": ["string", "null"] }
+      }
+    },
+    "incoming_state": { "$ref": "#/definitions/phase_state" },
+    "outgoing_state": { "$ref": "#/definitions/phase_state" },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": { "$ref": "#/definitions/phase" }
+    }
+  },
+  "definitions": {
+    "phase_state": {
+      "type": "object",
+      "description": "Cross-phase continuity contract.",
+      "required": ["basemap_tier", "active_pins", "year_display"],
+      "properties": {
+        "basemap_tier": { "enum": ["continental", "regional", "urban", "scene", "building", "off_map"] },
+        "active_pins": { "type": "array", "items": { "type": "string" } },
+        "dimmed_pins": { "type": "array", "items": { "type": "string" } },
+        "year_display": { "type": ["integer", "string"] },
+        "weather": { "type": ["string", "null"] },
+        "time_of_day": { "type": ["string", "null"] },
+        "active_ui_furniture": { "type": "array", "items": { "type": "string" } },
+        "chapter_subject_id": { "type": ["string", "null"] }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "required": ["phase_id", "phase_kind", "duration_s", "beats"],
+      "properties": {
+        "phase_id": { "type": "string" },
+        "phase_kind": {
+          "enum": [
+            "cold_open",
+            "map_breath",
+            "approach",
+            "characters",
+            "story_dive",
+            "climax",
+            "aftermath",
+            "return_to_map",
+            "transition",
+            "chapter_intro",
+            "chapter_outro"
+          ]
+        },
+        "duration_s": { "type": "number", "minimum": 2 },
+        "beats": { "type": "array", "items": { "$ref": "#/definitions/beat" } }
+      }
+    },
+    "beat": {
+      "type": "object",
+      "required": ["beat_id", "start_anchor", "end_anchor", "layers"],
+      "properties": {
+        "beat_id": { "type": "string" },
+        "intent": { "type": "string", "description": "Human-readable description of what this beat does narratively." },
+        "shot_tier": { "enum": ["macro_map", "medium_diorama", "micro_offmap"], "description": "Which render tier this beat is authored in." },
+        "hero": { "type": "boolean", "default": false, "description": "True for a hero shot. A hero shot (or any medium_diorama) MUST carry a render_directive (qa_render_directive)." },
+        "render_directive": { "type": "string", "description": "Path (relative to project root) to this beat's Render Directive .md. MANDATORY for hero / medium_diorama beats; this is the rich per-shot brief handed to the animator agent." },
+        "start_anchor": { "$ref": "#/definitions/anchor" },
+        "end_anchor": { "$ref": "#/definitions/anchor" },
+        "experimental": {
+          "type": "boolean",
+          "default": false,
+          "description": "True for non-enum'd primitives (max 2 per phase). Requires rationale field if true."
+        },
+        "experimental_rationale": { "type": "string" },
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/layer_action" }
+        },
+        "transitions_out": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/transition" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["experimental"], "properties": { "experimental": { "const": true } } },
+          "then": { "required": ["experimental_rationale"] }
+        }
+      ]
+    },
+    "anchor": {
+      "type": "object",
+      "required": ["phrase"],
+      "properties": {
+        "phrase": { "type": "string", "description": "Exact Whisper word or phrase from VO." },
+        "offset_ms": { "type": "integer", "default": 0, "description": "Milliseconds before/after the anchor word." },
+        "fallback_absolute_s": { "type": "number", "description": "Hard fallback if anchor phrase can't be located in transcript." }
+      }
+    },
+    "layer_action": {
+      "type": "object",
+      "required": ["layer", "primitive"],
+      "properties": {
+        "layer": {
+          "enum": ["L0","L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11"],
+          "description": "Z-order layer. See design intel doc Section 15."
+        },
+        "primitive": {
+          "enum": [
+            "pin_drop","pin_dimming","pin_pulse_breath","all_presidents_pins",
+            "map_sprite","character_card","character_card_pop",
+            "migration_arrow","front_line_curve","glow_region","territory_wash","trench_line",
+            "concept_stamp","label_cluster","time_stamp","map_label",
+            "weather_overlay","cloud_drift","idle_atmosphere","time_of_day","paper_texture","vignette_pulse",
+            "camera_push_in","camera_pull_out","camera_pan","camera_orbit","camera_hold",
+            "basemap_swap","panel_to_pin_morph","chapter_wipe","time_shift","year_sweep","connection_line",
+            "story_dive","panel_archival","panel_illustration","panel_quote","parallax_layers","clip_archival","document_overlay",
+            "source_citation","etymology_card","concept_diagram",
+            "flash_burst","bullet_trail","slow_zoom_terror","clock_freeze","gunshot_freeze","mournful_hold","dust_settle",
+            "chapter_subject_badge_swap","year_card_update","chapter_timeline_update","structure_tree_node_fill","vignette_breath",
+            "polygon_fill","polygon_clear","region_label_in","region_label_out",
+            "music_swell","music_drop","sfx_accent","sfx_ambient_in","sfx_ambient_out",
+            "experimental"
+          ]
+        },
+        "anchor_id": { "type": "string", "description": "References geography.json anchor by ID." },
+        "asset_id": { "type": "string", "description": "References asset_manifest.json by ID." },
+        "params": {
+          "type": "object",
+          "description": "Primitive-specific parameters; compiler enforces shape. Notable shapes: migration_arrow.params.character_icon = {asset_id|icon|sprite|label, ...} declares a transportation/character icon that travels the route polyline (a rider on horseback), and migration_arrow.params.no_icon_rationale (string) documents a deliberately icon-less route (qa_migration_icon). all_presidents_pins.params = {pins:[{id, anchor_id|lat+lon, president?}], current:<pin id>} renders the recurring all-presidents spine map with `current` in color and the rest dimmed; the roster + positions must be consistent across chapters (qa_spine_consistency)."
+        },
+        "drift_budget_ms": { "type": "integer", "description": "Overrides default per-cue-type budget." }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "required": ["layer", "kind", "duration_s"],
+      "properties": {
+        "layer": { "enum": ["L0","L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11"] },
+        "kind": {
+          "enum": [
+            "fade_in","fade_out","crossfade","hard_cut","panel_to_pin_morph","basemap_swap",
+            "chapter_wipe","camera_pull_out","camera_push_in","year_sweep","none"
+          ]
+        },
+        "duration_s": { "type": "number", "minimum": 0, "maximum": 3 }
+      }
+    }
+  }
+}

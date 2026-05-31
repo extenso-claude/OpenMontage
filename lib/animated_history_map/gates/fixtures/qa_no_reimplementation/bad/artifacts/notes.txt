@@ -1,0 +1,8 @@
+Scratch math for placing the DC pin (THIS IS THE ANTI-PATTERN — re-implementing the
+projection instead of using lib.mapkit_subjects):
+
+  HALF_CIRCUMFERENCE = 20037508.34
+  x = lon / 180.0 * HALF_CIRCUMFERENCE
+  y = HALF_CIRCUMFERENCE * log(tan((90 + lat) * PI / 360)) / PI
+
+Pixels must come from lib.mapkit_subjects.latlon_to_local_pixel, never this.
