@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; }
+      body {
+        background:
+          radial-gradient(ellipse at center, #1a120a 0%, #050402 100%);
+        font-family: "Times New Roman", serif;
+      }
+      /* Bookshelves left + right */
+      .shelf {
+        position: absolute;
+        top: 0; bottom: 0; width: 480px;
+        background:
+          repeating-linear-gradient(180deg, transparent 0px, transparent 220px, rgba(0,0,0,0.5) 220px, rgba(0,0,0,0.5) 224px);
+      }
+      .shelf.left { left: 0; }
+      .shelf.right { right: 0; transform: scaleX(-1); }
+      /* Books */
+      .book {
+        position: absolute;
+        bottom: 0;
+        width: 38px; height: 200px;
+        border-radius: 4px 4px 0 0;
+        box-shadow: -3px 0 5px rgba(0,0,0,0.4);
+      }
+      .book::before {
+        content: ""; position: absolute; left: 6px; right: 6px; top: 30px; height: 4px;
+        background: rgba(180, 140, 80, 0.6); border-radius: 2px;
+      }
+      .book::after {
+        content: ""; position: absolute; left: 6px; right: 6px; top: 90px; height: 30px;
+        background: rgba(180, 140, 80, 0.4); border-radius: 2px;
+      }
+      /* Lectern + photo */
+      .lectern {
+        position: absolute;
+        left: 50%; top: 130px;
+        transform: translateX(-50%);
+        width: 920px; height: 700px;
+        background:
+          linear-gradient(180deg, #4a3018 0%, #2a1808 100%);
+        border-radius: 8px;
+        box-shadow:
+          0 40px 100px rgba(0,0,0,0.85),
+          inset 0 6px 14px rgba(255,200,140,0.10);
+        padding: 60px;
+      }
+      .photo {
+        position: relative;
+        width: 100%; height: 100%;
+        background: #1a1612;
+        border: 14px solid #c8a060;
+        overflow: hidden;
+        box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
+      }
+      .photo video { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) contrast(1.05); }
+      /* Reading lamp pool */
+      .lamp-pool {
+        position: absolute; left: 50%; top: 0;
+        transform: translateX(-50%);
+        width: 1400px; height: 1000px;
+        background: radial-gradient(ellipse 800px 400px at center 30%, rgba(255,200,120,0.15) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .quote {
+        position: absolute;
+        bottom: 100px; left: 50%; transform: translateX(-50%);
+        font-style: italic;
+        font-size: 32px;
+        color: rgba(220, 200, 160, 0.9);
+        background: rgba(0,0,0,0.55);
+        padding: 16px 40px;
+        max-width: 1100px; text-align: center;
+        opacity: 0;
+      }
+      .quote::before { content: "\"" ; margin-right: 6px; }
+      .quote::after  { content: "\"" ; margin-left: 6px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="frame_library" data-width="1920" data-height="1080">
+      <div class="shelf left">
+        <div class="book" style="left:30px; bottom:0; background:linear-gradient(180deg,#6a3010,#4a2008); height:210px"></div>
+        <div class="book" style="left:80px; bottom:0; background:linear-gradient(180deg,#1a3a5a,#0a2040); height:195px"></div>
+        <div class="book" style="left:130px; bottom:0; background:linear-gradient(180deg,#3a1a40,#1a0a20); height:200px"></div>
+        <div class="book" style="left:180px; bottom:0; background:linear-gradient(180deg,#5a3010,#3a1808); height:215px"></div>
+        <div class="book" style="left:230px; bottom:0; background:linear-gradient(180deg,#1a4030,#0a2018); height:190px"></div>
+        <div class="book" style="left:30px; bottom:225px; background:linear-gradient(180deg,#3a1a30,#1a0a18); height:200px"></div>
+        <div class="book" style="left:80px; bottom:225px; background:linear-gradient(180deg,#5a3a10,#3a2208); height:205px"></div>
+        <div class="book" style="left:130px; bottom:225px; background:linear-gradient(180deg,#1a3050,#0a1830); height:215px"></div>
+        <div class="book" style="left:180px; bottom:225px; background:linear-gradient(180deg,#4a1020,#2a0810); height:190px"></div>
+        <div class="book" style="left:230px; bottom:225px; background:linear-gradient(180deg,#1a4a5a,#0a2030); height:200px"></div>
+      </div>
+      <div class="shelf right">
+        <div class="book" style="left:30px; bottom:0; background:linear-gradient(180deg,#4a3010,#2a1808); height:200px"></div>
+        <div class="book" style="left:80px; bottom:0; background:linear-gradient(180deg,#1a2040,#0a1020); height:215px"></div>
+        <div class="book" style="left:130px; bottom:0; background:linear-gradient(180deg,#5a3a40,#3a1a20); height:195px"></div>
+        <div class="book" style="left:180px; bottom:0; background:linear-gradient(180deg,#3a4a10,#1a2008); height:210px"></div>
+        <div class="book" style="left:230px; bottom:0; background:linear-gradient(180deg,#5a1010,#3a0808); height:200px"></div>
+        <div class="book" style="left:30px; bottom:225px; background:linear-gradient(180deg,#1a3a40,#0a2018); height:205px"></div>
+        <div class="book" style="left:80px; bottom:225px; background:linear-gradient(180deg,#4a3010,#2a1808); height:195px"></div>
+        <div class="book" style="left:130px; bottom:225px; background:linear-gradient(180deg,#1a1a3a,#0a0a20); height:210px"></div>
+        <div class="book" style="left:180px; bottom:225px; background:linear-gradient(180deg,#5a3030,#3a1010); height:200px"></div>
+        <div class="book" style="left:230px; bottom:225px; background:linear-gradient(180deg,#2a5050,#103030); height:215px"></div>
+      </div>
+      <div class="lamp-pool"></div>
+      <div class="lectern">
+        <div class="photo">
+          <video id="clip" class="clip" src="../assets/clips/clip_demo.mp4"
+                 data-start="0" data-duration="5" data-track-index="0" data-has-audio="false"
+                 muted playsinline></video>
+        </div>
+      </div>
+      <div class="quote">Some doors, once opened, can never quite be closed again.</div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(".lamp-pool", { opacity: 0 }, { opacity: 1, duration: 1.5 }, 0);
+        tl.fromTo(".lectern", { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.9 }, 0.3);
+        tl.fromTo(".quote", { opacity: 0, y: 20 }, { opacity: 0.92, y: 0, duration: 0.7 }, 1.8);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["frame_library"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

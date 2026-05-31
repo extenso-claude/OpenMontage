@@ -1,0 +1,189 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"clip_src","type":"string","label":"Clip source","default":"../assets/clips/clip_demo.mp4"},
+    {"id":"headline","type":"string","label":"Headline","default":"IRAN ERUPTS"},
+    {"id":"subhead","type":"string","label":"Subhead","default":"Mossadegh Held Under House Arrest as Shah Returns to Throne"},
+    {"id":"date","type":"string","label":"Date","default":"AUGUST 20, 1953"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      body {
+        font-family: "Times New Roman", Georgia, serif;
+        background:
+          radial-gradient(ellipse at center, #2a2519 0%, #050403 100%);
+      }
+
+      .desk-shadow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 60%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.7) 100%);
+      }
+
+      .newspaper {
+        position: absolute;
+        top: 40px; left: 50%;
+        width: 1480px;
+        height: 1020px;
+        transform: translateX(-50%) rotate(-2deg);
+        background: #f0e8d2;
+        padding: 60px 80px;
+        box-shadow:
+          0 30px 80px rgba(0, 0, 0, 0.7),
+          inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+      }
+
+      .nameplate {
+        text-align: center;
+        font-size: 64px;
+        font-weight: bold;
+        letter-spacing: 4px;
+        border-top: 4px solid #1a1612;
+        border-bottom: 1px solid #1a1612;
+        padding: 14px 0 12px 0;
+        color: #1a1612;
+        font-variant: small-caps;
+      }
+
+      .meta-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        letter-spacing: 2px;
+        padding: 8px 0;
+        border-bottom: 2px solid #1a1612;
+        color: #1a1612;
+      }
+
+      .headline {
+        margin-top: 40px;
+        font-size: 92px;
+        font-weight: bold;
+        line-height: 1.0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #1a1612;
+        text-align: center;
+        opacity: 0;
+      }
+
+      .subhead {
+        margin-top: 16px;
+        font-size: 30px;
+        font-style: italic;
+        text-align: center;
+        color: #2a2517;
+        letter-spacing: 0.5px;
+        opacity: 0;
+      }
+
+      .photo-block {
+        margin-top: 30px;
+        position: relative;
+        width: 100%;
+        height: 520px;
+        background: #000;
+        border: 4px solid #1a1612;
+        overflow: hidden;
+      }
+
+      .photo-block video {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        filter: contrast(1.08) saturate(0.7) brightness(0.95);
+      }
+
+      .photo-block::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(0deg, transparent 0px, transparent 1px, rgba(0,0,0,0.04) 1px, rgba(0,0,0,0.04) 2px);
+        pointer-events: none;
+      }
+
+      .caption {
+        margin-top: 12px;
+        font-size: 16px;
+        font-style: italic;
+        text-align: center;
+        color: #3a342a;
+        letter-spacing: 0.5px;
+        opacity: 0;
+      }
+
+      /* Halftone speckle overlay over the whole paper */
+      .speckle {
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(circle at 20% 10%, rgba(0, 0, 0, 0.04) 1px, transparent 2px),
+          radial-gradient(circle at 70% 30%, rgba(0, 0, 0, 0.05) 1px, transparent 2px),
+          radial-gradient(circle at 30% 70%, rgba(0, 0, 0, 0.04) 1px, transparent 2px),
+          radial-gradient(circle at 85% 80%, rgba(0, 0, 0, 0.05) 1px, transparent 2px);
+        background-size: 600px 600px, 500px 500px, 450px 450px, 700px 700px;
+        pointer-events: none;
+        mix-blend-mode: multiply;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="frame_newspaper"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="desk-shadow"></div>
+      <div class="newspaper">
+        <div class="nameplate">THE TEHRAN HERALD</div>
+        <div class="meta-row">
+          <span id="date-l"></span>
+          <span>EVENING EDITION</span>
+          <span>PRICE: 5¢</span>
+        </div>
+        <div class="headline" id="headline"></div>
+        <div class="subhead" id="subhead"></div>
+        <div class="photo-block">
+          <video
+            id="clip"
+            class="clip"
+            src="../assets/clips/clip_demo.mp4"
+            data-start="0"
+            data-duration="5"
+            data-track-index="0"
+            data-has-audio="false"
+            muted
+            playsinline
+          ></video>
+        </div>
+        <div class="caption">Above: scene from the streets of Tehran, August 19th.</div>
+        <div class="speckle"></div>
+      </div>
+
+      <script>
+        const vars = window.__hyperframes.getVariables();
+        const dur = vars.clip_duration || 5;
+        document.getElementById("date-l").textContent = vars.date;
+        document.getElementById("headline").textContent = vars.headline;
+        document.getElementById("subhead").textContent = vars.subhead;
+
+        const tl = gsap.timeline({ paused: true });
+        // Newspaper slides up
+        tl.fromTo(".newspaper", { y: 80, rotate: -8, scale: 0.9 }, { y: 0, rotate: -2, scale: 1, duration: 0.7, ease: "back.out(1.3)" }, 0);
+        tl.fromTo("#headline", { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.5 }, 0.6);
+        tl.fromTo("#subhead", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.9);
+        tl.fromTo(".caption", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.5);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["frame_newspaper"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; }
+      body {
+        background:
+          radial-gradient(ellipse at 50% 90%, #0d0a08 0%, #050302 100%);
+      }
+      .room {
+        position: absolute; inset: 0;
+        background:
+          linear-gradient(180deg, #110d08 0%, #050402 50%, #1a130a 100%);
+      }
+      /* Perspective table — trapezoid via clip-path */
+      .table {
+        position: absolute;
+        bottom: -100px; left: 50%;
+        transform: translateX(-50%);
+        width: 1700px; height: 700px;
+        background:
+          linear-gradient(180deg, #6b4e2a 0%, #3a2a18 80%);
+        clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+        box-shadow:
+          inset 0 -30px 80px rgba(0,0,0,0.7),
+          inset 0 0 0 1px rgba(255,200,140,0.12);
+      }
+      /* Chair silhouettes */
+      .chair {
+        position: absolute;
+        background: linear-gradient(180deg, #1a0f0a 0%, #050302 100%);
+        border-radius: 16px 16px 6px 6px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      }
+      .chair.l1 { left: 13%; bottom: 60px; width: 110px; height: 280px; transform: rotate(-12deg); }
+      .chair.l2 { left: 7%;  bottom: 30px; width: 130px; height: 300px; transform: rotate(-15deg); }
+      .chair.r1 { right: 13%; bottom: 60px; width: 110px; height: 280px; transform: rotate(12deg); }
+      .chair.r2 { right: 7%;  bottom: 30px; width: 130px; height: 300px; transform: rotate(15deg); }
+      .chair.head {
+        left: 50%; transform: translateX(-50%);
+        bottom: 540px;
+        width: 100px; height: 220px;
+        background: linear-gradient(180deg, #2a1810 0%, #050302 100%);
+      }
+      /* Subject image — frame at head of table */
+      .subject-frame {
+        position: absolute;
+        left: 50%; top: 80px;
+        transform: translateX(-50%);
+        width: 760px; height: 540px;
+        background: #1a1612;
+        border: 14px solid #c8a04a;
+        box-shadow:
+          0 18px 50px rgba(0,0,0,0.8),
+          inset 0 0 40px rgba(0,0,0,0.6),
+          0 0 60px rgba(255,180,80,0.15);
+        overflow: hidden;
+      }
+      .subject-frame video {
+        width: 100%; height: 100%; object-fit: cover;
+        filter: contrast(1.05) sepia(0.15);
+      }
+      /* Hanging lamp pool */
+      .lamp-pool {
+        position: absolute;
+        left: 50%; top: 80px;
+        transform: translateX(-50%);
+        width: 1200px; height: 600px;
+        background: radial-gradient(ellipse 600px 300px at center top, rgba(255,200,120,0.20) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .nameplate {
+        position: absolute;
+        left: 50%; top: 640px;
+        transform: translateX(-50%);
+        font-family: serif;
+        font-size: 38px;
+        color: rgba(220, 200, 160, 0.85);
+        letter-spacing: 8px;
+        background: rgba(0,0,0,0.5);
+        padding: 8px 26px;
+        border-top: 2px solid rgba(220,200,160,0.4);
+        border-bottom: 2px solid rgba(220,200,160,0.4);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="frame_boardroom" data-width="1920" data-height="1080">
+      <div class="room"></div>
+      <div class="table"></div>
+      <div class="chair l1"></div>
+      <div class="chair l2"></div>
+      <div class="chair r1"></div>
+      <div class="chair r2"></div>
+      <div class="chair head"></div>
+      <div class="lamp-pool"></div>
+      <div class="subject-frame">
+        <video id="clip" class="clip" src="../assets/clips/clip_demo.mp4"
+               data-start="0" data-duration="5" data-track-index="0" data-has-audio="false"
+               muted playsinline></video>
+      </div>
+      <div class="nameplate">— THE PRINCIPAL —</div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(".lamp-pool", { opacity: 0 }, { opacity: 1, duration: 1.2 }, 0);
+        tl.fromTo(".subject-frame", { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8 }, 0.2);
+        tl.fromTo(".chair", { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.08 }, 0.5);
+        tl.fromTo(".nameplate", { opacity: 0, y: 20 }, { opacity: 0.92, y: 0, duration: 0.5 }, 1.8);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["frame_boardroom"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

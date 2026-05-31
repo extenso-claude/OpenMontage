@@ -37,59 +37,78 @@ from tools.base_tool import (
 # Inworld TTS-2 hard cap per request body. Anything longer must be chunked.
 _MAX_CHARS_PER_REQUEST = 2000
 
-# Sentence-boundary splitter. We split AFTER one of these delimiters when
-# followed by whitespace, keeping the delimiter attached to the left chunk.
-# Order matters slightly (em-dash first so we don't double-match), but the
-# regex below alternates with non-overlapping matches.
-_SENTENCE_BOUNDARY_RE = re.compile(r"(?<=[.!?—])\s+|\n+")
+# Inworld parses SSML <break time="..."/> tags from the text (max 20 per
+# request). Two hard requirements when splitting an over-long request:
+#   (a) PRESERVE line breaks — newlines are the channel's natural-pause cue and
+#       DO create pauses on Inworld (team-verified). The previous splitter
+#       folded every newline into a single space, silently nullifying them.
+#   (b) Never sever a <break .../> (or any <...>) tag at a chunk boundary.
+_MAX_BREAKS_PER_REQUEST = 20
+
+# Capture the separator so it survives into the chunk. Match spaces/tabs AFTER
+# sentence punctuation (NOT \s, so a newline is never folded into a space) and
+# newline runs separately — both are kept verbatim.
+_BOUNDARY_RE = re.compile(r"((?<=[.!?—])[ \t]+|\n+)")
+_TAG_SPAN_RE = re.compile(r"<[^>]*>")
+_BREAK_TAG_RE = re.compile(r"<\s*break\b[^>]*>", re.IGNORECASE)
 
 
-def _split_into_sentences(text: str) -> list[str]:
-    """Split text on sentence-ish boundaries: `. `, `? `, `! `, em-dash + space, newlines."""
-    parts = [p.strip() for p in _SENTENCE_BOUNDARY_RE.split(text) if p and p.strip()]
-    return parts
+def _count_breaks(text: str) -> int:
+    """Number of SSML <break> tags in a request body."""
+    return len(_BREAK_TAG_RE.findall(text))
+
+
+def _safe_cut(s: str, cut: int) -> int:
+    """Move a proposed cut index back so it never lands inside a <...> tag."""
+    for m in _TAG_SPAN_RE.finditer(s):
+        if m.start() < cut < m.end():
+            return m.start()
+    return cut
 
 
 def _chunk_text(text: str, max_chars: int = _MAX_CHARS_PER_REQUEST) -> list[str]:
-    """Pack sentences into chunks <= max_chars without splitting a sentence.
+    """Pack text into <= max_chars chunks, PRESERVING internal line breaks and
+    never cutting inside a <...> tag.
 
-    If a single sentence is itself longer than max_chars (e.g. a comma-heavy
-    paragraph with no terminal punctuation), we hard-split it on the last
-    whitespace before the cap.
+    A single chunk under the cap is returned verbatim (newlines intact). Longer
+    text is packed at sentence/paragraph boundaries, keeping each boundary's
+    actual separator (space or newline) attached so the pause survives.
     """
     text = text.strip()
     if len(text) <= max_chars:
         return [text]
 
-    sentences = _split_into_sentences(text)
+    # Split into (segment + its trailing separator) tokens so the newline/space
+    # that follows a sentence stays attached and survives into the chunk.
+    parts = _BOUNDARY_RE.split(text)
+    tokens: list[str] = []
+    i = 0
+    while i < len(parts):
+        seg = parts[i] or ""
+        sep = parts[i + 1] if i + 1 < len(parts) else ""
+        if seg or sep:
+            tokens.append(seg + sep)
+        i += 2
+
     chunks: list[str] = []
     buf = ""
-
-    def _flush() -> None:
-        nonlocal buf
-        if buf.strip():
-            chunks.append(buf.strip())
-        buf = ""
-
-    for sentence in sentences:
-        # Hard-split oversized single sentences.
-        while len(sentence) > max_chars:
-            head = sentence[:max_chars]
-            cut = head.rfind(" ")
-            if cut == -1:
-                # No whitespace at all - just hard cut.
-                cut = max_chars
-            _flush()
-            chunks.append(sentence[:cut].strip())
-            sentence = sentence[cut:].strip()
-
-        # Would adding this sentence (plus a space) exceed the cap?
-        if buf and len(buf) + 1 + len(sentence) > max_chars:
-            _flush()
-        buf = sentence if not buf else f"{buf} {sentence}"
-
-    _flush()
-    return chunks
+    for tok in tokens:
+        # Hard-split a token longer than the cap — at a space, never inside a tag.
+        while len(tok) > max_chars:
+            raw = tok.rfind(" ", 0, max_chars)
+            cut = max(1, _safe_cut(tok, raw if raw > 0 else max_chars))
+            if buf.strip():
+                chunks.append(buf.rstrip())
+            buf = ""
+            chunks.append(tok[:cut].rstrip())
+            tok = tok[cut:].lstrip(" ")
+        if buf and len(buf) + len(tok) > max_chars:
+            chunks.append(buf.rstrip())
+            buf = ""
+        buf += tok
+    if buf.strip():
+        chunks.append(buf.rstrip())
+    return [c for c in chunks if c.strip()]
 
 
 class InworldTTS(BaseTool):
@@ -172,8 +191,8 @@ class InworldTTS(BaseTool):
                 "type": "number",
                 "default": 1.0,
                 "minimum": 0.5,
-                "maximum": 2.0,
-                "description": "Speaking rate multiplier.",
+                "maximum": 1.5,
+                "description": "Speaking rate multiplier (Inworld TTS-2 caps at 1.5).",
             },
             "language": {
                 "type": "string",
@@ -352,6 +371,20 @@ class InworldTTS(BaseTool):
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         chunks = _chunk_text(text)
+
+        # Inworld silently drops <break> tags past the 20th per request; fail
+        # loudly rather than ship a VO with vanished pauses.
+        for ci, chunk in enumerate(chunks):
+            nb = _count_breaks(chunk)
+            if nb > _MAX_BREAKS_PER_REQUEST:
+                return ToolResult(
+                    success=False,
+                    error=(
+                        f"chunk {ci} has {nb} <break> tags (Inworld caps at "
+                        f"{_MAX_BREAKS_PER_REQUEST}/request; extras are silently dropped). "
+                        "Split this segment or use fewer explicit breaks."
+                    ),
+                )
 
         # Fast path: single chunk -> write directly.
         if len(chunks) == 1:

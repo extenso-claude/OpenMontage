@@ -1,0 +1,88 @@
+{
+  "$comment": "Locked production defaults for the clip-treatment toolkit. Read this from the workflow so the 'always use X' rules can't drift. Updated 2026-05-20 per user. Companion docs: shared sheet 1v1pI_x1s7ermhkG1ryNxhNxelDQuliCM6l-3hHRwwY8 (Animation Library tab), memory copyright_treatment_defaults.md.",
+
+  "rules": {
+    "copyrighted_video": {
+      "filter": "grade_cyan_orange",
+      "audio_treatment": "pitch_up_1st",
+      "must_wrap_in_frame": true,
+      "rationale": "User-locked default 2026-05-20: broadcast cyan-orange + frame composite is the production-blessed transformative treatment for third-party video footage. If the clip's audio is kept (vo-pause workflow), apply pitch_up_1st to the audio track in parallel."
+    },
+    "copyrighted_image": {
+      "filter": "grade_crushed_warm",
+      "must_wrap_in_frame": true,
+      "rationale": "User-locked default 2026-05-20: archival crushed-warm grade + frame composite is the production-blessed transformative treatment for third-party still images."
+    },
+    "copyrighted_audio": {
+      "filter": "pitch_up_1st",
+      "rationale": "User-locked default 2026-05-21 (after sampling pitch_down 1-2st and pitch_up 1-3st): pitch_up_1st is the production default for any potentially copyrighted audio. Applies to standalone third-party audio AND to a video clip's audio track when we keep it (vo-pause workflow). loudnorm to -14 LUFS is auto-appended by apply_audio_treatment().",
+      "applies_to": ["standalone_audio", "video_clip_audio_track_when_kept"]
+    },
+    "character_image": {
+      "filter": null,
+      "must_wrap_in_frame": false,
+      "route_to": "character_cards",
+      "rationale": "Character images use the main flow's character-card system, NOT the copyright wrap rule. The copyright wrap is for B-roll / event / document / scene imagery."
+    }
+  },
+
+  "approved_frames": [
+    {
+      "name": "tv-vintage",
+      "channel_affinity": ["midnight_magnates", "grandpa_huxley"],
+      "best_situation": "retro broadcast / archival news feel",
+      "html_path": "hyperframes_project/compositions/frame-tv-vintage.html"
+    },
+    {
+      "name": "dossier",
+      "channel_affinity": ["midnight_magnates"],
+      "best_situation": "classified document reveal",
+      "html_path": "hyperframes_project/compositions/frame-dossier.html"
+    },
+    {
+      "name": "newspaper",
+      "channel_affinity": ["midnight_magnates", "grandpa_huxley"],
+      "best_situation": "breaking news / headline moment",
+      "html_path": "hyperframes_project/compositions/frame-newspaper.html"
+    },
+    {
+      "name": "fireside",
+      "channel_affinity": ["grandpa_huxley"],
+      "best_situation": "cozy storytelling / mantel photograph",
+      "html_path": "hyperframes_project/compositions/frame-fireside.html"
+    },
+    {
+      "name": "surveillance",
+      "channel_affinity": ["midnight_magnates"],
+      "best_situation": "spy / intelligence / 'we are watching'",
+      "html_path": "hyperframes_project/compositions/frame-surveillance.html"
+    },
+    {
+      "name": "boardroom",
+      "channel_affinity": ["midnight_magnates"],
+      "best_situation": "power meeting / executive reveal",
+      "html_path": "hyperframes_project/compositions/frame-boardroom.html"
+    },
+    {
+      "name": "magnifier",
+      "channel_affinity": ["midnight_magnates", "grandpa_huxley"],
+      "best_situation": "investigation / 'look closer' / evidence",
+      "html_path": "hyperframes_project/compositions/frame-magnifier.html"
+    },
+    {
+      "name": "library",
+      "channel_affinity": ["grandpa_huxley"],
+      "best_situation": "historical knowledge / quiet reflection",
+      "html_path": "hyperframes_project/compositions/frame-library.html"
+    }
+  ],
+
+  "experimental_frames_note": "The 8 approved frames above are the production-blessed library. Other frames in hyperframes_project/compositions/ (frame-wax-letter, frame-ledger, frame-telex, frame-projector, frame-pocket-watch, frame-radio-broadcast, frame-globe, frame-photo-album, frame-candlelight, frame-train-window, frame-map-route) are experimental — usable but not the production default. Add to approved_frames here AND the shared sheet (rows 22+) once a frame is blessed.",
+
+  "experimental_audio_pending_review": {
+    "$comment": "Pitch-shift recipes — 2026-05-21 user evaluation outcome: pitch_up_1st promoted to production default (see rules.copyrighted_audio above). The others remain available but are not the locked default.",
+    "samples_dir": "~/Downloads/Pitch Samples/",
+    "still_available_as_alternatives": ["pitch_down_2st", "pitch_down_1st", "pitch_up_2st", "pitch_up_3st", "pitch_down_4st", "pitch_down_6st"],
+    "library_path": "projects/iran-us-history-clip-toolkit-v1/toolkit/audio_treatments/audio_library.py"
+  }
+}

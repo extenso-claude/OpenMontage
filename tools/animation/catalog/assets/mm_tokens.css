@@ -1,0 +1,95 @@
+/* Midnight Magnates noir tokens — used by every composition */
+:root {
+  --mm-deep:       #080c16;
+  --mm-night:      #11182a;
+  --mm-gold:       #c9a84c;
+  --mm-gold-dim:   #8c6e23;
+  --mm-red:        #b41e1e;
+  --mm-blue:       #4a6fa5;
+  --mm-cream:      #f5f0e4;
+  --mm-cream-dim:  #e8e0d0;
+  --mm-stormgray:  #6a6a7a;
+
+  --mm-serif:      'Georgia', 'Times New Roman', serif;
+  --mm-display:    'Playfair Display', 'Georgia', serif;
+  --mm-mono:       'Courier New', monospace;
+}
+
+/* Universal base — every comp gets this */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: var(--mm-deep); color: var(--mm-cream); font-family: var(--mm-serif); overflow: hidden; }
+
+/* Sleep-safe defaults — never pure white, never raw black */
+img { display: block; user-select: none; -webkit-user-drag: none; }
+svg { display: block; }
+
+/* ===== Global noir grade — pushes ALL Recraft assets toward MM mood ===== */
+/* Applied to every asset-bearing class. Keep filters identical so stacks composite cleanly. */
+.noir-grade,
+.hero, .hero-flat, .layer-d, .actor, .layer.bg, .layer.mid,
+.doc, .still, .pan-img, .stack-img, .morph-img, .seq-img {
+  filter:
+    brightness(0.68)
+    saturate(0.55)
+    contrast(1.16)
+    sepia(0.08)
+    hue-rotate(-10deg);
+}
+/* Line-art images (style #1, #2) keep their crisp pen lines — no filter */
+.lineart { filter: none !important; }
+
+/* Per-band noir tint overlay — placed AS A SIBLING after the image */
+.noir-tint {
+  position: absolute; inset: 0; pointer-events: none;
+  background: rgba(10, 20, 40, 0.22);
+  mix-blend-mode: multiply;
+}
+
+/* Stronger version for "deep night" scenes */
+.noir-tint-deep {
+  position: absolute; inset: 0; pointer-events: none;
+  background: rgba(8, 12, 22, 0.38);
+  mix-blend-mode: multiply;
+}
+
+/* Decorative — grain overlay (use as <div class="grain"></div>) */
+.grain {
+  position: absolute; inset: 0; pointer-events: none; mix-blend-mode: overlay; opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+/* Decorative — vignette */
+.vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(8,12,22,0.6) 100%);
+}
+
+/* Decorative — light shaft (single warm key) */
+.light-shaft {
+  position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen;
+  background: radial-gradient(ellipse 1200px 800px at 30% -10%, rgba(201,168,76,0.18), transparent 65%);
+}
+
+/* Document reveal — paper aging + texture */
+.paper-noir {
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.04), transparent 60%),
+    linear-gradient(180deg, #d8cda8 0%, #c4b387 50%, #a89461 100%);
+  position: relative;
+}
+.paper-noir::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='r'><feTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/><feColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.48  0 0 0 0 0.30  0 0 0 0.25 0'/></filter><rect width='100%' height='100%' filter='url(%23r)'/></svg>");
+  opacity: 0.5; mix-blend-mode: multiply;
+}
+
+/* Scene base — fills full 1920x1080 canvas */
+.scene {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  background: var(--mm-deep);
+  overflow: hidden;
+}
+
+/* "Letter-box" framing — subtle dark border for premium feel */
+.letterbox-tint { box-shadow: inset 0 0 200px rgba(8,12,22,0.6); }

@@ -1,0 +1,204 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"clip_src","type":"string","label":"Clip source path","default":"../assets/clips/clip_demo.mp4"},
+    {"id":"clip_duration","type":"number","label":"Clip duration (s)","default":5},
+    {"id":"label_text","type":"string","label":"Bottom label","default":"TEHRAN — 1953"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      body {
+        background:
+          radial-gradient(circle at 50% 45%, #1a1411 0%, #0a0807 70%, #050403 100%);
+        font-family: "Times New Roman", Georgia, serif;
+      }
+
+      /* Wood-grain cabinet around the screen */
+      .cabinet {
+        position: absolute;
+        left: 240px;
+        top: 110px;
+        width: 1440px;
+        height: 860px;
+        background:
+          linear-gradient(160deg, #4a2f1d 0%, #6b4327 30%, #4a2f1d 65%, #2e1c10 100%);
+        border-radius: 24px;
+        box-shadow:
+          inset 0 8px 16px rgba(255, 220, 180, 0.08),
+          inset 0 -12px 30px rgba(0, 0, 0, 0.6),
+          0 30px 80px rgba(0, 0, 0, 0.7);
+        padding: 60px;
+      }
+
+      /* CRT-shaped screen — slight pillow */
+      .crt-screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 60px / 32px;
+        background: #000;
+        overflow: hidden;
+        box-shadow:
+          inset 0 0 60px rgba(0, 0, 0, 0.9),
+          inset 0 0 18px rgba(120, 90, 40, 0.25);
+      }
+
+      .crt-screen video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Slight pillow distortion */
+        transform: scale(1.04);
+      }
+
+      /* Scanline overlay (subtle) */
+      .scanlines {
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.18) 0px,
+          rgba(0, 0, 0, 0.18) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        pointer-events: none;
+        mix-blend-mode: multiply;
+      }
+
+      /* Soft vignette inside the tube */
+      .tube-vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at center,
+          transparent 55%,
+          rgba(0, 0, 0, 0.55) 100%
+        );
+        pointer-events: none;
+      }
+
+      /* Glass reflection highlight */
+      .glass-highlight {
+        position: absolute;
+        top: 0; left: 0;
+        width: 60%; height: 38%;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+        pointer-events: none;
+        border-radius: 60px / 32px;
+      }
+
+      /* Channel label */
+      .channel-label {
+        position: absolute;
+        top: 40px;
+        right: 60px;
+        font-family: "Courier New", monospace;
+        font-size: 28px;
+        color: rgba(255, 200, 120, 0.85);
+        letter-spacing: 4px;
+        text-shadow: 0 0 8px rgba(255, 160, 60, 0.4);
+        opacity: 0;
+      }
+
+      /* Bottom location label */
+      .location-label {
+        position: absolute;
+        bottom: 28px;
+        left: 60px;
+        font-family: "Courier New", monospace;
+        font-size: 32px;
+        color: rgba(255, 220, 180, 0.85);
+        letter-spacing: 6px;
+        text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.4);
+        padding: 6px 14px;
+        border-left: 3px solid rgba(255, 80, 30, 0.7);
+        opacity: 0;
+      }
+
+      /* Knobs */
+      .knob {
+        position: absolute;
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 30% 30%, #b08158, #5c3a20 70%);
+        box-shadow: inset 0 -3px 6px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.5);
+      }
+      .knob.k1 { bottom: 28px; right: 90px; }
+      .knob.k2 { bottom: 28px; right: 30px; }
+
+      /* Power LED */
+      .led {
+        position: absolute;
+        bottom: 44px; left: 50%; transform: translateX(-50%);
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #ff5526;
+        box-shadow: 0 0 10px #ff5526, 0 0 20px rgba(255, 85, 38, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="frame_tv_vintage"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="cabinet">
+        <div class="crt-screen">
+          <video
+            id="clip"
+            class="clip"
+            src="../assets/clips/clip_demo.mp4"
+            data-start="0"
+            data-duration="5"
+            data-track-index="0"
+            data-has-audio="false"
+            muted
+            playsinline
+          ></video>
+          <div class="scanlines"></div>
+          <div class="tube-vignette"></div>
+          <div class="glass-highlight"></div>
+          <div class="channel-label" id="channel">REC ● 12</div>
+          <div class="location-label" id="loc"></div>
+        </div>
+        <div class="knob k1"></div>
+        <div class="knob k2"></div>
+        <div class="led"></div>
+      </div>
+
+      <script>
+        const vars = window.__hyperframes.getVariables();
+        const dur = vars.clip_duration || 5;
+        document.getElementById("loc").textContent = vars.label_text;
+
+        // Animation: labels fade in, slight cabinet sway, screen breathing
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#channel", { opacity: 0 }, { opacity: 0.85, duration: 0.6 }, 0.4);
+        tl.fromTo("#loc", { opacity: 0, x: -20 }, { opacity: 0.9, x: 0, duration: 0.7 }, 0.8);
+        tl.fromTo(".crt-screen video", { scale: 1.04 }, { scale: 1.08, duration: dur, ease: "none" }, 0);
+
+        // Subtle scanline breathing — finite count based on duration
+        const breathCycle = 1.0; // seconds per breath cycle
+        const breathRepeats = Math.max(0, Math.floor(dur / breathCycle) - 1);
+        tl.to(".scanlines", { opacity: 0.95, duration: 0.5, repeat: breathRepeats, yoyo: true, ease: "sine.inOut" }, 0);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["frame_tv_vintage"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

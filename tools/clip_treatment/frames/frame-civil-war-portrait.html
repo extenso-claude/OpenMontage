@@ -1,0 +1,168 @@
+<!doctype html>
+<!--
+  Era frame: civil-war-portrait  (animated-history-map channel, Lincoln 1865 theme)
+  Aged-parchment oval-mat frame for 1865-era third-party stills/clips. Drops into the
+  shared clip_treatment engine unchanged: it exposes the same clip_src default
+  ("../assets/clips/clip_demo.mp4") and the same <video ... data-duration="5"> contract
+  the engine's _wrap_in_frame substitutes. Caption goes in the telegraph-bar slot
+  (clip-treatments.md NO-EXTRA-CHYRON: the frame's own slot carries year/context).
+  NOT noir — this is the era-appropriate alternative to tv-vintage for pre-photography
+  /pre-broadcast material (CRT scanlines on an 1865 engraving read anachronistic).
+-->
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"clip_src","type":"string","label":"Clip source","default":"../assets/clips/clip_demo.mp4"},
+    {"id":"caption","type":"string","label":"Telegraph-bar caption","default":"WASHINGTON CITY — APRIL 14, 1865"},
+    {"id":"placard","type":"string","label":"Brass placard","default":"FORD'S THEATRE"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      body {
+        font-family: Georgia, "Times New Roman", serif;
+        /* Warm parchment-lit room, NOT moonlit noir. */
+        background: radial-gradient(ellipse at 50% 42%, #3a2f1d 0%, #14100a 78%, #0a0805 100%);
+      }
+
+      /* Foxed-paper mat the portrait sits on. */
+      .mat {
+        position: absolute;
+        top: 70px; left: 50%;
+        width: 1320px; height: 940px;
+        transform: translateX(-50%);
+        background:
+          radial-gradient(circle at 28% 18%, rgba(120, 92, 48, 0.18) 0 3px, transparent 4px),
+          radial-gradient(circle at 74% 64%, rgba(120, 92, 48, 0.15) 0 3px, transparent 4px),
+          radial-gradient(circle at 50% 88%, rgba(120, 92, 48, 0.12) 0 2px, transparent 3px),
+          linear-gradient(160deg, #e7d8b4 0%, #d8c49a 55%, #c9b384 100%);
+        background-size: 540px 540px, 480px 480px, 600px 600px, 100% 100%;
+        box-shadow: 0 36px 90px rgba(0,0,0,0.72), inset 0 0 120px rgba(80,58,28,0.35);
+        border: 2px solid #6e5630;
+      }
+
+      /* Oval gilt opening that holds the period image/clip. */
+      .oval {
+        position: absolute;
+        top: 96px; left: 50%;
+        width: 920px; height: 700px;
+        transform: translateX(-50%);
+        border-radius: 50% / 50%;
+        overflow: hidden;
+        background: #000;
+        border: 14px solid;
+        border-image: linear-gradient(145deg, #b8902f 0%, #e8cf86 28%, #8a6a22 60%, #d8bd6e 100%) 1;
+        box-shadow:
+          inset 0 0 60px rgba(0,0,0,0.65),
+          0 8px 26px rgba(0,0,0,0.55);
+        opacity: 0;
+      }
+
+      .oval video {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        /* Period-true desaturated warm cast at the frame level too (belt + suspenders
+           with the sepia_archive grade applied on the media by the engine). */
+        filter: sepia(0.45) contrast(1.05) saturate(0.7) brightness(0.95);
+      }
+
+      /* Soft vignette inside the oval. */
+      .oval::after {
+        content: "";
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(20,12,4,0.55) 100%);
+        pointer-events: none;
+      }
+
+      /* Engraved brass placard under the oval (period print culture). */
+      .placard {
+        position: absolute;
+        top: 812px; left: 50%;
+        transform: translateX(-50%);
+        min-width: 420px;
+        text-align: center;
+        padding: 12px 40px;
+        background: linear-gradient(180deg, #b8902f 0%, #8a6a22 100%);
+        color: #221a08;
+        font-variant: small-caps;
+        letter-spacing: 4px;
+        font-size: 30px;
+        border: 2px solid #6e5630;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,240,200,0.4);
+        opacity: 0;
+      }
+
+      /* Telegraph-bar caption slot (this is the chyron — no stacked lower-third). */
+      .telegraph {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 64px;
+        display: flex; align-items: center; justify-content: center;
+        background: linear-gradient(180deg, #1c160c 0%, #0a0805 100%);
+        border-top: 2px solid #6e5630;
+        color: #e7d8b4;
+        letter-spacing: 6px;
+        font-size: 24px;
+        font-variant: small-caps;
+        opacity: 0;
+      }
+
+      /* Whole-frame grain so the parchment never reads as flat digital. */
+      .grain {
+        position: absolute; inset: 0;
+        background-image:
+          radial-gradient(circle at 15% 20%, rgba(0,0,0,0.05) 1px, transparent 2px),
+          radial-gradient(circle at 65% 35%, rgba(0,0,0,0.06) 1px, transparent 2px),
+          radial-gradient(circle at 40% 75%, rgba(0,0,0,0.05) 1px, transparent 2px);
+        background-size: 520px 520px, 440px 440px, 600px 600px;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="frame_civil_war_portrait"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="mat"></div>
+      <div class="oval">
+        <video
+          id="clip"
+          class="clip"
+          src="../assets/clips/clip_demo.mp4"
+          data-start="0"
+          data-duration="5"
+          data-track-index="0"
+          data-has-audio="false"
+          muted
+          playsinline
+        ></video>
+      </div>
+      <div class="placard" id="placard"></div>
+      <div class="telegraph" id="telegraph"></div>
+      <div class="grain"></div>
+
+      <script>
+        const vars = window.__hyperframes.getVariables();
+        document.getElementById("placard").textContent = vars.placard || "";
+        document.getElementById("telegraph").textContent = vars.caption || "";
+
+        const tl = gsap.timeline({ paused: true });
+        // Oval irises in like an unveiled portrait.
+        tl.fromTo(".oval", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out" }, 0);
+        tl.fromTo(".placard", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5 }, 0.6);
+        tl.fromTo(".telegraph", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.9);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["frame_civil_war_portrait"] = tl;
+      </script>
+    </div>
+  </body>
+</html>

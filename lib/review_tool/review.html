@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Iran Hook Review</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #0a0d18; color: #f5f0e4; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; }
+  body { display: grid; grid-template-columns: 1fr 480px; height: 100vh; }
+
+  .stage { display: flex; flex-direction: column; background: #050811; min-width: 0; }
+  .video-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 0; }
+  video {
+    width: 100%; max-width: 100%; max-height: 100%;
+    background: #000; box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    border-radius: 4px;
+  }
+  .controls { padding: 14px 24px 22px 24px; border-top: 1px solid #1a2235; background: #08101e; }
+  .timeline {
+    width: 100%; height: 6px; background: #1a2235; border-radius: 3px;
+    position: relative; cursor: pointer; margin-bottom: 10px;
+  }
+  .timeline-fill { position: absolute; top: 0; left: 0; height: 100%; background: #c9a84c; border-radius: 3px; }
+  .timeline-marker {
+    position: absolute; top: -6px; width: 4px; height: 18px;
+    background: #d72020; transform: translateX(-50%); cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(215,32,32,0.6);
+  }
+  .timeline-marker:hover { background: #f55050; }
+  .control-row {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 13px; color: #c9a84c;
+    font-variant-numeric: tabular-nums;
+  }
+  .btn {
+    background: #1a2235; border: 1px solid #2a3550; color: #f5f0e4;
+    padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px;
+    font-family: inherit; letter-spacing: 0.05em;
+  }
+  .btn:hover { background: #2a3550; }
+  .btn-primary { background: #c9a84c; color: #050811; border-color: #c9a84c; font-weight: 700; }
+  .btn-primary:hover { background: #e0bd5c; }
+  .btn-danger { background: #b41e1e; border-color: #b41e1e; }
+  .btn-danger:hover { background: #d02323; }
+  .time-display { font-size: 14px; letter-spacing: 0.05em; min-width: 110px; }
+
+  .panel { background: #0e1422; border-left: 1px solid #1a2235; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+  .panel-head { padding: 18px 22px 14px 22px; border-bottom: 1px solid #1a2235; }
+  .panel-head h1 { font-size: 16px; margin: 0 0 4px 0; letter-spacing: 0.10em; color: #c9a84c; font-weight: 700; }
+  .panel-head .meta { font-size: 11px; color: #8a98b5; letter-spacing: 0.06em; }
+  .panel-actions { padding: 14px 22px; border-bottom: 1px solid #1a2235; display: flex; gap: 8px; }
+  .comments {
+    flex: 1; overflow-y: auto; padding: 12px 16px;
+  }
+  .empty {
+    text-align: center; padding: 60px 24px; color: #6a7a99; font-size: 13px; line-height: 1.6;
+  }
+  .empty kbd {
+    display: inline-block; background: #1a2235; border: 1px solid #2a3550;
+    padding: 2px 7px; border-radius: 3px; font-size: 11px; color: #e8dcc0;
+    margin: 0 3px; font-family: ui-monospace, "SF Mono", monospace;
+  }
+  .comment {
+    background: #14182a; border: 1px solid #1f2740; border-radius: 6px;
+    padding: 12px; margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+  .comment:hover { border-color: #2a3550; }
+  .comment-thumb {
+    width: 100%; aspect-ratio: 16/9; background: #050811;
+    border-radius: 3px; margin-bottom: 10px; overflow: hidden;
+    cursor: pointer; display: block;
+  }
+  .comment-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .comment-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .comment-time { color: #c9a84c; font-weight: 700; font-size: 13px; font-variant-numeric: tabular-nums; cursor: pointer; }
+  .comment-time:hover { text-decoration: underline; }
+  .comment-sev {
+    font-size: 10px; padding: 2px 8px; border-radius: 10px;
+    letter-spacing: 0.10em; font-weight: 700;
+  }
+  .sev-must  { background: #b41e1e; color: #fff; }
+  .sev-shoul { background: #c9a84c; color: #050811; }
+  .sev-nit   { background: #2a3550; color: #c9a84c; }
+  .comment textarea {
+    width: 100%; background: #050811; border: 1px solid #2a3550; color: #f5f0e4;
+    padding: 8px; border-radius: 3px; font-family: inherit; font-size: 13px;
+    resize: vertical; min-height: 50px; line-height: 1.4;
+  }
+  .comment-foot { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+  .sev-select {
+    background: #050811; border: 1px solid #2a3550; color: #f5f0e4;
+    padding: 4px 8px; border-radius: 3px; font-size: 11px; font-family: inherit;
+  }
+  .del-btn {
+    background: transparent; border: none; color: #6a7a99; cursor: pointer;
+    padding: 4px 6px; margin-left: auto; font-size: 16px;
+  }
+  .del-btn:hover { color: #b41e1e; }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    padding: 14px 20px; border-radius: 4px;
+    background: #2a3550; color: #f5f0e4; font-size: 13px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.6);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.ok { background: #2a5a30; }
+  .toast.err { background: #5a2020; }
+
+  .shot-tag {
+    display: inline-block; background: #c9a84c; color: #050811;
+    padding: 1px 6px; border-radius: 2px; font-size: 10px;
+    font-weight: 700; letter-spacing: 0.08em; margin-right: 6px;
+  }
+
+  /* Hidden canvas used for frame capture */
+  canvas { display: none; }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="video-wrap">
+    <video id="video" src="master_draft.mp4" controls preload="auto"></video>
+  </div>
+  <div class="controls">
+    <div class="timeline" id="timeline">
+      <div class="timeline-fill" id="timeline-fill"></div>
+    </div>
+    <div class="control-row">
+      <span class="time-display" id="time-display">0:00.00 / 0:00.00</span>
+      <button class="btn btn-primary" id="add-btn">+ Comment at this frame  (K)</button>
+      <span style="margin-left:auto;color:#8a98b5;font-size:11px;">
+        Space play/pause · J / L = ±1s · K = add · ← / → = ±0.1s
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <h1>REVIEW NOTES</h1>
+    <div class="meta">Iran Hook + Intro · 1920×1080 · 95.80s</div>
+  </div>
+  <div class="panel-actions">
+    <button class="btn btn-primary" id="submit-btn">Submit All to Claude</button>
+    <button class="btn" id="export-btn">Export JSON</button>
+    <button class="btn btn-danger" id="clear-btn">Clear</button>
+  </div>
+  <div class="comments" id="comments">
+    <div class="empty">
+      No notes yet.<br/><br/>
+      Scrub the video, then click <strong>+ Comment at this frame</strong> or press <kbd>K</kbd>.<br/>
+      Each note captures the current timestamp and a snapshot of the frame.<br/><br/>
+      When done, hit <strong>Submit All to Claude</strong> — Claude reads the bundle and acts on each note.
+    </div>
+  </div>
+</div>
+
+<canvas id="cap"></canvas>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SHOT_MAP = [
+  {id:"01", start:0.00,  end:8.58,  name:"Phone call"},
+  {id:"02", start:8.58,  end:17.52, name:"DC → Tehran map"},
+  {id:"03", start:17.52, end:25.80, name:"Dulles"},
+  {id:"04", start:25.80, end:35.99, name:"Roosevelt"},
+  {id:"05", start:35.99, end:43.19, name:"Overthrow memo"},
+  {id:"06", start:43.19, end:51.03, name:"$11M stat"},
+  {id:"07", start:51.03, end:52.33, name:"Price of movie"},
+  {id:"08", start:52.33, end:56.79, name:"Bought enemy"},
+  {id:"09", start:56.79, end:64.39, name:"Blood/oil/headlines"},
+  {id:"10", start:64.39, end:69.37, name:"Tonight"},
+  {id:"11", start:69.37, end:73.21, name:"Hero title"},
+  {id:"12", start:73.21, end:76.89, name:"Hospital bed 1951"},
+  {id:"13", start:76.89, end:79.91, name:"Drone strike"},
+  {id:"14", start:79.91, end:86.47, name:"Cruise missile"},
+  {id:"15", start:86.47, end:95.80, name:"KPI grid"},
+];
+
+const STORAGE_KEY = "iran-hook-review-notes";
+const video = document.getElementById("video");
+const cap   = document.getElementById("cap");
+const ctx   = cap.getContext("2d");
+
+let comments = [];
+try { comments = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch(e) {}
+
+function fmtTime(t) {
+  const m = Math.floor(t / 60);
+  const s = (t - m * 60);
+  return `${m}:${s.toFixed(2).padStart(5, "0")}`;
+}
+
+function shotForTime(t) {
+  return SHOT_MAP.find(s => t >= s.start && t < s.end) || SHOT_MAP[SHOT_MAP.length - 1];
+}
+
+function captureFrame() {
+  // Source video aspect — match canvas
+  const w = video.videoWidth || 1920;
+  const h = video.videoHeight || 1080;
+  cap.width = w; cap.height = h;
+  ctx.drawImage(video, 0, 0, w, h);
+  // Scale-down a thumb to save storage size — we keep the full frame for submission
+  return {
+    full: cap.toDataURL("image/jpeg", 0.85),
+    thumb: thumbOf(w, h)
+  };
+}
+function thumbOf(srcW, srcH) {
+  const tcanv = document.createElement("canvas");
+  const tw = 480; const th = Math.round(srcH / srcW * tw);
+  tcanv.width = tw; tcanv.height = th;
+  tcanv.getContext("2d").drawImage(video, 0, 0, tw, th);
+  return tcanv.toDataURL("image/jpeg", 0.78);
+}
+
+function addComment() {
+  const t = video.currentTime;
+  video.pause();
+  const cap = captureFrame();
+  const shot = shotForTime(t);
+  const c = {
+    id: Date.now(),
+    time: t,
+    shot_id: shot.id,
+    shot_name: shot.name,
+    text: "",
+    thumb: cap.thumb,
+    full: cap.full,
+    created_at: new Date().toISOString(),
+  };
+  comments.push(c);
+  comments.sort((a,b) => a.time - b.time);
+  persist();
+  render();
+  // Focus the new textarea
+  setTimeout(() => {
+    const el = document.querySelector(`[data-cid="${c.id}"] textarea`);
+    if (el) el.focus();
+  }, 50);
+}
+
+function persist() {
+  // Don't store full frames in localStorage (size); we re-capture from frames at submit time? No — keep them.
+  // Strip full from storage to keep localStorage small; we'll capture full again at submit.
+  const lite = comments.map(c => ({...c, full: null}));
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(lite)); } catch(e) { toast("localStorage full — export and clear", "err"); }
+}
+
+function deleteComment(id) {
+  comments = comments.filter(c => c.id !== id);
+  persist(); render();
+}
+
+function updateComment(id, patch) {
+  const c = comments.find(x => x.id === id);
+  if (!c) return;
+  Object.assign(c, patch);
+  persist();
+  // Update markers without full re-render
+  renderMarkers();
+}
+
+function jumpTo(t) {
+  video.currentTime = t;
+  video.pause();
+}
+
+function render() {
+  const wrap = document.getElementById("comments");
+  if (!comments.length) {
+    wrap.innerHTML = `<div class="empty">
+      No notes yet.<br/><br/>
+      Scrub the video, then click <strong>+ Comment at this frame</strong> or press <kbd>K</kbd>.<br/>
+      Each note captures the current timestamp and a snapshot of the frame.<br/><br/>
+      When done, hit <strong>Submit All to Claude</strong>.
+    </div>`;
+    renderMarkers();
+    return;
+  }
+  wrap.innerHTML = comments.map(c => `
+    <div class="comment" data-cid="${c.id}">
+      <img class="comment-thumb" src="${c.thumb}" onclick="jumpTo(${c.time})" />
+      <div class="comment-head">
+        <span class="comment-time" onclick="jumpTo(${c.time})">
+          <span class="shot-tag">SHOT ${c.shot_id}</span>${fmtTime(c.time)}
+        </span>
+      </div>
+      <textarea placeholder="What needs to change here?" oninput="updateComment(${c.id}, {text: this.value})">${c.text || ""}</textarea>
+      <div class="comment-foot">
+        <button class="del-btn" onclick="deleteComment(${c.id})" title="Delete">×</button>
+      </div>
+    </div>
+  `).join("");
+  renderMarkers();
+}
+
+function renderMarkers() {
+  const tl = document.getElementById("timeline");
+  tl.querySelectorAll(".timeline-marker").forEach(el => el.remove());
+  const dur = video.duration || 95.80;
+  comments.forEach(c => {
+    const m = document.createElement("div");
+    m.className = "timeline-marker";
+    m.style.left = `${(c.time / dur) * 100}%`;
+    m.title = `${fmtTime(c.time)} – ${c.text || "(empty)"}`;
+    m.onclick = (e) => { e.stopPropagation(); jumpTo(c.time); };
+    tl.appendChild(m);
+  });
+}
+
+// Re-capture full frames before submit (we don't keep them in localStorage)
+async function recaptureFulls() {
+  const wasTime = video.currentTime;
+  const wasPaused = video.paused;
+  video.pause();
+  for (const c of comments) {
+    if (c.full) continue;
+    await new Promise(resolve => {
+      const handler = () => { video.removeEventListener("seeked", handler); resolve(); };
+      video.addEventListener("seeked", handler);
+      video.currentTime = c.time;
+    });
+    const w = video.videoWidth || 1920;
+    const h = video.videoHeight || 1080;
+    cap.width = w; cap.height = h;
+    ctx.drawImage(video, 0, 0, w, h);
+    c.full = cap.toDataURL("image/jpeg", 0.85);
+  }
+  video.currentTime = wasTime;
+  if (!wasPaused) video.play();
+}
+
+async function submitAll() {
+  if (!comments.length) { toast("No notes to submit.", "err"); return; }
+  toast("Capturing frames…");
+  await recaptureFulls();
+  toast("Submitting…");
+  try {
+    const r = await fetch("/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        master: "iran-hook-master",
+        master_duration: 95.80,
+        submitted_at: new Date().toISOString(),
+        comments: comments.map(c => ({
+          id: c.id, time: c.time, shot_id: c.shot_id, shot_name: c.shot_name,
+          severity: c.severity, text: c.text, full: c.full,
+          created_at: c.created_at,
+        })),
+      }),
+    });
+    const data = await r.json();
+    if (r.ok && data.ok) {
+      toast(`Submitted to ${data.path}`, "ok");
+    } else {
+      toast(`Error: ${data.error || r.statusText}`, "err");
+    }
+  } catch (e) {
+    toast(`Network error: ${e.message}`, "err");
+  }
+  // Strip full from in-memory after submit
+  comments.forEach(c => c.full = null);
+}
+
+async function exportJSON() {
+  if (!comments.length) { toast("No notes to export.", "err"); return; }
+  toast("Capturing frames…");
+  await recaptureFulls();
+  const blob = new Blob([JSON.stringify({
+    master: "iran-hook-master",
+    submitted_at: new Date().toISOString(),
+    comments: comments,
+  }, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `review_${Date.now()}.json`;
+  a.click();
+  toast("Downloaded.", "ok");
+  comments.forEach(c => c.full = null);
+}
+
+function clearAll() {
+  if (!comments.length) return;
+  if (!confirm(`Delete all ${comments.length} note(s)?`)) return;
+  comments = []; persist(); render();
+  toast("Cleared.", "ok");
+}
+
+function toast(msg, kind) {
+  const t = document.getElementById("toast");
+  t.className = `toast show ${kind || ""}`;
+  t.textContent = msg;
+  setTimeout(() => { t.className = "toast " + (kind || ""); }, 2400);
+}
+
+// Wire UI
+document.getElementById("add-btn").onclick = addComment;
+document.getElementById("submit-btn").onclick = submitAll;
+document.getElementById("export-btn").onclick = exportJSON;
+document.getElementById("clear-btn").onclick = clearAll;
+
+// Timeline scrub
+document.getElementById("timeline").onclick = (e) => {
+  if (e.target.classList.contains("timeline-marker")) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - r.left) / r.width;
+  video.currentTime = pct * (video.duration || 95.80);
+};
+
+// Time display + fill update
+video.addEventListener("timeupdate", () => {
+  const t = video.currentTime, d = video.duration || 95.80;
+  document.getElementById("time-display").textContent = `${fmtTime(t)} / ${fmtTime(d)}`;
+  document.getElementById("timeline-fill").style.width = `${(t/d)*100}%`;
+});
+video.addEventListener("loadedmetadata", () => {
+  document.getElementById("time-display").textContent = `0:00.00 / ${fmtTime(video.duration)}`;
+  renderMarkers();
+});
+
+// Keyboard shortcuts
+window.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+  switch(e.key) {
+    case " ": e.preventDefault(); video.paused ? video.play() : video.pause(); break;
+    case "k": case "K": e.preventDefault(); addComment(); break;
+    case "j": case "J": e.preventDefault(); video.currentTime = Math.max(0, video.currentTime - 1); break;
+    case "l": case "L": e.preventDefault(); video.currentTime = Math.min(video.duration, video.currentTime + 1); break;
+    case "ArrowLeft": e.preventDefault(); video.currentTime = Math.max(0, video.currentTime - 0.1); break;
+    case "ArrowRight": e.preventDefault(); video.currentTime = Math.min(video.duration, video.currentTime + 0.1); break;
+  }
+});
+
+render();
+</script>
+
+</body>
+</html>

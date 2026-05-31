@@ -1,0 +1,238 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"clip_src","type":"string","label":"Clip source","default":"../assets/clips/clip_demo.mp4"},
+    {"id":"clip_duration","type":"number","label":"Clip duration (s)","default":5},
+    {"id":"file_no","type":"string","label":"File number","default":"TPAJAX/53"},
+    {"id":"subject","type":"string","label":"Subject","default":"SUBJECT: MOSADDEGH, M."},
+    {"id":"classification","type":"string","label":"Classification stamp","default":"TOP SECRET"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      body {
+        font-family: "Courier New", monospace;
+        background:
+          repeating-linear-gradient(
+            120deg,
+            #d9c9a6 0px, #d3c198 6px, #d9c9a6 8px
+          );
+        /* paper texture: subtle noise via SVG */
+      }
+
+      .desk {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 100%);
+      }
+
+      .folder {
+        position: absolute;
+        left: 120px;
+        top: 80px;
+        width: 1680px;
+        height: 920px;
+        background: linear-gradient(180deg, #b08649 0%, #a3793b 100%);
+        border-radius: 8px 8px 4px 4px;
+        box-shadow:
+          0 24px 60px rgba(0, 0, 0, 0.5),
+          inset 0 -8px 12px rgba(0, 0, 0, 0.2);
+        padding: 50px 70px;
+        transform: rotate(-1.5deg);
+      }
+
+      .folder-tab {
+        position: absolute;
+        top: -38px; left: 60px;
+        width: 220px; height: 40px;
+        background: #b08649;
+        border-radius: 8px 8px 0 0;
+        box-shadow: 0 -4px 8px rgba(0,0,0,0.3);
+      }
+
+      .doc {
+        width: 100%; height: 100%;
+        background: #f1e7c8;
+        border-radius: 4px;
+        padding: 60px 70px;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #2a2517;
+      }
+
+      .file-no {
+        font-size: 24px;
+        letter-spacing: 4px;
+        color: #2a2517;
+        opacity: 0;
+      }
+
+      .agency {
+        font-size: 18px;
+        letter-spacing: 8px;
+        color: #6c4f25;
+        font-weight: bold;
+        opacity: 0;
+      }
+
+      .classification-stamp {
+        position: absolute;
+        top: 90px;
+        right: 80px;
+        font-size: 52px;
+        font-weight: bold;
+        color: #8a1010;
+        border: 6px double #8a1010;
+        padding: 10px 24px;
+        transform: rotate(-9deg);
+        letter-spacing: 6px;
+        opacity: 0;
+        text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+      }
+
+      .subject-line {
+        margin-top: 24px;
+        font-size: 26px;
+        letter-spacing: 3px;
+        color: #2a2517;
+        opacity: 0;
+      }
+
+      .photo-window {
+        margin-top: 40px;
+        width: 100%;
+        height: 540px;
+        position: relative;
+        background: #000;
+        border: 12px solid #2a2517;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+      }
+
+      .photo-window video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: contrast(1.05) saturate(0.85);
+      }
+
+      .photo-window::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(0,0,0,0.1) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.1) 100%);
+        pointer-events: none;
+      }
+
+      .corner-marks {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .corner-marks::before,
+      .corner-marks::after,
+      .corner-marks span {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border: 3px solid #f1e7c8;
+        background: transparent;
+      }
+      .corner-marks::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+      .corner-marks::after  { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+      .corner-marks .br      { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+      .corner-marks .bl      { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+
+      .footer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        letter-spacing: 3px;
+        color: #6c4f25;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="frame_dossier"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="desk">
+        <div class="folder">
+          <div class="folder-tab"></div>
+          <div class="doc">
+            <div class="header">
+              <div class="file-no" id="file-no"></div>
+              <div class="agency">CENTRAL INTELLIGENCE AGENCY</div>
+            </div>
+            <div class="classification-stamp" id="stamp"></div>
+            <div class="subject-line" id="subject"></div>
+
+            <div class="photo-window">
+              <video
+                id="clip"
+                class="clip"
+                src="../assets/clips/clip_demo.mp4"
+                data-start="0"
+                data-duration="5"
+                data-track-index="0"
+                data-has-audio="false"
+                muted
+                playsinline
+              ></video>
+              <div class="corner-marks">
+                <span class="br"></span>
+                <span class="bl"></span>
+              </div>
+            </div>
+
+            <div class="footer" id="footer">
+              <span>EYES ONLY</span>
+              <span>PG. 04 / 47</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const vars = window.__hyperframes.getVariables();
+        document.getElementById("file-no").textContent = "FILE NO. " + vars.file_no;
+        document.getElementById("stamp").textContent = vars.classification;
+        document.getElementById("subject").textContent = vars.subject;
+
+        const tl = gsap.timeline({ paused: true });
+        // Entry: folder swings into place
+        tl.fromTo(".folder", { rotate: -8, scale: 0.92, y: 30 }, { rotate: -1.5, scale: 1, y: 0, duration: 0.7, ease: "back.out(1.2)" }, 0);
+        tl.fromTo("#file-no", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4 }, 0.5);
+        tl.fromTo(".agency", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.6);
+        // Stamp slams down
+        tl.fromTo("#stamp", { opacity: 0, scale: 2.4, rotate: -25 }, { opacity: 0.92, scale: 1, rotate: -9, duration: 0.35, ease: "back.out(2)" }, 0.9);
+        tl.fromTo("#subject", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.1);
+        tl.fromTo("#footer", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.4);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["frame_dossier"] = tl;
+      </script>
+    </div>
+  </body>
+</html>
