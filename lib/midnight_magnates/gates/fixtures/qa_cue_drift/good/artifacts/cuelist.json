@@ -1,0 +1,62 @@
+{
+  "cues": [
+    {
+      "id": "ch01_counting.b01_open.face_closeup.0",
+      "kind": "face_closeup",
+      "layer": 1,
+      "track": 2,
+      "is_audio": false,
+      "text": "the clerk",
+      "bbox": {
+        "x": 460,
+        "y": 60,
+        "w": 1000,
+        "h": 960
+      },
+      "anchor_phrase": "the clerk",
+      "anchor_time_s": 2.0,
+      "anchor_source": "whisper",
+      "start_s": 2.0,
+      "end_s": 6.0
+    },
+    {
+      "id": "ch01_counting.b01_open.panel_illustration.1",
+      "kind": "panel_illustration",
+      "layer": 2,
+      "track": 3,
+      "is_audio": false,
+      "text": "the ledger",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "w": 1920,
+        "h": 1080
+      },
+      "time_distinct": true,
+      "anchor_phrase": "the ledger",
+      "anchor_time_s": 3.5,
+      "anchor_source": "whisper",
+      "start_s": 3.5,
+      "end_s": 6.0
+    },
+    {
+      "id": "ch02_harbor.b01_seal.face_medium.0",
+      "kind": "face_medium",
+      "layer": 1,
+      "track": 2,
+      "is_audio": false,
+      "text": "the captain",
+      "bbox": {
+        "x": 610,
+        "y": 170,
+        "w": 700,
+        "h": 780
+      },
+      "anchor_phrase": "the captain",
+      "anchor_time_s": 71.5,
+      "anchor_source": "whisper",
+      "start_s": 71.5,
+      "end_s": 75.5
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<meta name="compiler-version" content="midnight_magnates.compiler@0.1.0" />
+<meta name="shot-id" content="ch01.b03_map" />
+<meta name="shot-tier" content="macro_map" />
+<style>
+  html,body { width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+              background:#080c16; color:#f5f0e4; font-family:Georgia,serif; }
+  #root { position:absolute; inset:0; }
+  .clip { position:absolute; box-sizing:border-box; }
+  /* A REAL raster basemap (pre-rendered by mapkit) is painted under the overlay
+     via background-image. No projection math here — the pin pixel below was
+     pre-resolved into positions.json by lib.mapkit_subjects. */
+  #map_region { position:absolute; left:0; top:0; width:1920px; height:1080px;
+                background-image:url("../../../assets/maps/manhunt_regional.png");
+                background-size:1920px 1080px; transform-origin:957px 352px; }
+  .cue-pin_drop::before { content:''; width:18px; height:18px; border-radius:50%;
+                          background:var(--accent); }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01.b03_map"
+     data-start="0" data-duration="12.000" data-width="1920" data-height="1080" data-track-index="0">
+  <div id="map_region" class="mapimg clip" data-start="0" data-duration="12.000" data-track-index="0"></div>
+  <!-- pin placed at a pixel pre-resolved from positions.json (no inline projection) -->
+  <div class="clip cue-pin_drop" id="ch01.b03_map.pin_drop.0" data-start="0.300" data-duration="11.400"
+       data-track-index="1" style="left:947px; top:342px; width:220px; height:64px; opacity:0; --accent:#c9a84c;"></div>
+</div>
+<script>
+  /* Sanctioned: a paused GSAP timeline registered to window.__timelines.
+     The compiler authors every tween; no canvas, no scheduler, no projection. */
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  tl.to("#ch01.b03_map.pin_drop.0", { opacity: 1, duration: 0.300, ease: "power1.out" }, 0.300);
+  tl.to("#ch01.b03_map.pin_drop.0", { opacity: 0, duration: 0.300, ease: "power1.in" }, 11.400);
+  window.__timelines["ch01.b03_map"] = tl;
+</script>
+</body>
+</html>

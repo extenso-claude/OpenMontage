@@ -1,0 +1,115 @@
+{
+  "$comment": "Midnight Magnates noir transformative-treatment defaults. UNLIKE the animated-history-map era_treatments.json (whose own header says 'the maps channel is NOT Midnight Magnates noir' and grades to each subject's era), Midnight Magnates HAS a fixed channel LOOK: noir. But that noir look is produced by HyperFrames-generated scenes — it is NOT applied as a clip grade. Clip grades here exist for ONE purpose only: to transform third-party copyright / potential-copyright assets AWAY from their original (defeat copyright + audio fingerprinting), then composite them inside one of the 8 approved noir frames. A clip grade is NEVER the channel style and is NEVER applied to first-party HyperFrames scenes or to Nano-Banana-generated faces (see memory feedback_mm_noir_look_vs_grades). These presets REUSE the shared engine (tools/clip_treatment/): every grade id below is a real recipe in tools/clip_treatment/filters.py, the audio recipe is real in tools/clip_treatment/audio_recipes.py, every frame is one of ClipTreatment.APPROVED_FRAMES (the 8 noir frames). DO NOT duplicate the engine — call ClipTreatment(operation=apply_filter|apply_audio|wrap_in_frame). These defaults were LOCKED by the user (filter+frame for video/image on 2026-05-20; audio = pitch_up_1st on 2026-05-21). They are HARD RULES — do not substitute.",
+
+  "policy": "noir_copyright_transform_only",
+
+  "selection_rule": "Treatment applies ONLY to third-party assets whose copyright_status is 'copyright' or 'potential_copyright'. For those: pick the default by asset_kind — VIDEO -> grade_cyan_orange, IMAGE -> grade_crushed_warm — then wrap the graded output inside ONE of the 8 approved noir frames (choose the frame by source decade + situation per skills/core/clip-treatments.md; e.g. tv-vintage for 1945+ broadcast, surveillance/dossier/boardroom for intelligence/power/document reveals). If the asset is a VIDEO whose own audio is kept (audio_role in vo_pause | vo-pause | mixed | kept | keep), also apply the audio default pitch_up_1st to that kept track; vo_over / muted clips need no audio recipe. EXEMPTIONS: copyright_status 'pd' / 'free_license' / 'generated' need NO grade or frame. CHARACTER images (category in portrait|character|character_card|character_cutout|cutout, or is_character: true) route to character cards instead of inline grade+frame. Nano-Banana-generated faces are first-party (copyright_status 'generated') and are EXEMPT from grade+frame — they are the channel's own art, not a copyright asset.",
+
+  "defaults": {
+    "video": {
+      "applies_when": {
+        "copyright_status": ["copyright", "potential_copyright"],
+        "is_character": false
+      },
+      "treatment": "grade_cyan_orange",
+      "filter": "grade_cyan_orange",
+      "frame_required": true,
+      "frame_from": "frames",
+      "operations": ["apply_filter", "wrap_in_frame"],
+      "note": "Locked 2026-05-20. Third-party / potential-copyright VIDEO clip: grade with grade_cyan_orange (cyan-orange teal grade) on the video track, then composite inside one of the 8 approved noir frames. If the clip's own audio is kept, ALSO apply the audio default (see defaults.audio). The grade is a copyright-transform, not the channel look."
+    },
+
+    "image": {
+      "applies_when": {
+        "copyright_status": ["copyright", "potential_copyright"],
+        "is_character": false
+      },
+      "treatment": "grade_crushed_warm",
+      "filter": "grade_crushed_warm",
+      "frame_required": true,
+      "frame_from": "frames",
+      "operations": ["apply_filter", "wrap_in_frame"],
+      "note": "Locked 2026-05-20. Third-party / potential-copyright still IMAGE: grade with grade_crushed_warm (crushed blacks + warm cast), applied AFTER any Ken Burns move, then composite inside one of the 8 approved noir frames. The grade is a copyright-transform, not the channel look."
+    },
+
+    "audio": {
+      "applies_when": {
+        "copyright_status": ["copyright", "potential_copyright"],
+        "audio_role": ["vo_pause", "vo-pause", "mixed", "kept", "keep"]
+      },
+      "audio_treatment": "pitch_up_1st",
+      "audio": "pitch_up_1st",
+      "frame_required": false,
+      "operations": ["apply_audio"],
+      "note": "Locked 2026-05-21 (after sampling pitch_down 1-2st and pitch_up 1-3st). Kept-from-clip OR standalone third-party AUDIO: apply pitch_up_1st (pitch +1 semitone; loudnorm I=-14 auto-appended by the engine) to defeat audio fingerprinting. Only relevant when the clip's own audio is kept (audio_role vo_pause | mixed | kept); vo_over / muted clips need no audio recipe."
+    },
+
+    "character": {
+      "route": "character_card",
+      "exempt_from_grade_and_frame": true,
+      "matches": {
+        "category": ["portrait", "character", "character_card", "character_cutout", "cutout"],
+        "is_character": true
+      },
+      "treatment": null,
+      "frame": null,
+      "audio_treatment": null,
+      "note": "CHARACTER images are EXEMPT from the inline grade+frame wrap — a portrait of a person we are introducing/telling a story about is a character CARD, not third-party B-roll. Route to the main flow's character cards / cutouts. qa_clip_treatment skips any asset matching these categories or is_character: true. They still need a sourcing block."
+    }
+  },
+
+  "exempt": {
+    "$comment": "Asset classes that receive NO copyright grade and NO frame wrap. These are first-party or already-clear material — applying a copyright-defeat grade to them would be wrong (it is not the channel style).",
+    "copyright_status": ["pd", "free_license", "generated"],
+    "nano_banana_faces": {
+      "exempt": true,
+      "copyright_status": "generated",
+      "reason": "Nano-Banana-generated faces are the channel's OWN art (first-party generation), not a third-party copyright asset. They are EXEMPT from grade+frame. See memory feedback_mm_noir_look_vs_grades: Nano Banana is the faces / fallback path; the noir LOOK comes from HyperFrames scenes, never from a clip grade."
+    },
+    "hyperframes_scenes": {
+      "exempt": true,
+      "reason": "First-party HyperFrames-generated noir scenes ARE the Midnight Magnates channel look. They are authored noir, not transformed copyright media — never run a clip grade over them."
+    }
+  },
+
+  "frames": [
+    "tv-vintage",
+    "dossier",
+    "newspaper",
+    "fireside",
+    "surveillance",
+    "boardroom",
+    "magnifier",
+    "library"
+  ],
+
+  "frames_detail": {
+    "$comment": "The 8 production-approved noir frames (mirrors the first 8 of ClipTreatment.APPROVED_FRAMES and qa_clip_treatment._APPROVED_FRAMES and skills/core/clip-treatments.md). The 6 warm frames now in APPROVED_FRAMES (candlelight, wax-letter, pocket-watch, train-window, dossier-warm, magnifier-warm) belong to the Grandpa Huxley channel, NOT Midnight Magnates noir — MM keeps its noir frames. Each frame has a built-in caption slot that carries the year/context (the chyron); do NOT stack a separate lower-third over a frame-wrapped clip (NO-EXTRA-CHYRON rule, locked 2026-05-21).",
+    "tv-vintage":   { "channel_affinity": "both",              "best_situation": "retro broadcast / archival news",         "caption_slot": "bottom-bar headline, mid-frame" },
+    "dossier":      { "channel_affinity": "midnight_magnates", "best_situation": "classified document reveal",              "caption_slot": "top-right CLASSIFIED stamp + bottom-left handwritten file label" },
+    "newspaper":    { "channel_affinity": "both",              "best_situation": "breaking news / headline moment",         "caption_slot": "headline at top, subhead below" },
+    "fireside":     { "channel_affinity": "grandpa_huxley",    "best_situation": "cozy storytelling / mantel photograph",   "caption_slot": "mantel placard at top" },
+    "surveillance": { "channel_affinity": "midnight_magnates", "best_situation": "spy / intelligence / we're-watching",     "caption_slot": "bottom-left timestamp + top-right CAM 1 label" },
+    "boardroom":    { "channel_affinity": "midnight_magnates", "best_situation": "power-meeting / executive reveal",        "caption_slot": "bottom name plate" },
+    "magnifier":    { "channel_affinity": "both",              "best_situation": "investigation / evidence detail",         "caption_slot": "outside the lens — caption to the right" },
+    "library":      { "channel_affinity": "grandpa_huxley",    "best_situation": "historical knowledge / quiet reflection", "caption_slot": "spine label, mid-frame" }
+  },
+
+  "engine": {
+    "$comment": "How to apply these defaults. Reuse the shared engine; never duplicate it.",
+    "module": "tools.clip_treatment",
+    "class": "ClipTreatment",
+    "video_grade_id": "grade_cyan_orange",
+    "image_grade_id": "grade_crushed_warm",
+    "audio_recipe_id": "pitch_up_1st",
+    "filters_source": "tools/clip_treatment/filters.py",
+    "audio_source": "tools/clip_treatment/audio_recipes.py",
+    "frames_dir": "tools/clip_treatment/frames/",
+    "example": "ct = ClipTreatment(); ct.execute({'operation':'apply_filter','input_path':raw,'output_path':graded,'recipe':'grade_cyan_orange'}); ct.execute({'operation':'wrap_in_frame','input_path':graded,'frame':'surveillance','output_path':final})"
+  },
+
+  "enforced_by": [
+    "lib/midnight_magnates/gates/qa_clip_treatment.py",
+    "lib/midnight_magnates/gates/qa_asset_sourcing.py"
+  ]
+}

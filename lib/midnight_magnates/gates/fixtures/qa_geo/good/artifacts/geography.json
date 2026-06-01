@@ -1,0 +1,42 @@
+{
+  "project_id": "qa_geo_good_fixture",
+  "map_extents": [
+    {
+      "id": "east_coast_regional",
+      "tier": "regional",
+      "center_lat": 38.9072,
+      "center_lon": -77.0369,
+      "zoom": 6,
+      "width": 1920,
+      "height": 1080,
+      "provider": "carto_dark",
+      "style": "noir"
+    }
+  ],
+  "anchors": [
+    {
+      "id": "dc_white_house",
+      "name": "Washington, D.C.",
+      "lat": 38.8977,
+      "lon": -77.0365,
+      "tier": "regional",
+      "provenance": {"source": "Wikipedia", "confidence": "high"}
+    },
+    {
+      "id": "philadelphia",
+      "name": "Philadelphia",
+      "lat": 39.9526,
+      "lon": -75.1652,
+      "tier": "regional",
+      "provenance": {"source": "Wikipedia", "confidence": "high"}
+    },
+    {
+      "id": "new_york",
+      "name": "New York City",
+      "lat": 40.7128,
+      "lon": -74.006,
+      "tier": "regional",
+      "provenance": {"source": "Wikipedia", "confidence": "high"}
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "_note": "BAD sound cuelist. Same gunshot, same flash binding (ch01.b07.muzzle_flash.0 @ 44.00s), but t_in 44.34 with a -40ms offset => onset 44.30s, which is 0.30s off the flash — over the 0.08s frame-lock budget => sfx_event_desync. (The other impulsive cues remain correctly bound/synced so the ONLY failure is the gunshot desync.)",
+  "cues": [
+    { "id": "music_bed",        "category": "music",   "asset": "music_bed_main.mp3",   "t_in": 0.0,   "t_out": 200.0 },
+    { "id": "amb_room_tone",    "category": "ambient", "asset": "theatre_room_tone.wav","t_in": 0.0,   "t_out": 200.0 },
+    { "id": "intro_whoosh",     "category": "sfx",     "asset": "ui_whoosh_long.wav",   "t_in": 5.0,   "t_out": 6.4,  "anchor_phrase": "the story begins" },
+
+    { "id": "pin_tock_12s",     "category": "sfx",     "asset": "pin_tock.wav",         "t_in": 11.72, "t_out": 12.30, "event_cue_id": "ch01.b02.pin_drop.2",           "anchor_phrase": "stops at the theatre" },
+    { "id": "card_slam_27s",    "category": "sfx",     "asset": "card_slam.wav",        "t_in": 27.20, "t_out": 28.05, "event_cue_id": "ch01.b04.character_card_pop.0", "anchor_phrase": "John Wilkes Booth" },
+    { "id": "gunshot_44s",      "category": "sfx",     "asset": "gunshot_report.wav",   "t_in": 44.34, "t_out": 45.00, "event_cue_id": "ch01.b07.muzzle_flash.0",       "transient_offset_ms": -40, "anchor_phrase": "a single shot" }
+  ]
+}

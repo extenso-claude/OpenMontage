@@ -1,0 +1,14 @@
+{
+  "cues": [
+    {"id": "paper_bg", "kind": "paper_texture", "start_s": 0.0, "end_s": 120.0, "layer": 0},
+    {"id": "timeline_ui", "kind": "chapter_timeline_update", "start_s": 0.5, "end_s": 120.0, "layer": 2, "label_count": 1},
+
+    {"id": "title_dc", "kind": "chapter_title", "text": "Washington, April 1865", "start_s": 2.0, "end_s": 9.0, "layer": 4, "bbox": {"x": 200, "y": 80, "w": 640, "h": 120}},
+
+    {"id": "card_lincoln", "kind": "character_card", "text": "Abraham Lincoln", "start_s": 12.0, "end_s": 28.0, "layer": 5, "asset_id": "portrait_lincoln", "bbox": {"x": 100, "y": 600, "w": 400, "h": 300}},
+
+    {"id": "card_booth_orphaned", "kind": "character_card", "text": "John Wilkes Booth", "start_s": 110.0, "end_s": 134.0, "layer": 5, "asset_id": "portrait_booth", "bbox": {"x": 100, "y": 600, "w": 400, "h": 300}},
+
+    {"id": "smoke_overlay_linger", "kind": "stock_insert", "start_s": 30.0, "end_s": 120.0, "layer": 3, "asset_id": "stock_smoke"}
+  ]
+}

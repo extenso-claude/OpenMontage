@@ -1,0 +1,46 @@
+{
+  "chapter_id": "ch01_the_offer",
+  "chapter_index": 1,
+  "duration_s": 70,
+  "through_line": {
+    "type": "case_file",
+    "primitive": "spine_panel",
+    "consistency_keys": ["case_no", "evidence"],
+    "label": "The recurring case-file board."
+  },
+  "outgoing_state": {
+    "scene_tier": "off_map",
+    "year_display": 1929
+  },
+  "phases": [
+    {
+      "phase_id": "p_outro",
+      "phase_kind": "chapter_outro",
+      "duration_s": 6,
+      "beats": [
+        {
+          "beat_id": "b_spine",
+          "intent": "Reference spine usage; case-file board with the offer card active.",
+          "start_anchor": {"phrase": "another file", "fallback_absolute_s": 60.0},
+          "end_anchor": {"phrase": "still open", "fallback_absolute_s": 66.0},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "spine_panel",
+              "params": {
+                "active_card": "card_offer",
+                "case_no": "MM-0001",
+                "evidence": [
+                  {"id": "card_offer", "label": "The Offer"},
+                  {"id": "card_ledger", "label": "The Ledger"},
+                  {"id": "card_alibi", "label": "The Alibi"},
+                  {"id": "card_witness", "label": "The Witness"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

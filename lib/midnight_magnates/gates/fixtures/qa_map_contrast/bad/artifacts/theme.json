@@ -1,0 +1,29 @@
+{
+  "project_id": "fixture",
+  "video_title": "qa_map_contrast fixture",
+  "target_duration_min": 20,
+  "map_posture": "hybrid",
+  "camera_language": "static_with_accents",
+  "pacing_target": "cliffhanger",
+  "hook_engine": "rolling_payoff",
+  "palette_master": {
+    "basemap_filter": "noir",
+    "primary_accent": "#b08626",
+    "secondary_accent": "#8c2026",
+    "ui_dark": "#efe6cf",
+    "ui_light": "#2b2015",
+    "basemap_colors": {
+      "land": "#e4d6b2",
+      "water": "#6c8ea8",
+      "contrast_min": 40.0,
+      "variance_min": 12.0
+    }
+  },
+  "typography": {},
+  "voice_persona": {
+    "provider": "inworld_tts_v2",
+    "voice_id": "Tyler",
+    "delivery_mode": "more_creative",
+    "wpm_target": 164
+  }
+}

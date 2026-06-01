@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "midnight_magnates_theme.schema.json",
+  "title": "Per-Project Theme (Midnight Magnates)",
+  "description": "Per-project theme for the Midnight Magnates documentary pipeline. The channel style is LOCKED to noir ('night colors, noir atmosphere, moonlit, flat segmented color illustration'): palette_master.basemap_filter is constrained to 'noir' — warm/illuminated/light_minimal basemaps are rejected (MM hard rule 1).",
+  "type": "object",
+  "required": ["project_id", "video_title", "target_duration_min", "map_posture", "camera_language", "pacing_target", "hook_engine", "palette_master", "typography", "voice_persona"],
+  "properties": {
+    "project_id": { "type": "string" },
+    "video_title": { "type": "string" },
+    "target_duration_min": { "type": "number", "minimum": 5, "maximum": 60 },
+    "map_posture": { "enum": ["canvas", "bookend", "hybrid"] },
+    "camera_language": { "enum": ["static_with_accents", "continuous_drift"] },
+    "pacing_target": { "enum": ["broadcast", "cliffhanger", "explainer"] },
+    "hook_engine": { "enum": ["rolling_payoff", "deep_mystery"] },
+    "palette_master": {
+      "type": "object",
+      "required": ["basemap_filter", "primary_accent", "secondary_accent", "ui_dark", "ui_light"],
+      "properties": {
+        "basemap_filter": { "enum": ["noir"], "default": "noir", "description": "LOCKED to noir (MM hard rule 1 — noir is the channel default). warm/illuminated/light_minimal are rejected." },
+        "primary_accent": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "secondary_accent": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "ui_dark": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "ui_light": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+      }
+    },
+    "palette_per_period": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["year_range", "sub_theme", "accent_shifts"],
+        "properties": {
+          "year_range": { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+          "sub_theme": { "type": "string" },
+          "accent_shifts": { "type": "object" },
+          "region_colors": { "type": "object" }
+        }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "properties": {
+        "map_labels": { "$ref": "#/definitions/font_spec" },
+        "ui_chrome": { "$ref": "#/definitions/font_spec" },
+        "body_overlays": { "$ref": "#/definitions/font_spec" },
+        "year_stamp": { "$ref": "#/definitions/font_spec" },
+        "source_citation": { "$ref": "#/definitions/font_spec" }
+      }
+    },
+    "sprite_style": { "enum": ["noir_lithograph_silhouette", "warm_engraving", "illuminated_manuscript", "minimal_modern"] },
+    "voice_persona": {
+      "type": "object",
+      "required": ["provider", "voice_id", "delivery_mode", "wpm_target"],
+      "properties": {
+        "provider": { "enum": ["inworld_tts_v2"] },
+        "voice_id": { "type": "string" },
+        "delivery_mode": { "enum": ["stable", "balanced", "more_creative"] },
+        "wpm_target": { "type": "number", "minimum": 100, "maximum": 220 },
+        "emotion_tag_frequency": { "enum": ["per_paragraph", "topic_pivots_only", "minimal"] },
+        "caps_emphasis": { "enum": ["disabled", "climactic_words_only", "frequent"] },
+        "long_pause_style": { "enum": ["em_dash", "ellipsis", "comma"] },
+        "break_tags_after": { "enum": ["chapter_ends_only", "key_beats_and_chapter_ends", "frequent"] }
+      }
+    },
+    "sound_design": {
+      "type": "object",
+      "properties": {
+        "music_density_0_10_min": { "enum": ["continuous_underbed", "sparse"] },
+        "music_density_10_plus_min": { "enum": ["continuous_underbed", "sparse_period_appropriate", "silent"] },
+        "loudness_target_lufs": { "type": "number" },
+        "lra_target_lu": { "type": "number" },
+        "sfx_alarming_after_10_min": { "type": "boolean" }
+      }
+    },
+    "ui_furniture": { "type": "array", "items": { "type": "string" } },
+    "spine_thread": {
+      "type": "object",
+      "properties": {
+        "planted_in_first_minute": { "type": "string" },
+        "callback_in_closing": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "font_spec": {
+      "type": "object",
+      "properties": {
+        "family": { "type": "string" },
+        "weight": { "type": "string" },
+        "style": { "type": "string" },
+        "transform": { "type": "string" }
+      }
+    }
+  }
+}

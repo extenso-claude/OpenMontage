@@ -1,0 +1,10 @@
+{
+  "scene_t0_master_s": 12.5,
+  "beat_id": "b01_grief",
+  "chapter_id": "ch01",
+  "animation_tier": "2d",
+  "key_moments": [
+    { "local_t": 0.0, "vo_anchor_phrase": "the buggy rolled toward the theatre" },
+    { "local_t": 4.0, "vo_anchor_phrase": "and stopped at the entrance" }
+  ]
+}

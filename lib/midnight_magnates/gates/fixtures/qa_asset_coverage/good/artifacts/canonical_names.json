@@ -1,0 +1,65 @@
+{
+  "project_id": "coverage-fixture-good",
+  "people": [
+    {
+      "id": "pius_v",
+      "canonical_full": "Pope Pius V",
+      "canonical_short": "Pius V",
+      "first_mention_form": "Antonio Ghislieri"
+    },
+    {
+      "id": "roberto_calvi",
+      "canonical_full": "Roberto Calvi",
+      "canonical_short": "Calvi"
+    },
+    {
+      "id": "marcantonio_maffei",
+      "canonical_full": "Marcantonio Maffei",
+      "canonical_short": "Maffei",
+      "scrap_reason": "Minor administrative cardinal; no canonical PD portrait on Wikimedia. Text-only lower-third is the necessary fallback."
+    },
+    {
+      "id": "unspoken_figure",
+      "canonical_full": "Aldous Pemberton",
+      "canonical_short": "Pemberton"
+    }
+  ],
+  "places": [
+    {
+      "id": "blackfriars",
+      "canonical": "Blackfriars Bridge"
+    },
+    {
+      "id": "lepanto",
+      "canonical": "Gulf of Lepanto"
+    }
+  ],
+  "events": [
+    {
+      "id": "calvi_body_1982",
+      "canonical_short": "Calvi body discovery",
+      "iconic": true
+    },
+    {
+      "id": "routine_meeting",
+      "canonical_short": "a routine curia meeting",
+      "iconic": false
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "fleet_galleys",
+      "label": "Holy League vs Ottoman galleys",
+      "datapoints": [206, 278, 12]
+    },
+    {
+      "id": "two_way_only",
+      "label": "dead vs freed",
+      "datapoints": 2
+    }
+  ],
+  "chapters": [
+    { "id": "ch01_cold_open", "window": [0, 11] },
+    { "id": "ch02_lepanto", "window": [11, 14], "map_is_animation": true }
+  ]
+}

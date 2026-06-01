@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="midnight_magnates.compiler@0.1.0" />
+<style>
+  html,body{ width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+             background:#1b2740; color:#efe6cf; font-family:Georgia,serif; }
+  #root{ position:absolute; inset:0; }
+  .clip{ position:absolute; box-sizing:border-box; }
+  #title{ position:absolute; left:0; right:0; top:440px; text-align:center; }
+  .eyebrow{ font-size:40px; letter-spacing:8px; text-transform:uppercase; }
+  .heading{ font-size:96px; letter-spacing:2px; margin-top:18px; }
+</style>
+</head>
+<body>
+<!-- A DEDICATED chapter-intro title card: the chapter marker is the hero here, so
+     the shot opts in via data-qa-shot-kind="chapter_card" and must PASS. -->
+<div id="root" class="clip" data-qa-shot-kind="chapter_card"
+     data-composition-id="ch01_chapter_card"
+     data-start="0" data-duration="4.000" data-width="1920" data-height="1080" data-track-index="0">
+  <div id="title" class="clip" data-start="0.300" data-duration="3.400" data-track-index="1">
+    <div class="eyebrow">Chapter II</div>
+    <div class="heading">Lincoln</div>
+  </div>
+</div>
+<script>
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.3);
+  window.__timelines["ch01_chapter_card"] = tl;
+</script>
+</body>
+</html>

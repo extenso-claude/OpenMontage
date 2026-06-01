@@ -1,0 +1,6 @@
+{
+  "assets": [
+    {"id": "portrait_booth", "path": "assets/portraits/john_wilkes_booth.png", "category": "portrait", "required": true},
+    {"id": "clip_fords_theatre", "path": "assets/clips/fords_theatre.mp4", "category": "clip", "required": true}
+  ]
+}

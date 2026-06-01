@@ -1,0 +1,12 @@
+{
+  "scene_id": "ledger_slam",
+  "diorama_version": "midnight_magnates.diorama@0.1.0",
+  "chapter_id": "ch01_heist",
+  "beat_id": "b05_ledger",
+  "scene_t0_master_s": 9.00,
+  "bounds": { "w": 1920, "h": 1080 },
+  "fps": 24,
+  "key_moments": [
+    { "local_t": 0.55, "vo_anchor_phrase": "slammed the ledger", "note": "book hits the desk" }
+  ]
+}

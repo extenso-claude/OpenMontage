@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "channel": "midnight_magnates",
+  "source_video": "sources/vatican_entity_locked.mp4",
+  "_comment": "GOOD: every overlay bbox is placed clear of the source's baked hard regions during its time window. The chapter title is moved to a top band (clearing the stale baked center title + the SUBSCRIBE stack); cards/maps avoid the chyron, face, comment bubble, and subscribe stack.",
+  "cues": [
+    {
+      "id": "c1_chapter_title",
+      "kind": "chapter_title",
+      "t_in": 0.0,
+      "t_out": 6.0,
+      "anchor_phrase": "the vatican entity",
+      "treatment": "chapter_title_with_plate",
+      "bbox": {"x": 200, "y": 80, "w": 1300, "h": 180}
+    },
+    {
+      "id": "c2_stat_card",
+      "kind": "stat_card",
+      "t_in": 8.0,
+      "t_out": 12.0,
+      "anchor_phrase": "two point three billion",
+      "bbox": {"x": 120, "y": 120, "w": 520, "h": 240}
+    },
+    {
+      "id": "c3_photo_card",
+      "kind": "photo_card",
+      "t_in": 14.0,
+      "t_out": 20.0,
+      "anchor_phrase": "archbishop marcinkus",
+      "asset_id": "portrait_marcinkus",
+      "bbox": {"x": 1200, "y": 300, "w": 600, "h": 400}
+    },
+    {
+      "id": "c4_map",
+      "kind": "map",
+      "t_in": 20.0,
+      "t_out": 26.0,
+      "anchor_phrase": "across northern italy",
+      "bbox": {"x": 920, "y": 300, "w": 600, "h": 400}
+    },
+    {
+      "id": "c5_sfx_only_no_bbox",
+      "kind": "reveal",
+      "t_in": 9.5,
+      "t_out": 9.8,
+      "anchor_phrase": "a single ledger"
+    }
+  ]
+}

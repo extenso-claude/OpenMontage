@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "openmontage/artifacts/midnight_magnates_overlay_sound_cuelist",
+  "title": "Sleep Network Overlay — Sound Cuelist",
+  "description": "artifacts/sound_cuelist.json — music + SFX + ambient cues. category drives the per-category drift budget (sfx 0.15s / music 0.5s / ambient 2s) in qa_audio_drift; sfx cues MUST carry an anchor_phrase (an unanchored accent drifts). SFX assets are library-only (HARD RULE 1, qa_ui_sfx_coverage / search_sfx.py). additionalProperties stays open for compiler extras; known fields are type-checked.",
+  "type": "object",
+  "required": ["cues"],
+  "properties": {
+    "version": { "type": "string" },
+    "channel": { "type": "string" },
+    "cues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "t_in", "t_out"],
+        "properties": {
+          "id": { "type": "string" },
+          "category": { "type": "string", "enum": ["music", "sfx", "ambient"] },
+          "asset": { "type": "string", "description": "library SFX filename (SFX library-only) or music track path" },
+          "t_in": { "type": "number", "minimum": 0 },
+          "t_out": { "type": "number", "minimum": 0 },
+          "anchor_phrase": { "type": "string", "description": "contiguous word-run in the source Whisper transcript (required for sfx)" },
+          "fallback_absolute_s": { "type": "number" },
+          "fade_in_s": { "type": "number", "minimum": 0 },
+          "fade_out_s": { "type": "number", "minimum": 0 },
+          "level_lufs": { "type": "number", "description": "integrated level for music/ambient beds" },
+          "level_lufs_peak": { "type": "number", "description": "peak level for sfx accents (after 10:00 hard cap -20)" },
+          "event_cue_id": { "type": "string", "description": "binds an impulsive SFX to its visual event (qa_sfx_event_sync)" },
+          "alarming": { "type": "boolean", "description": "must be false after 10:00 (qa_alarming_sfx)" },
+          "period": { "type": "string", "description": "music period tag for after-10:00 period-appropriate selection" },
+          "_dropped": { "type": "boolean" },
+          "scrap_reason": { "type": ["string", "null"] }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "category": { "const": "sfx" } }, "required": ["category"] },
+            "then": { "required": ["anchor_phrase"] }
+          }
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

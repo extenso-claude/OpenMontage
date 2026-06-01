@@ -1,0 +1,7 @@
+{
+  "map_info": { "zoom": 12, "width": 1920, "height": 1080, "global_x_left": 100000, "global_y_top": 50000, "center_lat": 38.9, "center_lon": -77.0 },
+  "anchors": [
+    { "id": "ford_theatre", "lat": 38.8966, "lon": -77.0256, "px": 940, "py": 520 },
+    { "id": "baltimore_depot", "lat": 38.8951, "lon": -77.0203, "px": 1020, "py": 560 }
+  ]
+}

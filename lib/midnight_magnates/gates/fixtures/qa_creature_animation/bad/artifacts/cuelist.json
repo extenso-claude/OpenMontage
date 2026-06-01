@@ -1,0 +1,19 @@
+{
+  "cues": [
+    {
+      "id": "horse_gallop",
+      "kind": "map_sprite",
+      "start_s": 0.2,
+      "end_s": 1.9,
+      "layer": 4,
+      "subject_kind": "creature",
+      "is_creature": true,
+      "bbox": {
+        "x": 80,
+        "y": 90,
+        "w": 120,
+        "h": 70
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "channel": "midnight_magnates",
+  "source_video": "renders/locked_source.mp4",
+  "cues": [
+    {"id": "clip_parade_1942", "kind": "clip", "t_in": 12.0, "t_out": 20.0, "anchor_phrase": "the wehrmacht marched", "frame": "surveillance", "grade": "grade_cyan_orange", "audio_role": "vo-pause", "bbox": {"x": 360, "y": 140, "w": 1200, "h": 800}},
+    {"id": "clip_press_conf", "kind": "clip", "t_in": 30.0, "t_out": 38.0, "anchor_phrase": "the bank held a press conference", "frame": "tv-vintage", "grade": "grade_cyan_orange", "audio_role": "vo-over", "bbox": {"x": 360, "y": 140, "w": 1200, "h": 800}},
+
+    {"id": "lt_archive_footage", "kind": "lower_third", "text": "ARCHIVE FOOTAGE", "t_in": 13.0, "t_out": 19.0, "anchor_phrase": "archival reel rolls", "bbox": {"x": 380, "y": 860, "w": 760, "h": 120}},
+
+    {"id": "card_press_label", "kind": "card", "text": "Vatican Bank press conference", "t_in": 31.0, "t_out": 37.0, "anchor_phrase": "reporters gathered", "bbox": {"x": 700, "y": 760, "w": 700, "h": 200}},
+
+    {"id": "card_vault_stat", "kind": "stat_card", "text": "$2.1 billion", "t_in": 22.0, "t_out": 28.0, "anchor_phrase": "two point one billion dollars", "bbox": {"x": 1200, "y": 700, "w": 560, "h": 260}}
+  ]
+}

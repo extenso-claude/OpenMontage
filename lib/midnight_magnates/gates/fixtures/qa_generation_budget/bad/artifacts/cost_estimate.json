@@ -1,0 +1,19 @@
+{
+  "total_usd": 32.72,
+  "budget_cap_usd": 20.0,
+  "budget_approved": false,
+  "over_cap": true,
+  "categories": {
+    "avatar": {
+      "cue_count": 2,
+      "seconds": 1920.0,
+      "usd_per_second": 0.017,
+      "total_usd": 32.64
+    },
+    "ai_image": {
+      "cue_count": 2,
+      "usd_each": 0.04,
+      "total_usd": 0.08
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "chapter_id": "ch01_demo",
+  "phases": [
+    {
+      "phase_id": "p1",
+      "phase_kind": "climax",
+      "beats": [
+        {
+          "beat_id": "h1_no_directive",
+          "shot_scale": "medium",
+          "animation_tier": "3d",
+          "layers": [
+            {
+              "layer": "L8",
+              "primitive": "experimental"
+            }
+          ]
+        },
+        {
+          "beat_id": "h2_unresolved_tier",
+          "shot_scale": "medium",
+          "render_directive": "artifacts/shot_briefs/h1.md",
+          "layers": [
+            {
+              "layer": "L8",
+              "primitive": "experimental"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

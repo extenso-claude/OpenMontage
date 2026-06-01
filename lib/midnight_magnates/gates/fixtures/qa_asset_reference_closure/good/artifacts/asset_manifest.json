@@ -1,0 +1,9 @@
+{
+  "assets": [
+    {"id": "clip_lincoln_funeral", "path": "assets/clips/lincoln_funeral.mp4", "category": "clip", "required": true},
+    {"id": "portrait_booth", "path": "assets/portraits/john_wilkes_booth.png", "category": "portrait", "required": true},
+    {"id": "stock_fords_theatre", "path": "assets/stock/fords_theatre_exterior.mp4", "category": "stock", "required": true},
+    {"id": "clip_garfield_depot", "path": "assets/clips/garfield_depot.mp4", "category": "clip", "required": false,
+      "scrap": {"reason": "Footage misdated to 1901; the only Garfield clip we found is actually a 1920s reenactment, fails the period-accuracy gate.", "evidence_url": "https://www.loc.gov/item/garfield-depot-provenance-note"}}
+  ]
+}

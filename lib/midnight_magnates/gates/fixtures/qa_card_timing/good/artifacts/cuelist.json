@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "channel": "midnight_magnates",
+  "source_video": "source/locked.mp4",
+  "cues": [
+    {
+      "id": "hero_year",
+      "kind": "card",
+      "treatment": "hero_centered",
+      "anchor_phrase": "eighteen thirty five",
+      "t_in": 0.50,
+      "t_out": 5.00,
+      "text": "1835"
+    },
+    {
+      "id": "lt_richard_lawrence",
+      "kind": "lower_third",
+      "treatment": "lower_third_anchored",
+      "anchor_phrase": "Richard Lawrence",
+      "t_in": 5.00,
+      "t_out": 12.00,
+      "text": "Richard Lawrence — would-be assassin"
+    },
+    {
+      "id": "stat_pistol",
+      "kind": "stat_card",
+      "treatment": "stat_card",
+      "anchor_phrase": "raised a pistol",
+      "t_in": 10.70,
+      "t_out": 13.50,
+      "text": "First attempted presidential assassination"
+    },
+    {
+      "id": "stat_crowd",
+      "kind": "card",
+      "treatment": "center_card",
+      "anchor_phrase": "two hundred thousand people",
+      "t_in": 13.70,
+      "t_out": 18.50,
+      "text": "200,000 gathered"
+    },
+    {
+      "id": "map_dc",
+      "kind": "map",
+      "treatment": "map_pan",
+      "anchor_phrase": "Washington",
+      "t_in": 3.80,
+      "t_out": 7.40
+    },
+    {
+      "id": "stat_dropped",
+      "kind": "stat_card",
+      "treatment": "stat_card",
+      "anchor_phrase": "a fact that was never spoken on the timeline anywhere",
+      "t_in": 99.00,
+      "t_out": 110.00,
+      "text": "(scrapped)",
+      "_dropped": true,
+      "scrap_reason": "redundant with stat_pistol"
+    }
+  ]
+}

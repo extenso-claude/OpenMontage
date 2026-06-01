@@ -1,0 +1,40 @@
+{
+  "chapter_id": "ch01_heist",
+  "duration_s": 60,
+  "phases": [
+    {
+      "phase_id": "p1_dive",
+      "phase_kind": "story_dive",
+      "duration_s": 40,
+      "beats": [
+        {
+          "beat_id": "b02_alley",
+          "intent": "BUG: a flat-noir 2D scene that was tagged animated but whose scene graph was never built — renders as a dead hold.",
+          "shot_scale": "medium",
+          "animation_tier": "2d",
+          "layers": [
+            { "layer": "L5", "primitive": "panel_illustration" }
+          ]
+        },
+        {
+          "beat_id": "b03_vault",
+          "intent": "Clerk raises the lantern — this 3D beat HAS its scene graph, so only b02_alley should fail.",
+          "shot_scale": "medium",
+          "animation_tier": "3d",
+          "layers": [
+            { "layer": "L5", "primitive": "camera_push_in" }
+          ]
+        },
+        {
+          "beat_id": "b07_outro",
+          "intent": "Chrome year card — not an animated scene, needs no graph.",
+          "shot_scale": "macro",
+          "layers": [
+            { "layer": "L10", "primitive": "year_card_update", "placement": "chrome" }
+          ]
+        }
+      ]
+    }
+  ],
+  "outgoing_state": { "noir_atmosphere": true }
+}

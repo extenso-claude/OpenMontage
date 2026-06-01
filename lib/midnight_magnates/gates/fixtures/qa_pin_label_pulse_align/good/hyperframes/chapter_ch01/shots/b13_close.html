@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="midnight_magnates.compiler@0.1.0" />
+<style>
+  html,body{ width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+             background:#efe6cf; color:#2b2015; font-family:Georgia,serif; }
+  #root{ position:absolute; inset:0; }
+  .clip{ position:absolute; box-sizing:border-box; }
+
+  .pin{ position:absolute; width:44px; height:56px; opacity:0; }
+  .pin-body{ position:absolute; left:0; top:0; width:44px; height:44px;
+             border-radius:50% 50% 50% 0; transform:rotate(45deg); transform-origin:50% 50%;
+             background:radial-gradient(circle at 38% 34%, #c25055 0%, #8c2026 55%, #5e1418 100%); }
+  /* FIXED: ring centred on the head disc (head center is the box center -> local 22,22;
+     ring is 62x62 so left/top = 22-31 = -9). */
+  .pin-ring{ position:absolute; left:-9px; top:-9px; width:62px; height:62px; border-radius:50%;
+             border:2px solid #8c2026; opacity:0; }
+
+  #fords_pin{ left:1181px; top:493px; }     /* head center = (1203,515) */
+  /* FIXED: halo centred on the head disc (1203,515), NOT the tip. */
+  #fords_halo{ position:absolute; left:1203px; top:515px; width:90px; height:90px;
+               margin:-45px 0 0 -45px; border-radius:50%; opacity:0;
+               background:radial-gradient(circle, rgba(140,32,38,0.45), rgba(140,32,38,0) 70%); }
+
+  .map-label{ position:absolute; }
+  .lbl .plate{ display:inline-block; font-size:22px; background:#efe6cf; border:1px solid #b08626;
+               padding:6px 14px; }
+  .leader{ position:absolute; inset:0; overflow:visible; }
+  .leader line{ stroke:#2b2015; stroke-width:1.4; }
+  /* FIXED: leader endpoint lands ON the head disc: label box top-left (1260,505),
+     x2,y2 = (-57,10) -> (1203,515). */
+  #lbl_fords{ left:1260px; top:505px; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01_b13_close"
+     data-start="0" data-duration="8.000" data-width="1920" data-height="1080" data-track-index="0">
+
+  <div id="fords_halo" class="clip" data-start="4.600" data-duration="3.400" data-track-index="8"></div>
+
+  <div id="fords_pin" class="pin clip" data-start="4.600" data-duration="3.400" data-track-index="9">
+    <div class="pin-ring"></div>
+    <div class="pin-body"></div>
+  </div>
+
+  <div id="lbl_fords" class="lbl map-label clip" data-start="5.700" data-duration="2.300" data-track-index="10">
+    <svg class="leader" width="300" height="56"><line x1="0" y1="28" x2="-57" y2="10"/></svg>
+    <span class="plate">Ford&rsquo;s Theatre</span>
+  </div>
+</div>
+<script>
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  tl.to("#fords_pin", { opacity: 1, duration: 0.5 }, 4.6);
+  window.__timelines["ch01_b13_close"] = tl;
+</script>
+</body>
+</html>

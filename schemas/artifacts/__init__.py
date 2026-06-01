@@ -38,6 +38,15 @@ ARTIFACT_NAMES = [
     "animated_history_map_canonical_names",
     "animated_history_map_storyboard",
     "animated_history_map_qa_report",
+    # midnight-magnates-doc pipeline (fork of animated-history-map, 2026-05-31)
+    "midnight_magnates_theme",
+    "midnight_magnates_geography",
+    "midnight_magnates_canonical_names",
+    "midnight_magnates_storyboard",
+    "midnight_magnates_qa_report",
+    # sleep-network-overlay pipeline (overlay-postproduction onto a finished video, 2026-06-01)
+    "midnight_magnates_overlay_cuelist",
+    "midnight_magnates_overlay_sound_cuelist",
 ]
 
 

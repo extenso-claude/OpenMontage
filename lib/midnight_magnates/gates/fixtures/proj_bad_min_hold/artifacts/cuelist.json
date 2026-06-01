@@ -1,0 +1,5 @@
+{
+  "cues": [
+    {"id": "c1_too_brief", "kind": "character_card", "text": "This is a long overlay caption that clearly needs more time", "start_s": 2.0, "end_s": 4.0}
+  ]
+}

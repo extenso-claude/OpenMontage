@@ -1,0 +1,15 @@
+{
+  "words": [
+    {"word": "It", "start": 0.10, "end": 0.24},
+    {"word": "was", "start": 0.24, "end": 0.41},
+    {"word": "eighteen", "start": 0.41, "end": 0.78},
+    {"word": "thirty", "start": 0.78, "end": 1.02},
+    {"word": "five.", "start": 1.02, "end": 1.40},
+    {"word": "A", "start": 1.55, "end": 1.62},
+    {"word": "young", "start": 1.62, "end": 1.88},
+    {"word": "nation", "start": 1.88, "end": 2.30},
+    {"word": "watched", "start": 2.45, "end": 2.92},
+    {"word": "the", "start": 2.92, "end": 3.05},
+    {"word": "capital.", "start": 3.05, "end": 3.66}
+  ]
+}

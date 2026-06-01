@@ -1,0 +1,13 @@
+{
+  "budget_cap_usd": 25.0,
+  "budget_approved": true,
+  "cues": [
+    {"id": "c1_avatar_intro", "kind": "avatar", "t_in": 2.0, "t_out": 62.0, "anchor_phrase": "tonight we open the ledger", "avatar_video_offset_s": 0.0, "audio_cut_start_s": 2.0},
+    {"id": "c2_avatar_act1", "kind": "avatar", "t_in": 70.0, "t_out": 670.0, "anchor_phrase": "the first deal was struck in silence", "avatar_video_offset_s": 0.0, "audio_cut_start_s": 70.0},
+    {"id": "c3_avatar_act2", "kind": "avatar", "t_in": 690.0, "t_out": 1290.0, "anchor_phrase": "by dawn the empire had a name", "avatar_video_offset_s": 0.0, "audio_cut_start_s": 690.0},
+    {"id": "c4_skyline", "kind": "ai_image", "t_in": 4.0, "t_out": 12.0, "anchor_phrase": "a city that never slept", "sourcing": {"generation_reason": "no period night-skyline of this district exists in PD/free archives"}},
+    {"id": "c5_ledger", "kind": "ai_image", "t_in": 120.0, "t_out": 128.0, "anchor_phrase": "the ledger lay open", "generator": "nano_banana"},
+    {"id": "c6_pin_sfx", "kind": "sfx_accent", "t_in": 8.0, "t_out": 8.2, "anchor_phrase": "the pin dropped"},
+    {"id": "c7_archival_photo", "kind": "photo_card", "t_in": 200.0, "t_out": 208.0, "anchor_phrase": "this man signed everything", "sourcing": {"searched_copyright": true}}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "_comment": "Catalog of elements burned into the SOURCE video (top-left origin, 1920x1080). Identical to the good fixture's catalog — only the overlay cuelist differs.",
+  "source_video": "sources/vatican_entity_locked.mp4",
+  "elements": [
+    {"type": "title",          "t_in": 0.0,  "t_out": 6.0,  "bbox": {"x": 460,  "y": 340, "w": 1000, "h": 400}},
+    {"type": "subscribe",      "t_in": 0.0,  "t_out": 30.0, "bbox": {"x": 1560, "y": 40,  "w": 320,  "h": 200}},
+    {"type": "chyron",         "t_in": 8.0,  "t_out": 18.0, "bbox": {"x": 120,  "y": 900, "w": 1680, "h": 140}},
+    {"type": "face",           "t_in": 12.0, "t_out": 22.0, "bbox": {"x": 520,  "y": 300, "w": 380,  "h": 520}},
+    {"type": "comment_bubble", "t_in": 20.0, "t_out": 26.0, "bbox": {"x": 80,   "y": 620, "w": 420,  "h": 180}}
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "cues": [
+    {"id": "open_basemap", "kind": "basemap_swap", "start_s": 0.0, "end_s": 2.0, "layer": 0},
+    {"id": "year_badge", "kind": "year_card_update", "text": "1865", "start_s": 0.0, "end_s": 120.0, "layer": 11},
+    {"id": "drop_dc", "kind": "pin_drop", "text": "Washington", "start_s": 4.0, "end_s": 9.0, "layer": 5, "anchor_id": "washington_dc"},
+
+    {"id": "booth_card", "kind": "character_card_pop", "text": "John Wilkes Booth", "start_s": 27.18, "end_s": 40.77, "layer": 9, "asset_id": "portrait_booth", "bbox": {"x": 80, "y": 740, "w": 560, "h": 280}}
+  ]
+}

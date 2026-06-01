@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "channel": "grandpa_huxley",
+  "cues": [
+    {
+      "id": "sfx_page_turn",
+      "category": "sfx",
+      "asset": "page_turn_soft.wav",
+      "t_in": 3.85,
+      "t_out": 4.4,
+      "anchor_phrase": "meditations",
+      "level_lufs_peak": -16,
+      "alarming": false,
+      "event_cue_id": "lt_meditations"
+    },
+    {
+      "id": "music_bed",
+      "category": "music",
+      "asset": "warm_cello_drone.mp3",
+      "t_in": 0.0,
+      "t_out": 600.0,
+      "level_lufs": -22,
+      "fade_in_s": 3.0,
+      "period": "stoic_warm"
+    }
+  ]
+}

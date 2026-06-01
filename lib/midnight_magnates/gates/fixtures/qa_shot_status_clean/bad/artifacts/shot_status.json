@@ -1,0 +1,34 @@
+{
+  "shots": [
+    {
+      "shot_id": "b01_b02_open_macro",
+      "qa_status": "self_qa_pass",
+      "evidence": {
+        "rendered_frame": "renders/_scratch/b01_b02_open_macro/f_018.jpg",
+        "pixel_gate_log": {
+          "qa_visual_contrast": 0,
+          "qa_visual_completeness": 0,
+          "qa_visual_alignment": 0,
+          "loops": 3
+        }
+      }
+    },
+    {
+      "shot_id": "b04_booth_micro",
+      "qa_status": "pending_qa"
+    },
+    {
+      "shot_id": "b13_spine_diorama",
+      "qa_status": "self_qa_pass",
+      "evidence": {
+        "rendered_frame": "renders/_scratch/b13_spine_diorama/f_011.jpg",
+        "pixel_gate_log": {
+          "qa_physics": 0,
+          "qa_creature_animation": 0,
+          "qa_visual_completeness": 0,
+          "loops": 3
+        }
+      }
+    }
+  ]
+}

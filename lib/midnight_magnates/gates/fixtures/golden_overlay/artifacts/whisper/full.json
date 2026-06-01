@@ -1,0 +1,24 @@
+{
+  "words": [
+    {"word": "tonight", "start": 0.0, "end": 0.4},
+    {"word": "we", "start": 0.4, "end": 0.6},
+    {"word": "sit", "start": 0.6, "end": 0.9},
+    {"word": "with", "start": 0.9, "end": 1.1},
+    {"word": "marcus", "start": 1.1, "end": 1.5},
+    {"word": "aurelius", "start": 1.5, "end": 2.1},
+    {"word": "the", "start": 2.1, "end": 2.3},
+    {"word": "stoic", "start": 2.3, "end": 2.7},
+    {"word": "emperor", "start": 2.7, "end": 3.2},
+    {"word": "who", "start": 3.2, "end": 3.4},
+    {"word": "wrote", "start": 3.4, "end": 3.7},
+    {"word": "his", "start": 3.7, "end": 3.9},
+    {"word": "meditations", "start": 3.9, "end": 4.7},
+    {"word": "by", "start": 4.7, "end": 4.9},
+    {"word": "candlelight", "start": 4.9, "end": 5.7},
+    {"word": "along", "start": 5.7, "end": 6.0},
+    {"word": "the", "start": 6.0, "end": 6.2},
+    {"word": "danube", "start": 6.2, "end": 6.8},
+    {"word": "at", "start": 6.8, "end": 7.0},
+    {"word": "night", "start": 7.0, "end": 7.4}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "assets": [
+    {
+      "id": "portrait_booth",
+      "path": "assets/portraits/booth_placeholder.png",
+      "category": "portrait",
+      "required": true
+    },
+    {
+      "id": "character_garfield_cutout",
+      "kind": "character_cutout",
+      "path": "assets/portraits/garfield_cropped.png",
+      "category": "portrait",
+      "required": true,
+      "face_bbox": {"x": 320, "y": 90, "w": 150, "h": 230}
+    }
+  ]
+}

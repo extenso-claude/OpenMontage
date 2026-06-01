@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "channel": "grandpa_huxley",
+  "source_video": "renders/source_locked.mp4",
+  "cues": [
+    {
+      "id": "c1_chapter_title",
+      "kind": "chapter_title",
+      "t_in": 2.0,
+      "t_out": 9.0,
+      "text": "On Stillness",
+      "anchor_phrase": "let us begin",
+      "treatment": "chapter_title_with_plate",
+      "font": "Alegreya",
+      "plate_color": "#1a1410",
+      "bbox": {"x": 360, "y": 120, "w": 1200, "h": 220}
+    },
+    {
+      "id": "c2_key_term",
+      "kind": "lower_third",
+      "t_in": 14.0,
+      "t_out": 22.0,
+      "text": "wabi-sabi",
+      "anchor_phrase": "the beauty of imperfection",
+      "font": "Alegreya Sans",
+      "plate": {"color": "#241a14"},
+      "music_volume": 0.05,
+      "bbox": {"x": 80, "y": 900, "w": 520, "h": 140}
+    },
+    {
+      "id": "c3_stat_card",
+      "kind": "stat_card",
+      "t_in": 30.0,
+      "t_out": 38.0,
+      "text": "Seneca, 4 BC",
+      "anchor_phrase": "wrote to his friend lucilius",
+      "typography": {"font": "Alegreya"},
+      "background": "#1a1410",
+      "music_level": 0.04,
+      "bbox": {"x": 1240, "y": 820, "w": 600, "h": 200}
+    },
+    {
+      "id": "c4_dropped_legacy",
+      "kind": "photo_card",
+      "t_in": 41.0,
+      "t_out": 41.1,
+      "_dropped": true,
+      "scrap_reason": "replaced by c3; legacy noir styling no longer applies",
+      "font": "Georgia",
+      "plate_color": "#080c16"
+    }
+  ]
+}

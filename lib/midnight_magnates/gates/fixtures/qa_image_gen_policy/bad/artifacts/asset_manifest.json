@@ -1,0 +1,57 @@
+{
+  "project_id": "fixture-image-gen-policy-bad",
+  "assets": [
+    {
+      "id": "lincoln_portrait",
+      "kind": "portrait",
+      "path": "assets/portraits/portrait_lincoln.jpg",
+      "provenance": {
+        "generator": "wikimedia",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Abraham_Lincoln_O-77.jpg",
+        "license": "PD (pre-1929)"
+      }
+    },
+    {
+      "id": "booth_escape_route_inset",
+      "kind": "illustration",
+      "path": "assets/scenes/booth_escape_recraft.png",
+      "note": "BUG: produced with Recraft — a forbidden AI image generator (MM permits only nano_banana)",
+      "provenance": {
+        "generator": "recraft",
+        "model": "recraft-v4.1-vector",
+        "prompt": "1865 escape route map, noir illustration"
+      }
+    },
+    {
+      "id": "ford_theatre_dalle_plate",
+      "kind": "illustration",
+      "path": "assets/scenes/ford_theatre_dalle.png",
+      "note": "BUG: separator-bearing forbidden name — 'DALL-E' must canonicalize to 'dalle' and FAIL; a collapse-to-'_' scheme (dall_e) wrongly let this through (RULE-4 hole).",
+      "provenance": {
+        "generator": "DALL-E",
+        "model": "dall-e-3",
+        "prompt": "1865 theatre interior, noir"
+      }
+    },
+    {
+      "id": "booth_portrait_midjourney",
+      "kind": "illustration",
+      "path": "assets/scenes/booth_midjourney.png",
+      "note": "BUG: spaced forbidden name — 'Mid Journey' must canonicalize to 'midjourney' and FAIL.",
+      "provenance": {
+        "generator": "Mid Journey",
+        "model": "v6",
+        "prompt": "portrait of John Wilkes Booth, dramatic lighting"
+      }
+    },
+    {
+      "id": "gunshot_sfx",
+      "kind": "sfx",
+      "path": "assets/sfx/derringer_shot.wav",
+      "provenance": {
+        "generator": "freesound",
+        "license": "CC0"
+      }
+    }
+  ]
+}

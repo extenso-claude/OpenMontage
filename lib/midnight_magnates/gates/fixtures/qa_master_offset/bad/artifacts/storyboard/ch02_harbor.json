@@ -1,0 +1,35 @@
+{
+  "chapter_id": "ch02_harbor",
+  "duration_s": 40,
+  "vo_start_offset_in_master_s": 72,
+  "outgoing_state": {},
+  "phases": [
+    {
+      "phase_id": "p1",
+      "phase_kind": "scene_establish",
+      "duration_s": 40,
+      "beats": [
+        {
+          "beat_id": "b01_seal",
+          "shot_scale": "micro",
+          "animation_tier": "2d",
+          "start_anchor": {
+            "phrase": "the captain"
+          },
+          "end_anchor": {
+            "phrase": "set sail"
+          },
+          "layers": [
+            {
+              "layer": "L1",
+              "primitive": "face_medium",
+              "params": {
+                "text": "the captain"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

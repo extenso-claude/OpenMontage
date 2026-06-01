@@ -1,0 +1,62 @@
+{
+  "project_id": "fixture-image-gen-policy-good",
+  "assets": [
+    {
+      "id": "lincoln_portrait",
+      "kind": "portrait",
+      "path": "assets/portraits/portrait_lincoln.jpg",
+      "provenance": {
+        "generator": "wikimedia",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Abraham_Lincoln_O-77.jpg",
+        "license": "PD (pre-1929)"
+      }
+    },
+    {
+      "id": "fords_theatre_exterior",
+      "kind": "stock",
+      "path": "assets/stock/fords_theatre.mp4",
+      "provenance": {
+        "generator": "pexels",
+        "source_url": "https://www.pexels.com/video/example",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "booth_escape_route_inset",
+      "kind": "illustration",
+      "path": "assets/scenes/booth_escape_generated.png",
+      "provenance": {
+        "generator": "nano_banana",
+        "generation_reason": "No PD/copyright-cleared period illustration of Booth's specific escape route exists; user-approved Nano Banana generation, no baked text.",
+        "approved_by": "user@G2"
+      }
+    },
+    {
+      "id": "garrett_barn_diorama_plate",
+      "kind": "illustration",
+      "path": "assets/scenes/garrett_barn.png",
+      "provenance": {
+        "generator": "Nano Banana",
+        "note": "separator/case variant must still canonicalize to nano_banana",
+        "generation_reason": "Period barn interior plate, no PD source; user-approved.",
+        "approved_by": "user@G2"
+      }
+    },
+    {
+      "id": "gunshot_sfx",
+      "kind": "sfx",
+      "path": "assets/sfx/derringer_shot.wav",
+      "provenance": {
+        "generator": "freesound",
+        "license": "CC0",
+        "note": "non-AI audio source — generator is a real provider, not policed"
+      }
+    },
+    {
+      "id": "theatre_sprite",
+      "kind": "sprite",
+      "path": "assets/sprites/theatre.svg",
+      "note": "hand-authored procedural sprite — no provenance block, not policed"
+    }
+  ]
+}

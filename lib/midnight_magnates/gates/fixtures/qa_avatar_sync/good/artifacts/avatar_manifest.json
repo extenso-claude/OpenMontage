@@ -1,0 +1,23 @@
+{
+  "model": "wan-2.2-s2v",
+  "avatars": [
+    {
+      "id": "av1_narrator_intro",
+      "asset": "renders/wan/av1_narrator_intro_wan.mp4",
+      "audio_cut_start_s": 2.5,
+      "avatar_video_offset_s": 7.5
+    },
+    {
+      "id": "av2_closing_remark",
+      "asset": "renders/wan/av2_closing_remark_wan.mp4",
+      "audio_cut_start_s": 0.0,
+      "avatar_video_offset_s": 42.250,
+      "ffmpeg_args": [
+        "ffmpeg", "-y",
+        "-i", "renders/wan/av2_closing_remark_wan.mp4",
+        "-ss", "42.250",
+        "-c", "copy", "trimmed.mp4"
+      ]
+    }
+  ]
+}

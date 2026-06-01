@@ -1,0 +1,24 @@
+{
+  "project_id": "presidential_assassinations",
+  "target_duration_min": 22,
+  "map_posture": "canvas",
+  "camera_language": "continuous_drift",
+  "pacing_target": "broadcast",
+  "hook_engine": "rolling_payoff",
+  "palette_master": {
+    "basemap_filter": "noir",
+    "primary_accent": "#c8a24a",
+    "secondary_accent": "#4a6fa5",
+    "ui_dark": "#10141c",
+    "ui_light": "#e6e2d8"
+  },
+  "typography": {
+    "map_labels": { "family": "Cinzel", "weight": "500" }
+  },
+  "voice_persona": {
+    "provider": "inworld_tts_v2",
+    "voice_id": "ashley",
+    "delivery_mode": "stable",
+    "wpm_target": 145
+  }
+}

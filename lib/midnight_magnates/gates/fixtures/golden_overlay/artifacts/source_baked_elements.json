@@ -1,0 +1,6 @@
+{
+  "elements": [
+    {"type": "chyron", "t_in": 0.0, "t_out": 2.0, "bbox": {"x": 0, "y": 980, "w": 1920, "h": 100}},
+    {"type": "subscribe", "t_in": 8.0, "t_out": 10.0, "bbox": {"x": 1500, "y": 900, "w": 380, "h": 160}}
+  ]
+}

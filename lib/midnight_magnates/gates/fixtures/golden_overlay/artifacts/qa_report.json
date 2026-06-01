@@ -1,0 +1,92 @@
+{
+  "pipeline": "sleep-network-overlay",
+  "stage": "cue_design",
+  "ran_at": "2026-06-01T19:05:37.742078",
+  "runner_signature": "midnight_magnates.runner@0.1.0",
+  "input_hashes": {
+    "artifacts/cuelist.json": "30f5922e0f80f1dcbca920ad8bc6009c0cc8a7cd050c6b980e64e2c42068013b",
+    "artifacts/sound_cuelist.json": "cc59222d25c07109f2c8895accc6fe7a6637e9bcbb5ccccca39921616390abd0",
+    "artifacts/whisper/full.json": "9f538d1647c2ed42157112278a663b0f04654c2cb92576dd3c6b3b247f6e1792",
+    "artifacts/source_baked_elements.json": "03a5a67f6f9ca60a94ca91cb0dc33e9d73185d0f7835289c4455bc24bc67f2e2"
+  },
+  "gates": [
+    {
+      "name": "qa_schema_validate",
+      "cmd": "python3 -m lib.midnight_magnates.gates.qa_schema_validate --project '/Users/ryanodreher/Desktop/Claude code/Video Editing/lib/midnight_magnates/gates/fixtures/golden_overlay' --pipeline sleep-network-overlay",
+      "exit_code": 0,
+      "expected": 0,
+      "passed": true,
+      "blocks": true,
+      "duration_ms": 102.7,
+      "stdout_tail": "qa_schema_validate: PASS (0 blocking, 0 total)\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "qa_card_bounds",
+      "cmd": "python3 -m lib.midnight_magnates.gates.qa_card_bounds --project '/Users/ryanodreher/Desktop/Claude code/Video Editing/lib/midnight_magnates/gates/fixtures/golden_overlay'",
+      "exit_code": 0,
+      "expected": 0,
+      "passed": true,
+      "blocks": true,
+      "duration_ms": 42.5,
+      "stdout_tail": "qa_card_bounds: PASS (0 blocking, 0 total)\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "qa_element_overlap",
+      "cmd": "python3 -m lib.midnight_magnates.gates.qa_element_overlap --project '/Users/ryanodreher/Desktop/Claude code/Video Editing/lib/midnight_magnates/gates/fixtures/golden_overlay'",
+      "exit_code": 0,
+      "expected": 0,
+      "passed": true,
+      "blocks": true,
+      "duration_ms": 41.9,
+      "stdout_tail": "qa_element_overlap: PASS (0 blocking, 0 total)\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "qa_min_hold",
+      "cmd": "python3 -m lib.midnight_magnates.gates.qa_min_hold --project '/Users/ryanodreher/Desktop/Claude code/Video Editing/lib/midnight_magnates/gates/fixtures/golden_overlay'",
+      "exit_code": 0,
+      "expected": 0,
+      "passed": true,
+      "blocks": true,
+      "duration_ms": 42.9,
+      "stdout_tail": "qa_min_hold: PASS (0 blocking, 0 total)\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "qa_cue_lifecycle",
+      "cmd": "python3 -m lib.midnight_magnates.gates.qa_cue_lifecycle --project '/Users/ryanodreher/Desktop/Claude code/Video Editing/lib/midnight_magnates/gates/fixtures/golden_overlay'",
+      "exit_code": 0,
+      "expected": 0,
+      "passed": true,
+      "blocks": true,
+      "duration_ms": 43.4,
+      "stdout_tail": "qa_cue_lifecycle: PASS (0 blocking, 0 total)\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "qa_source_collision",
+      "cmd": "python3 -m lib.midnight_magnates.gates.qa_source_collision --project '/Users/ryanodreher/Desktop/Claude code/Video Editing/lib/midnight_magnates/gates/fixtures/golden_overlay'",
+      "exit_code": 0,
+      "expected": 0,
+      "passed": true,
+      "blocks": true,
+      "duration_ms": 44.2,
+      "stdout_tail": "qa_source_collision: PASS (0 blocking, 0 total)\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "qa_clip_no_extra_chyron",
+      "cmd": "python3 -m lib.midnight_magnates.gates.qa_clip_no_extra_chyron --project '/Users/ryanodreher/Desktop/Claude code/Video Editing/lib/midnight_magnates/gates/fixtures/golden_overlay'",
+      "exit_code": 0,
+      "expected": 0,
+      "passed": true,
+      "blocks": true,
+      "duration_ms": 42.8,
+      "stdout_tail": "qa_clip_no_extra_chyron: PASS (0 blocking, 0 total)\n",
+      "stderr_tail": ""
+    }
+  ],
+  "all_passed": true
+}

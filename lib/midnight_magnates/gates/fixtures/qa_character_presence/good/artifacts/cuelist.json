@@ -1,0 +1,16 @@
+{
+  "cues": [
+    {"id": "open_basemap", "kind": "basemap_swap", "start_s": 0.0, "end_s": 2.0, "layer": 0},
+    {"id": "year_badge", "kind": "year_card_update", "text": "1865", "start_s": 0.0, "end_s": 120.0, "layer": 11},
+
+    {"id": "booth_hero", "kind": "character_card_pop", "text": "John Wilkes Booth", "start_s": 27.0, "end_s": 41.0, "layer": 9, "asset_id": "cutout_booth", "treatment": "hero_cutout", "bbox": {"x": 1180, "y": 200, "w": 620, "h": 840}},
+
+    {"id": "lincoln_fullscreen", "kind": "character_card", "text": "President Lincoln", "start_s": 8.0, "end_s": 18.0, "layer": 7, "asset_id": "portrait_lincoln", "treatment": "full_screen_card", "bbox": {"x": 96, "y": 54, "w": 1728, "h": 972}},
+    {"id": "lincoln_push", "kind": "camera_push_in", "start_s": 8.0, "end_s": 18.0, "layer": 0},
+
+    {"id": "ford_panel", "kind": "panel_archival", "start_s": 50.0, "end_s": 64.0, "layer": 7, "asset_id": "stock_ford_interior", "bbox": {"x": 0, "y": 0, "w": 1920, "h": 1080}},
+    {"id": "seward_card", "kind": "character_card", "text": "William Seward", "start_s": 54.0, "end_s": 62.0, "layer": 8, "asset_id": "portrait_seward", "bbox": {"x": 80, "y": 740, "w": 560, "h": 280}},
+
+    {"id": "powell_hero_inferred", "kind": "character_card", "text": "Lewis Powell", "start_s": 70.0, "end_s": 80.0, "layer": 9, "asset_id": "cutout_powell", "bbox": {"x": 120, "y": 180, "w": 600, "h": 860}}
+  ]
+}

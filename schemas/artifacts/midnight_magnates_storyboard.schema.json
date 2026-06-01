@@ -1,0 +1,246 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "midnight_magnates_storyboard.schema.json",
+  "title": "Midnight Magnates — Chapter Storyboard",
+  "type": "object",
+  "required": ["chapter_id", "duration_s", "phases", "outgoing_state"],
+  "properties": {
+    "chapter_id": { "type": "string", "pattern": "^ch\\d{2}_[a-z0-9_]+$" },
+    "chapter_index": { "type": "integer", "minimum": 0 },
+    "title_display": { "type": "string" },
+    "year_range": { "type": "array", "items": { "type": "integer" }, "minItems": 1, "maxItems": 2 },
+    "duration_s": { "type": "number", "minimum": 30, "maximum": 300 },
+    "vo_start_offset_in_master_s": { "type": "number", "minimum": 0 },
+    "geography": {
+      "type": "object",
+      "description": "OPTIONAL for MM — present only for the minority of beats that use a real map/aerial. A no-map chapter omits this entirely (RULE 3: maps are not central).",
+      "required": [],
+      "properties": {
+        "map_extent_id": { "type": "string" },
+        "primary_anchor_id": { "type": "string" },
+        "secondary_anchor_ids": { "type": "array", "items": { "type": "string" } },
+        "scene_anchor_id": { "type": ["string", "null"] },
+        "building_anchor_id": { "type": ["string", "null"] }
+      }
+    },
+    "setting": {
+      "type": "object",
+      "description": "Non-geographic place for medium/micro scenes that never touch a basemap (a boardroom, an alley, a ledger cell). Backs spatial_target.region_id for off-map action cues (RULE 3 + spatial sync).",
+      "properties": {
+        "location_name": { "type": "string" },
+        "set_dressing": { "type": "array", "items": { "type": "string" } },
+        "scene_anchors": {
+          "type": "array",
+          "description": "Named on-screen regions/actors a cue can target via spatial_target.region_id.",
+          "items": {
+            "type": "object",
+            "required": ["region_id"],
+            "properties": {
+              "region_id": { "type": "string" },
+              "label": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "through_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "OPTIONAL brand-spine declaration — the recurring through-line this video returns to at every chapter close (the per-video replacement for the hardcoded all-presidents map). Declarative only here; the gate (qa_spine_consistency) enforces presence + per-chapter consistency.",
+      "required": ["type", "primitive"],
+      "properties": {
+        "type": { "enum": ["map", "case_file", "timeline", "cast_of_players", "other"] },
+        "primitive": { "type": "string", "description": "the primitive name (must be a member of the layer_action primitive enum) that renders the recurring spine" },
+        "close_phase_kinds": { "type": "array", "items": { "type": "string" }, "description": "phase_kind values that count as a chapter close where the spine must appear; defaults to [return_to_map, chapter_outro] if omitted" },
+        "consistency_keys": { "type": "array", "items": { "type": "string" }, "description": "param paths that must stay identical across chapters (e.g. roster ids/positions for a map; row order for a timeline)" },
+        "label": { "type": "string" }
+      }
+    },
+    "incoming_state": { "$ref": "#/definitions/phase_state" },
+    "outgoing_state": { "$ref": "#/definitions/phase_state" },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": { "$ref": "#/definitions/phase" }
+    }
+  },
+  "definitions": {
+    "phase_state": {
+      "type": "object",
+      "description": "Cross-phase continuity contract (RULE 3: map fields optional; MM uses scene/subject fields). qa_continuity compares only the fields that are present on BOTH sides of a boundary.",
+      "required": [],
+      "properties": {
+        "scene_tier": { "enum": ["establishing", "scene", "closeup", "map", "off_map"], "description": "MM shot-scale continuity state (map-optional)." },
+        "active_scene_id": { "type": ["string", "null"] },
+        "current_location_id": { "type": ["string", "null"] },
+        "on_screen_character": { "type": ["string", "null"] },
+        "active_subjects": { "type": "array", "items": { "type": "string" }, "description": "On-screen figures (MM analog of active_pins)." },
+        "dimmed_subjects": { "type": "array", "items": { "type": "string" } },
+        "noir_atmosphere": { "type": "boolean", "default": true },
+        "year_display": { "type": ["integer", "string"] },
+        "weather": { "type": ["string", "null"] },
+        "time_of_day": { "type": ["string", "null"], "default": "night" },
+        "active_ui_furniture": { "type": "array", "items": { "type": "string" } },
+        "chapter_subject_id": { "type": ["string", "null"] },
+        "basemap_tier": { "enum": ["continental", "regional", "urban", "scene", "building", "off_map"], "description": "OPTIONAL — only when a map is present." },
+        "active_pins": { "type": "array", "items": { "type": "string" }, "description": "OPTIONAL — map pins only." },
+        "dimmed_pins": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "required": ["phase_id", "phase_kind", "duration_s", "beats"],
+      "properties": {
+        "phase_id": { "type": "string" },
+        "phase_kind": {
+          "enum": [
+            "cold_open",
+            "scene_establish",
+            "map_breath",
+            "approach",
+            "characters",
+            "story_dive",
+            "object_focus",
+            "face_beat",
+            "climax",
+            "aftermath",
+            "reset",
+            "return_to_map",
+            "transition",
+            "chapter_intro",
+            "chapter_outro"
+          ]
+        },
+        "duration_s": { "type": "number", "minimum": 2 },
+        "beats": { "type": "array", "items": { "$ref": "#/definitions/beat" } }
+      }
+    },
+    "beat": {
+      "type": "object",
+      "required": ["beat_id", "start_anchor", "end_anchor", "layers"],
+      "properties": {
+        "beat_id": { "type": "string", "pattern": "^[A-Za-z0-9_]+$", "description": "Unique within its chapter, no dots/whitespace — a dot mis-binds the compiler's <chapter>.<beat>.<prim>.<idx> cue ids and <chapter>.<beat> scene-graph filenames; the compiler also rejects a duplicate beat_id in a chapter." },
+        "intent": { "type": "string", "description": "Human-readable description of what this beat does narratively." },
+        "shot_scale": { "enum": ["macro", "medium", "micro"], "description": "Shot scale (map-OPTIONAL): macro=establishing (may be a map, an aerial, or a wide noir scene), medium=the scene where action happens, micro=close-up on a face/object/document. Most MM visuals live at medium+micro." },
+        "animation_tier": { "enum": ["2d", "3d"], "description": "Render mode chosen per shot for best fit: 2d=flat-segmented noir scene (HyperFrames/GSAP — chiaroscuro/ledger idiom), 3d=bird's-eye diorama. MUST be resolved for hero / medium-scale beats (qa_render_directive); absent = not yet chosen." },
+        "hero": { "type": "boolean", "default": false, "description": "True for a hero shot. A hero shot (or any medium-scale scene, 2D or 3D) MUST carry a render_directive AND a resolved animation_tier (qa_render_directive)." },
+        "render_directive": { "type": "string", "description": "Path (relative to project root) to this beat's Render Directive .md. MANDATORY for hero beats and every medium-scale scene (2D or 3D); the rich per-shot brief handed to the animator agent." },
+        "emotion_face": {
+          "type": "object",
+          "description": "RULE 4 — an emotional medium/close-up human FACE for this beat. When present, the beat MUST render a face primitive (face_closeup/face_reaction/face_medium/reaction_cut). Sourced from a real still/clip first, else generated (Nano Banana).",
+          "required": ["source", "subject_id"],
+          "properties": {
+            "source": { "enum": ["still", "clip", "nano_banana"] },
+            "subject_id": { "type": "string", "description": "References canonical_names people[].id." },
+            "asset_id": { "type": "string" },
+            "prompt": { "type": "string", "description": "Nano-Banana close-up prompt (when source == nano_banana)." }
+          }
+        },
+        "start_anchor": { "$ref": "#/definitions/anchor" },
+        "end_anchor": { "$ref": "#/definitions/anchor" },
+        "experimental": {
+          "type": "boolean",
+          "default": false,
+          "description": "True for non-enum'd primitives (max 2 per phase). Requires rationale field if true."
+        },
+        "experimental_rationale": { "type": "string" },
+        "layers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/layer_action" }
+        },
+        "transitions_out": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/transition" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["experimental"], "properties": { "experimental": { "const": true } } },
+          "then": { "required": ["experimental_rationale"] }
+        },
+        {
+          "if": { "required": ["emotion_face"] },
+          "then": { "properties": { "layers": { "contains": { "type": "object", "required": ["primitive"], "properties": { "primitive": { "enum": ["face_closeup", "face_reaction", "face_medium", "reaction_cut"] } } } } } }
+        }
+      ]
+    },
+    "anchor": {
+      "type": "object",
+      "required": ["phrase"],
+      "properties": {
+        "phrase": { "type": "string", "description": "Exact contiguous Whisper word/phrase from the VO. In a FINAL render this MUST resolve (qa_drift); inventing a time via fallback is a hard fail." },
+        "offset_ms": { "type": "integer", "default": 0, "description": "Milliseconds before/after the anchor word. Applied identically by the compiler and the drift gates (shared tokenizer)." },
+        "occurrence_index": { "type": "integer", "minimum": 0, "description": "Disambiguates a phrase matching multiple runs in scope (silent first-occurrence binding is banned — qa_drift)." },
+        "near_s": { "type": "number", "description": "Alternative disambiguator: approximate master-seconds of the intended occurrence." },
+        "fallback_absolute_s": { "type": "number", "description": "Time-only fallback. LEGAL only with fallback_reason set AND a structural (non-final) build; a USED fallback in a final render is a hard fail (qa_drift)." },
+        "fallback_reason": { "enum": ["no_vo_yet_structural_test"], "description": "Required to legally use fallback_absolute_s." }
+      }
+    },
+    "layer_action": {
+      "type": "object",
+      "required": ["layer", "primitive"],
+      "properties": {
+        "layer": {
+          "enum": ["L0","L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11"],
+          "description": "Z-order layer. See design intel doc Section 15."
+        },
+        "primitive": {
+          "enum": [
+            "pin_drop","pin_dimming","pin_pulse_breath","all_presidents_pins",
+            "map_sprite","character_card","character_card_pop",
+            "migration_arrow","front_line_curve","glow_region","territory_wash","trench_line",
+            "concept_stamp","label_cluster","time_stamp","map_label",
+            "weather_overlay","cloud_drift","idle_atmosphere","time_of_day","paper_texture","vignette_pulse",
+            "camera_push_in","camera_pull_out","camera_pan","camera_orbit","camera_hold",
+            "basemap_swap","panel_to_pin_morph","chapter_wipe","time_shift","year_sweep","connection_line",
+            "story_dive","panel_archival","panel_illustration","panel_quote","parallax_layers","clip_archival","document_overlay",
+            "source_citation","etymology_card","concept_diagram",
+            "flash_burst","bullet_trail","slow_zoom_terror","clock_freeze","gunshot_freeze","mournful_hold","dust_settle",
+            "chapter_subject_badge_swap","year_card_update","chapter_timeline_update","structure_tree_node_fill","vignette_breath",
+            "polygon_fill","polygon_clear","region_label_in","region_label_out",
+            "music_swell","music_drop","sfx_accent","sfx_ambient_in","sfx_ambient_out",
+            "face_closeup","face_reaction","face_medium","reaction_cut",
+            "spine_panel",
+            "experimental"
+          ]
+        },
+        "anchor_id": { "type": "string", "description": "References geography.json anchor by ID." },
+        "asset_id": { "type": "string", "description": "References asset_manifest.json by ID." },
+        "params": {
+          "type": "object",
+          "description": "Primitive-specific parameters; compiler enforces shape. Notable shapes: migration_arrow.params.character_icon = {asset_id|icon|sprite|label, ...} declares a transportation/character icon that travels the route polyline (a rider on horseback), and migration_arrow.params.no_icon_rationale (string) documents a deliberately icon-less route (qa_migration_icon). all_presidents_pins.params = {pins:[{id, anchor_id|lat+lon, president?}], current:<pin id>} renders an all-presidents map (ONE possible through-line spine, not the mandated one) with `current` in color and the rest dimmed. Whatever spine primitive a video DECLARES via top-level through_line, the params at its declared consistency_keys must be deep-equal across chapters (qa_spine_consistency)."
+        },
+        "drift_budget_ms": { "type": "integer", "description": "May only TIGHTEN the default per-cue-type budget (qa_cue_drift), never loosen it." },
+        "cue_anchor": { "$ref": "#/definitions/anchor", "description": "Per-CUE time anchor (overrides the beat's start for this layer). Required for the 2nd+ time-distinct action in a beat so each action lands on its own narrated word (qa_cue_drift)." },
+        "time_distinct": { "type": "boolean", "default": false, "description": "True if this layer fires at its own narrated moment, not the beat start." },
+        "placement": { "enum": ["on_action", "chrome"], "default": "on_action", "description": "on_action = must sit on the narrated thing (needs spatial_target); chrome = intentionally action-independent UI (year card, badge, citation)." },
+        "spatial_target": {
+          "type": "object",
+          "description": "WHERE on the frame this cue lands. Provide exactly one of anchor_id / region_id / target_px. Required for every visible non-chrome action cue (qa_spatial_anchor); the compiler stamps the resolved pixel onto the cuelist for rendered-pixel verification (qa_visual_alignment).",
+          "properties": {
+            "anchor_id": { "type": "string", "description": "Map/geo pixel via geography.json." },
+            "region_id": { "type": "string", "description": "A named region/actor in the shot scene_graph or the setting.scene_anchors index." },
+            "target_px": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 4, "description": "[x,y] or [x,y,w,h] authored pixel for a 2D/3D scene." }
+          }
+        },
+        "anchor_color": { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 255 }, "minItems": 3, "maxItems": 3, "description": "[r,g,b] of the cue's rendered content, for the COLOR_TOL render-verification path on noir frames (qa_visual_alignment)." }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "required": ["layer", "kind", "duration_s"],
+      "properties": {
+        "layer": { "enum": ["L0","L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11"] },
+        "kind": {
+          "enum": [
+            "fade_in","fade_out","crossfade","hard_cut","panel_to_pin_morph","basemap_swap",
+            "chapter_wipe","camera_pull_out","camera_push_in","year_sweep","none"
+          ]
+        },
+        "duration_s": { "type": "number", "minimum": 0, "maximum": 3 }
+      }
+    }
+  }
+}

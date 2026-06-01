@@ -1,0 +1,18 @@
+{
+  "words": [
+    { "word": "He",     "start": 0.00, "end": 0.20 },
+    { "word": "was",    "start": 0.20, "end": 0.40 },
+    { "word": "left",   "start": 0.40, "end": 0.70 },
+    { "word": "alone",  "start": 0.70, "end": 1.10 },
+    { "word": "with",   "start": 1.10, "end": 1.30 },
+    { "word": "his",    "start": 1.30, "end": 1.50 },
+    { "word": "grief.", "start": 1.50, "end": 2.00 },
+    { "word": "Across", "start": 2.00, "end": 2.30 },
+    { "word": "the",    "start": 2.30, "end": 2.45 },
+    { "word": "harbor", "start": 2.45, "end": 2.90 },
+    { "word": "at",     "start": 2.90, "end": 3.05 },
+    { "word": "dusk,",  "start": 3.05, "end": 3.50 },
+    { "word": "lamps",  "start": 3.50, "end": 3.90 },
+    { "word": "lit.",   "start": 3.90, "end": 4.30 }
+  ]
+}

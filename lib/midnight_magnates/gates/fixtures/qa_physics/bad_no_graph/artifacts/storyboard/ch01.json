@@ -1,0 +1,15 @@
+{
+  "chapter_id": "ch01",
+  "phases": [
+    {
+      "phase_id": "p1_face_beat",
+      "beats": [
+        {
+          "beat_id": "b01_grief",
+          "animation_tier": "2d",
+          "emotion_face": {"source": "sourced", "subject_id": "dying_noble"}
+        }
+      ]
+    }
+  ]
+}

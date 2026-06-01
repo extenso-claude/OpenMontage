@@ -1,0 +1,60 @@
+{
+  "chapter_id": "ch01_jackson",
+  "chapter_index": 1,
+  "title_display": "Jackson",
+  "year_range": [1835],
+  "duration_s": 70,
+  "incoming_state": {
+    "basemap_tier": "continental",
+    "active_pins": ["pin_washington_dc"],
+    "dimmed_pins": [],
+    "year_display": 1835,
+    "weather": "clear",
+    "time_of_day": "night",
+    "active_ui_furniture": ["year_card"],
+    "chapter_subject_id": "subj_jackson"
+  },
+  "outgoing_state": {
+    "basemap_tier": "urban",
+    "active_pins": ["pin_washington_dc", "pin_capitol"],
+    "dimmed_pins": ["pin_washington_dc"],
+    "year_display": 1835,
+    "weather": "clear",
+    "time_of_day": "night",
+    "active_ui_furniture": ["year_card", "chapter_timeline"],
+    "chapter_subject_id": "subj_jackson"
+  },
+  "phases": [
+    {
+      "phase_id": "p0_approach",
+      "phase_kind": "approach",
+      "duration_s": 30,
+      "beats": [
+        {
+          "beat_id": "b0",
+          "start_anchor": {"phrase": "the president"},
+          "end_anchor": {"phrase": "the rotunda"},
+          "layers": [
+            {"layer": "L0", "primitive": "camera_push_in"},
+            {"layer": "L4", "primitive": "pin_drop", "anchor_id": "pin_capitol"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p1_characters",
+      "phase_kind": "characters",
+      "duration_s": 40,
+      "beats": [
+        {
+          "beat_id": "b1",
+          "start_anchor": {"phrase": "Andrew Jackson"},
+          "end_anchor": {"phrase": "stepped forward"},
+          "layers": [
+            {"layer": "L7", "primitive": "character_card", "asset_id": "portrait_jackson"}
+          ]
+        }
+      ]
+    }
+  ]
+}

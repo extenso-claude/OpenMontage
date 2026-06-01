@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<!-- This file carries the compiler stamp, so check #1 (provenance) PASSES on it.
+     But the <script> below re-implements Web-Mercator AND hand-composites onto a
+     2D canvas — a parallel engine wearing the compiler's badge. The TIGHTENED
+     check #2 must catch this even though the file is stamped. -->
+<meta name="compiler-version" content="midnight_magnates.compiler@0.1.0" />
+<meta name="shot-id" content="ch01.b03_map" />
+<style>
+  html,body { width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+              background:#080c16; color:#f5f0e4; font-family:Georgia,serif; }
+  #root { position:absolute; inset:0; }
+  #stage { position:absolute; inset:0; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01.b03_map"
+     data-start="0" data-duration="12.000" data-width="1920" data-height="1080" data-track-index="0">
+  <canvas id="stage" width="1920" height="1080"></canvas>
+</div>
+<script>
+  // ANTI-PATTERN: hand-rolled spherical Web-Mercator projection in the render
+  // HTML. Geographic pixels must be pre-resolved from positions.json by
+  // lib.mapkit_subjects — never re-derived here.
+  const R = 20037508.34;
+  function project(lon, lat) {
+    const x = lon / 180 * R;
+    const y = R * Math.log(Math.tan((90 + lat) * Math.PI / 360)) / Math.PI;
+    return [x, y];
+  }
+  // ANTI-PATTERN: hand-rolled 2D-canvas compositor + a setInterval scheduler,
+  // instead of the compiler's paused GSAP timeline registered to __timelines.
+  const ctx = document.getElementById("stage").getContext("2d");
+  const base = new Image(); base.src = "../../../assets/maps/manhunt_regional.png";
+  let t = 0;
+  setInterval(function () {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.drawImage(base, 0, 0, 1920, 1080);
+    const [px, py] = project(-77.03, 38.90);
+    ctx.beginPath();
+    ctx.arc(957 + (px % 1), 352 + (py % 1), 12, 0, Math.PI * 2);
+    ctx.fillStyle = "#8c2026";
+    ctx.fill();
+    t += 1;
+  }, 33);
+</script>
+</body>
+</html>

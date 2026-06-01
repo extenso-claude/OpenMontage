@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "channel": "midnight_magnates",
+  "source_video": "sources/vatican_entity_locked.mp4",
+  "_comment": "BAD: c3_photo_card is dropped into the lower-third (y 880-1080) during t 14-20, sitting squarely on the source's baked chyron (x 120-1800, y 900-1040, window t 8-18). qa_source_collision must FAIL with covers_baked_chyron. The other cues are placed clear, so the failure is unambiguous.",
+  "cues": [
+    {
+      "id": "c1_chapter_title",
+      "kind": "chapter_title",
+      "t_in": 0.0,
+      "t_out": 6.0,
+      "anchor_phrase": "the vatican entity",
+      "treatment": "chapter_title_with_plate",
+      "bbox": {"x": 200, "y": 80, "w": 1300, "h": 180}
+    },
+    {
+      "id": "c2_stat_card",
+      "kind": "stat_card",
+      "t_in": 8.0,
+      "t_out": 12.0,
+      "anchor_phrase": "two point three billion",
+      "bbox": {"x": 120, "y": 120, "w": 520, "h": 240}
+    },
+    {
+      "id": "c3_photo_card",
+      "kind": "photo_card",
+      "t_in": 14.0,
+      "t_out": 20.0,
+      "anchor_phrase": "archbishop marcinkus",
+      "asset_id": "portrait_marcinkus",
+      "bbox": {"x": 300, "y": 880, "w": 700, "h": 200}
+    },
+    {
+      "id": "c4_map",
+      "kind": "map",
+      "t_in": 20.0,
+      "t_out": 26.0,
+      "anchor_phrase": "across northern italy",
+      "bbox": {"x": 700, "y": 120, "w": 820, "h": 400}
+    }
+  ]
+}

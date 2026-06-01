@@ -1,0 +1,8 @@
+{
+  "cues": [
+    {"id": "c1_lincoln_clip", "kind": "clip", "start_s": 4.0, "end_s": 12.0, "layer": 3, "asset_id": "clip_lincoln_funeral"},
+    {"id": "c2_booth_card", "kind": "character_card", "text": "John Wilkes Booth", "start_s": 14.0, "end_s": 20.0, "layer": 5, "asset_id": "portrait_booth"},
+    {"id": "c3_theatre_stock", "kind": "stock", "start_s": 22.0, "end_s": 28.0, "layer": 2, "asset_id": "stock_fords_theatre"},
+    {"id": "c4_pin_sfx", "kind": "sfx_accent", "start_s": 14.0, "end_s": 14.2, "layer": 9}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "scene_id": "bad_scene",
+  "diorama_version": "midnight_magnates.diorama@0.1.0",
+  "bounds": { "w": 1920, "h": 1080 },
+  "fps": 4,
+  "props": [
+    { "id": "theatre", "layer": 1, "walkable": false, "footprint": { "x": 500, "y": 600, "w": 300, "h": 200 } }
+  ],
+  "actors": [
+    {
+      "id": "buggy", "layer": 2, "facing": "left", "facing_follows_path": true, "can_overlap": [],
+      "net_dx": 600, "net_dy": 0,
+      "samples": [
+        { "t": 0.0, "cx": 200, "cy": 680, "bbox": { "x": 160, "y": 640, "w": 80, "h": 80 }, "heading_deg": 0.0 },
+        { "t": 1.0, "cx": 450, "cy": 680, "bbox": { "x": 410, "y": 640, "w": 80, "h": 80 }, "heading_deg": 0.0 },
+        { "t": 2.0, "cx": 650, "cy": 680, "bbox": { "x": 610, "y": 640, "w": 80, "h": 80 }, "heading_deg": 0.0 },
+        { "t": 3.0, "cx": 800, "cy": 680, "bbox": { "x": 760, "y": 640, "w": 80, "h": 80 }, "heading_deg": 0.0 }
+      ]
+    }
+  ]
+}

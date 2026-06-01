@@ -1,0 +1,76 @@
+{
+  "version": "coverage-good-v1",
+  "channel": "midnight_magnates",
+  "cues": [
+    {
+      "id": "photo_pius_v_intro",
+      "kind": "photo_card",
+      "t_in": 2.8,
+      "t_out": 7.0,
+      "asset_id": "photo_pius_v",
+      "anchor_phrase": "Pope Pius V"
+    },
+    {
+      "id": "clip_roberto_calvi_blackfriars",
+      "kind": "clip",
+      "t_in": 5.4,
+      "t_out": 9.0,
+      "asset_id": "clip_roberto_calvi_1982",
+      "frame": "civil-war-portrait",
+      "grade": "grade_cyan_orange",
+      "anchor_phrase": "Roberto Calvi"
+    },
+    {
+      "id": "lower_third_maffei_name",
+      "kind": "lower_third",
+      "t_in": 8.5,
+      "t_out": 10.5,
+      "asset_id": "lt_marcantonio_maffei",
+      "text": "Marcantonio Maffei",
+      "anchor_phrase": "Marcantonio Maffei signed"
+    },
+    {
+      "id": "map_blackfriars_london",
+      "kind": "map",
+      "t_in": 6.8,
+      "t_out": 8.0,
+      "asset_id": "map_blackfriars",
+      "anchor_phrase": "beneath Blackfriars Bridge"
+    },
+    {
+      "id": "map_lepanto_collision",
+      "kind": "map",
+      "t_in": 11.2,
+      "t_out": 13.0,
+      "asset_id": "map_lepanto",
+      "anchor_phrase": "At Lepanto"
+    },
+    {
+      "id": "clip_calvi_body_discovery",
+      "kind": "clip",
+      "t_in": 6.1,
+      "t_out": 7.9,
+      "asset_id": "clip_calvi_body_1982",
+      "event_cue_id": "calvi_body_1982",
+      "frame": "polaroid-1980s",
+      "treatment": "grade_crushed_warm",
+      "anchor_phrase": "was found beneath"
+    },
+    {
+      "id": "chart_fleet_galleys_bars",
+      "kind": "chart",
+      "t_in": 11.9,
+      "t_out": 13.0,
+      "asset_id": "chart_fleet_galleys",
+      "anchor_phrase": "the fleets collided"
+    },
+    {
+      "id": "anim_cold_open_title",
+      "kind": "animation",
+      "t_in": 0.5,
+      "t_out": 2.8,
+      "asset_id": "anim_ch01_cold_open_titles",
+      "anchor_phrase": "Antonio Ghislieri"
+    }
+  ]
+}

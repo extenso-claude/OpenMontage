@@ -1,0 +1,8 @@
+{
+  "assets": [
+    {"id": "clip_lincoln_funeral", "path": "assets/clips/lincoln_funeral.mp4", "category": "clip", "required": true},
+    {"id": "portrait_booth", "path": "assets/portraits/john_wilkes_booth.png", "category": "portrait", "required": true},
+    {"id": "stock_fords_theatre", "path": "assets/stock/fords_theatre_exterior.mp4", "category": "stock", "required": true},
+    {"id": "clip_mckinley_panam", "path": "assets/clips/mckinley_pan_american.mp4", "category": "clip", "required": false}
+  ]
+}

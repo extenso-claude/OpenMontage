@@ -1,0 +1,41 @@
+{
+  "cues": [
+    {
+      "id": "ch01_climax.b3.sfx_accent.0",
+      "kind": "character_card_pop",
+      "layer": 6,
+      "start_s": 41.0,
+      "end_s": 45.0,
+      "anchor_time_s": 42.4,
+      "anchor_px": 240,
+      "anchor_py": 130,
+      "anchor_color": [
+        235,
+        90,
+        70
+      ],
+      "placement": "on_action",
+      "anchor_phrase": "raised the pistol"
+    },
+    {
+      "id": "ch01_climax.b3.year_card_update.0",
+      "kind": "year_card_update",
+      "layer": 10,
+      "start_s": 41.0,
+      "end_s": 50.0,
+      "anchor_time_s": 41.0,
+      "spatial_target": {
+        "target_px": [
+          60,
+          30
+        ]
+      },
+      "anchor_color": [
+        200,
+        196,
+        180
+      ],
+      "placement": "chrome"
+    }
+  ]
+}

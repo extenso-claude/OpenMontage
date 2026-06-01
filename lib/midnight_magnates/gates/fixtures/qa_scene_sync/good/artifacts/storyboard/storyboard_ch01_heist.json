@@ -1,0 +1,50 @@
+{
+  "chapter_id": "ch01_heist",
+  "duration_s": 60,
+  "phases": [
+    {
+      "phase_id": "p1_dive",
+      "phase_kind": "story_dive",
+      "duration_s": 40,
+      "beats": [
+        {
+          "beat_id": "b03_vault",
+          "intent": "Clerk descends into the vault and raises the lantern.",
+          "shot_scale": "medium",
+          "animation_tier": "3d",
+          "layers": [
+            { "layer": "L5", "primitive": "camera_push_in" }
+          ]
+        },
+        {
+          "beat_id": "b05_ledger",
+          "intent": "He slams the ledger shut.",
+          "shot_scale": "medium",
+          "animation_tier": "2d",
+          "layers": [
+            { "layer": "L5", "primitive": "document_overlay" }
+          ]
+        },
+        {
+          "beat_id": "b06_face",
+          "intent": "A shadow crosses his face as he turns away.",
+          "shot_scale": "micro",
+          "animation_tier": "3d",
+          "emotion_face": { "source": "still", "subject_id": "clerk", "asset_id": "clerk_closeup" },
+          "layers": [
+            { "layer": "L8", "primitive": "face_closeup" }
+          ]
+        },
+        {
+          "beat_id": "b07_outro",
+          "intent": "Persistent chapter year card — chrome, not an animated scene.",
+          "shot_scale": "macro",
+          "layers": [
+            { "layer": "L10", "primitive": "year_card_update", "placement": "chrome" }
+          ]
+        }
+      ]
+    }
+  ],
+  "outgoing_state": { "noir_atmosphere": true }
+}

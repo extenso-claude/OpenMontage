@@ -1,0 +1,53 @@
+{
+  "chapter_id": "ch01_demo",
+  "duration_s": 60,
+  "phases": [
+    {
+      "phase_id": "p1_face_beat",
+      "phase_kind": "face_beat",
+      "duration_s": 20,
+      "beats": [
+        {
+          "beat_id": "b01_grief",
+          "intent": "He learns of the betrayal and is left alone with his grief.",
+          "shot_scale": "micro",
+          "emotion_face": {
+            "source": "still",
+            "subject_id": "p_magnate",
+            "asset_id": "img_magnate_closeup"
+          },
+          "start_anchor": { "phrase": "left alone" },
+          "end_anchor": { "phrase": "with his grief" },
+          "layers": [
+            {
+              "layer": "L7",
+              "primitive": "face_closeup",
+              "asset_id": "img_magnate_closeup",
+              "spatial_target": { "region_id": "subject_face" }
+            },
+            {
+              "layer": "L2",
+              "primitive": "vignette_pulse"
+            }
+          ]
+        },
+        {
+          "beat_id": "b02_neutral_map",
+          "intent": "Establishing wide of the harbor at dusk.",
+          "shot_scale": "macro",
+          "start_anchor": { "phrase": "the harbor" },
+          "end_anchor": { "phrase": "at dusk" },
+          "layers": [
+            {
+              "layer": "L0",
+              "primitive": "camera_hold"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outgoing_state": {
+    "scene_tier": "closeup"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "_note": "GOOD sound cuelist. Every IMPULSIVE sfx (gunshot/card slam/pin tock/stamp) carries an event_cue_id that resolves in cuelist.json, and its transient onset (t_in + transient_offset_ms/1000) is within 0.08s of that visual cue's start_s. The music bed and the long whoosh are NON-impulsive and out of scope. The gunshot uses a -40ms transient_offset_ms (a short pre-attack lead-in) and still lands on the flash at 44.00s.",
+  "cues": [
+    { "id": "music_bed",        "category": "music",   "asset": "music_bed_main.mp3",   "t_in": 0.0,   "t_out": 200.0 },
+    { "id": "amb_room_tone",    "category": "ambient", "asset": "theatre_room_tone.wav","t_in": 0.0,   "t_out": 200.0 },
+    { "id": "intro_whoosh",     "category": "sfx",     "asset": "ui_whoosh_long.wav",   "t_in": 5.0,   "t_out": 6.4,  "anchor_phrase": "the story begins" },
+
+    { "id": "pin_tock_12s",     "category": "sfx",     "asset": "pin_tock.wav",         "t_in": 11.72, "t_out": 12.30, "event_cue_id": "ch01.b02.pin_drop.2",           "anchor_phrase": "stops at the theatre" },
+    { "id": "card_slam_27s",    "category": "sfx",     "asset": "card_slam.wav",        "t_in": 27.20, "t_out": 28.05, "event_cue_id": "ch01.b04.character_card_pop.0", "anchor_phrase": "John Wilkes Booth" },
+    { "id": "gunshot_44s",      "category": "sfx",     "asset": "gunshot_report.wav",   "t_in": 44.04, "t_out": 44.70, "event_cue_id": "ch01.b07.muzzle_flash.0",       "transient_offset_ms": -40, "anchor_phrase": "a single shot" }
+  ]
+}

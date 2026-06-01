@@ -1,0 +1,11 @@
+{
+  "scene_id": "vault_descent",
+  "diorama_version": "midnight_magnates.diorama@0.1.0",
+  "scene_t0_master_s": 4.50,
+  "bounds": { "w": 1920, "h": 1080 },
+  "fps": 24,
+  "key_moments": [
+    { "local_t": 0.70, "vo_anchor_phrase": "raised the lantern", "note": "lantern lifts into frame" },
+    { "local_t": 5.00, "vo_anchor_phrase": "slammed the ledger", "note": "cut/whip to the ledger slam" }
+  ]
+}

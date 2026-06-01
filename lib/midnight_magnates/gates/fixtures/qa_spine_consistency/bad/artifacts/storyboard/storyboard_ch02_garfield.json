@@ -1,0 +1,37 @@
+{
+  "chapter_id": "ch02_the_ledger",
+  "chapter_index": 2,
+  "duration_s": 100,
+  "through_line": {
+    "type": "case_file",
+    "primitive": "spine_panel",
+    "consistency_keys": ["case_no", "evidence"],
+    "label": "Same recurring case-file board — but this chapter forgets to return to it."
+  },
+  "incoming_state": {
+    "scene_tier": "off_map",
+    "year_display": 1929
+  },
+  "outgoing_state": {
+    "scene_tier": "off_map",
+    "year_display": 1931
+  },
+  "phases": [
+    {
+      "phase_id": "p_return",
+      "phase_kind": "return_to_map",
+      "duration_s": 6,
+      "beats": [
+        {
+          "beat_id": "b_close",
+          "intent": "FAILURE MODE 1: chapter closes on a bespoke one-off panel — NO spine_panel, so the recurring callback never lands.",
+          "start_anchor": {"phrase": "the board again", "fallback_absolute_s": 90.0},
+          "end_anchor": {"phrase": "one more pinned", "fallback_absolute_s": 96.0},
+          "layers": [
+            {"layer": "L4", "primitive": "panel_illustration"}
+          ]
+        }
+      ]
+    }
+  ]
+}

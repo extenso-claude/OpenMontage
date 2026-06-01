@@ -1,0 +1,23 @@
+{
+  "cues": [
+    {
+      "id": "b01.b02.pin_drop.0",
+      "kind": "pin_drop",
+      "layer": 5,
+      "start_s": 3.80,
+      "end_s": 9.40,
+      "qa_status": "self_qa_pass",
+      "evidence": {
+        "rendered_frame": "renders/_scratch/b01_b02_open_macro/f_018.jpg",
+        "pixel_gate_log": {"qa_visual_alignment": 0, "loops": 3}
+      }
+    },
+    {
+      "id": "b04.b04.character_card.0",
+      "kind": "character_card",
+      "layer": 8,
+      "start_s": 7.60,
+      "end_s": 13.30
+    }
+  ]
+}

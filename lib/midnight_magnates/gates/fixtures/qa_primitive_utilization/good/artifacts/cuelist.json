@@ -1,0 +1,27 @@
+{
+  "cues": [
+    {"id": "open_basemap", "kind": "basemap_swap", "start_s": 0.0, "end_s": 2.0, "layer": 0},
+    {"id": "camera_settle", "kind": "camera_pull_out", "start_s": 0.0, "end_s": 3.0, "layer": 0},
+    {"id": "year_badge", "kind": "year_card_update", "text": "1865", "start_s": 0.0, "end_s": 120.0, "layer": 11},
+    {"id": "subject_badge", "kind": "chapter_subject_badge_swap", "text": "Abraham Lincoln", "start_s": 0.0, "end_s": 120.0, "layer": 11},
+    {"id": "timeline_ui", "kind": "chapter_timeline_update", "start_s": 0.0, "end_s": 120.0, "layer": 11},
+
+    {"id": "drop_dc", "kind": "pin_drop", "text": "Washington", "start_s": 4.0, "end_s": 9.0, "layer": 5, "anchor_id": "washington_dc"},
+    {"id": "pulse_dc", "kind": "pin_pulse_breath", "start_s": 9.0, "end_s": 14.0, "layer": 5, "anchor_id": "washington_dc"},
+    {"id": "label_dc", "kind": "map_label", "text": "Washington D.C.", "start_s": 4.5, "end_s": 14.0, "layer": 6, "anchor_id": "washington_dc"},
+    {"id": "region_glow", "kind": "glow_region", "start_s": 6.0, "end_s": 14.0, "layer": 2, "anchor_id": "union_states"},
+    {"id": "march_arrow", "kind": "migration_arrow", "start_s": 14.0, "end_s": 20.0, "layer": 4, "anchor_id": "richmond"},
+
+    {"id": "dive_theatre", "kind": "story_dive", "start_s": 22.0, "end_s": 25.0, "layer": 3},
+    {"id": "card_lincoln", "kind": "character_card", "text": "President Lincoln", "start_s": 25.0, "end_s": 33.0, "layer": 7, "asset_id": "portrait_lincoln"},
+    {"id": "panel_ford", "kind": "panel_archival", "start_s": 33.0, "end_s": 40.0, "layer": 7, "asset_id": "stock_ford_theatre"},
+    {"id": "cite_loc", "kind": "source_citation", "text": "Library of Congress", "start_s": 38.0, "end_s": 42.0, "layer": 8},
+
+    {"id": "weather", "kind": "weather_overlay", "start_s": 22.0, "end_s": 42.0, "layer": 1},
+
+    {"id": "freeze", "kind": "gunshot_freeze", "start_s": 44.0, "end_s": 47.0, "layer": 9},
+    {"id": "mourn", "kind": "mournful_hold", "start_s": 47.0, "end_s": 52.0, "layer": 9},
+
+    {"id": "music_in", "kind": "music_swell", "start_s": 44.0, "end_s": 52.0, "layer": 0, "is_audio": true}
+  ]
+}

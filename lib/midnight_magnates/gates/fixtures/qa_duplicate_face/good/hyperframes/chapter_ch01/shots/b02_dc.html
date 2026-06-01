@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="compiler-version" content="midnight_magnates.compiler@0.1.0" />
+<style>
+  html,body{ width:1920px; height:1080px; margin:0; padding:0; overflow:hidden;
+             background:#efe6cf; color:#2b2015; font-family:Georgia,serif; }
+  #root{ position:absolute; inset:0; }
+  .clip{ position:absolute; box-sizing:border-box; }
+
+  #lincoln_card{ position:absolute; left:80px; top:720px; width:560px; height:300px; opacity:0;
+                 display:flex; align-items:center; gap:22px; padding:22px 26px; }
+  .card-portrait{ width:172px; height:212px; border:2px solid #b08626; overflow:hidden; }
+  .card-portrait img{ width:100%; height:100%; object-fit:cover; }
+
+  #subject_badge{ position:absolute; right:40px; top:40px; width:312px; height:96px; opacity:0;
+                  display:flex; align-items:center; gap:14px; padding:10px 14px; }
+  .badge-portrait{ width:72px; height:72px; border-radius:50%; overflow:hidden;
+                   background-image:url("assets/portraits/portrait_lincoln.jpg");
+                   background-size:cover; background-position:50% 24%; }
+</style>
+</head>
+<body>
+<div id="root" class="clip" data-composition-id="ch01_b02_dc"
+     data-start="0" data-duration="24.000" data-width="1920" data-height="1080" data-track-index="0">
+
+  <!-- FIXED: the badge portrait is shown ONLY 1.2s..16.0s, then swapped out -->
+  <div id="subject_badge" class="clip" data-start="1.200" data-duration="14.800" data-track-index="10">
+    <div class="badge-portrait" role="img" aria-label="Abraham Lincoln"></div>
+    <div class="badge-name">Abraham Lincoln</div>
+  </div>
+
+  <!-- the card brings the same face up AFTER the badge is gone (17.4s..24.0s) -->
+  <div id="lincoln_card" class="clip" data-start="17.400" data-duration="6.600" data-track-index="9">
+    <div class="card-portrait"><img src="assets/portraits/portrait_lincoln.jpg" alt="" /></div>
+    <div class="card-text"><div class="card-name">President Abraham Lincoln</div></div>
+  </div>
+</div>
+<script>
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#subject_badge", { opacity: 0 }, { opacity: 1, duration: 0.7 }, 1.2);
+  tl.to("#subject_badge", { opacity: 0, duration: 0.6 }, 15.4);
+  tl.fromTo("#lincoln_card", { opacity: 0 }, { opacity: 1, duration: 0.8 }, 17.4);
+  window.__timelines["ch01_b02_dc"] = tl;
+</script>
+</body>
+</html>

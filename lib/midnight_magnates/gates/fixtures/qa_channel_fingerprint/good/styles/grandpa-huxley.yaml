@@ -1,0 +1,25 @@
+# Fixture playbook — minimal faithful copy of the LOCKED Grandpa Huxley
+# fingerprint that qa_channel_fingerprint reads. Bundled project-local so the
+# gate test is self-contained (does not depend on the live repo styles dir).
+visual_language:
+  color_palette:
+    primary: ["#c9a84c", "#d4a54a"]   # brass gold + warm amber
+    accent: ["#f0e6d2", "#f5ead0"]    # parchment cream
+    background: "#1a1410"             # warm dark earth (NOT the MM noir navy)
+    text: "#f0e6d2"
+    muted: "#8a6e54"
+
+typography:
+  headings:
+    font: "Alegreya"
+    weight: 700
+  body:
+    font: "Alegreya Sans"
+    weight: 400
+  stat_card:
+    font: "Alegreya"
+    weight: 800
+
+audio:
+  music_mood: "soft ambient, contemplative"
+  music_volume: 0.05

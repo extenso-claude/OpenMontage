@@ -1,0 +1,10 @@
+{
+  "voice": { "voice_id": "Tyler", "source": "user_provided", "generated": false },
+  "segments": [
+    { "id": "s1", "status": "pass", "fix_iterations": 0,
+      "metrics": { "wer": 0.04, "min_word_prob": 0.88, "mos": 3.9, "wps": 2.7, "clipping": false, "dropout": false } },
+    { "id": "s2", "status": "fail", "human_approved": false, "fix_iterations": 3,
+      "metrics": { "wer": 0.40, "min_word_prob": 0.18, "mos": 2.8, "wps": 4.2, "clipping": true, "dropout": false } }
+  ],
+  "track": { "lufs": -15.2, "true_peak_db": -1.6 }
+}

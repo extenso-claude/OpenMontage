@@ -1,0 +1,17 @@
+{
+  "cues": [
+    {"id": "title_dc", "kind": "chapter_title", "text": "Washington 1865", "start_s": 2.0, "end_s": 10.0, "layer": 4, "bbox": {"x": 200, "y": 80, "w": 600, "h": 120}},
+    {"id": "label_richmond", "kind": "map_label", "text": "Richmond", "start_s": 4.0, "end_s": 9.0, "layer": 4, "bbox": {"x": 1100, "y": 700, "w": 320, "h": 90}},
+
+    {"id": "bg_map_glow", "kind": "map_overlay", "start_s": 4.0, "end_s": 9.0, "layer": 1, "bbox": {"x": 0, "y": 0, "w": 1920, "h": 1080}},
+    {"id": "foreground_pin", "kind": "marker", "start_s": 5.0, "end_s": 8.0, "layer": 5, "bbox": {"x": 900, "y": 480, "w": 80, "h": 120}},
+
+    {"id": "marker_booth", "kind": "marker", "start_s": 12.0, "end_s": 18.0, "layer": 6, "bbox": {"x": 850, "y": 460, "w": 70, "h": 110}, "interaction_with": ["label_booth"]},
+    {"id": "label_booth", "kind": "map_label", "text": "Booth", "start_s": 12.0, "end_s": 18.0, "layer": 6, "bbox": {"x": 860, "y": 470, "w": 200, "h": 60}, "interaction_with": ["marker_booth"]},
+
+    {"id": "card_early", "kind": "character_card", "text": "Lincoln", "start_s": 20.0, "end_s": 25.0, "layer": 5, "bbox": {"x": 100, "y": 600, "w": 400, "h": 300}},
+    {"id": "card_late", "kind": "character_card", "text": "Grant", "start_s": 25.0, "end_s": 30.0, "layer": 5, "bbox": {"x": 100, "y": 600, "w": 400, "h": 300}},
+
+    {"id": "pin_sfx", "kind": "sfx_accent", "start_s": 5.0, "end_s": 5.2, "layer": 0}
+  ]
+}

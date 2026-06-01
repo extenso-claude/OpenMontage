@@ -1,0 +1,65 @@
+{
+  "chapter_id": "ch02_the_ledger",
+  "chapter_index": 2,
+  "duration_s": 100,
+  "through_line": {
+    "type": "case_file",
+    "primitive": "spine_panel",
+    "consistency_keys": ["case_no", "evidence"],
+    "label": "Same recurring case-file board; the active card advances."
+  },
+  "incoming_state": {
+    "scene_tier": "off_map",
+    "year_display": 1929
+  },
+  "outgoing_state": {
+    "scene_tier": "off_map",
+    "year_display": 1931
+  },
+  "phases": [
+    {
+      "phase_id": "p_climax",
+      "phase_kind": "climax",
+      "duration_s": 8,
+      "beats": [
+        {
+          "beat_id": "b_books",
+          "start_anchor": {"phrase": "the second set", "fallback_absolute_s": 2.0},
+          "end_anchor": {"phrase": "of books", "fallback_absolute_s": 6.0},
+          "layers": [
+            {"layer": "L9", "primitive": "gunshot_freeze"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p_return",
+      "phase_kind": "return_to_map",
+      "duration_s": 6,
+      "beats": [
+        {
+          "beat_id": "b_spine",
+          "intent": "Same recurring case-file board; the ledger card now active. Object-key order differs but the value is identical.",
+          "start_anchor": {"phrase": "the board again", "fallback_absolute_s": 90.0},
+          "end_anchor": {"phrase": "one more pinned", "fallback_absolute_s": 96.0},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "spine_panel",
+              "params": {
+                "active_card": "card_ledger",
+                "case_no": "MM-0001",
+                "evidence": [
+                  {"label": "The Offer", "id": "card_offer"},
+                  {"label": "The Ledger", "id": "card_ledger"},
+                  {"label": "The Alibi", "id": "card_alibi"},
+                  {"label": "The Witness", "id": "card_witness"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

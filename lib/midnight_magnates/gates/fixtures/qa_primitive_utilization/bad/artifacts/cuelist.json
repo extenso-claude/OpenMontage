@@ -1,0 +1,15 @@
+{
+  "cues": [
+    {"id": "drop_dc", "kind": "pin_drop", "text": "Washington", "start_s": 4.0, "end_s": 9.0, "layer": 5, "anchor_id": "washington_dc"},
+    {"id": "drop_richmond", "kind": "pin_drop", "text": "Richmond", "start_s": 10.0, "end_s": 15.0, "layer": 5, "anchor_id": "richmond"},
+    {"id": "drop_atlanta", "kind": "pin_drop", "text": "Atlanta", "start_s": 16.0, "end_s": 21.0, "layer": 5, "anchor_id": "atlanta"},
+
+    {"id": "dim_dc", "kind": "pin_dimming", "start_s": 21.0, "end_s": 23.0, "layer": 5, "anchor_id": "washington_dc"},
+
+    {"id": "label_dc", "kind": "map_label", "text": "Washington D.C.", "start_s": 4.5, "end_s": 21.0, "layer": 6, "anchor_id": "washington_dc"},
+    {"id": "label_richmond", "kind": "map_label", "text": "Richmond", "start_s": 10.5, "end_s": 21.0, "layer": 6, "anchor_id": "richmond"},
+    {"id": "label_atlanta", "kind": "map_label", "text": "Atlanta", "start_s": 16.5, "end_s": 21.0, "layer": 6, "anchor_id": "atlanta"},
+
+    {"id": "march_arrow", "kind": "migration_arrow", "start_s": 23.0, "end_s": 29.0, "layer": 4, "anchor_id": "atlanta"}
+  ]
+}

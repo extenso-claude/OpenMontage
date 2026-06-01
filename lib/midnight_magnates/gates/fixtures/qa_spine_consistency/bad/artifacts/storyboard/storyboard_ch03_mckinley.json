@@ -1,0 +1,50 @@
+{
+  "chapter_id": "ch03_the_witness",
+  "chapter_index": 3,
+  "duration_s": 100,
+  "through_line": {
+    "type": "case_file",
+    "primitive": "spine_panel",
+    "consistency_keys": ["case_no", "evidence"],
+    "label": "Same recurring case-file board — but its case number and an evidence label have drifted."
+  },
+  "incoming_state": {
+    "scene_tier": "off_map",
+    "year_display": 1931
+  },
+  "outgoing_state": {
+    "scene_tier": "off_map",
+    "year_display": 1934
+  },
+  "phases": [
+    {
+      "phase_id": "p_return",
+      "phase_kind": "return_to_map",
+      "duration_s": 6,
+      "beats": [
+        {
+          "beat_id": "b_spine",
+          "intent": "FAILURE MODE 2: spine present, but case_no drifted (MM-0001 -> MM-0007) and the witness card was relabelled — the recurring artifact is no longer the SAME board.",
+          "start_anchor": {"phrase": "the board once more", "fallback_absolute_s": 90.0},
+          "end_anchor": {"phrase": "case still open", "fallback_absolute_s": 96.0},
+          "layers": [
+            {
+              "layer": "L4",
+              "primitive": "spine_panel",
+              "params": {
+                "active_card": "card_witness",
+                "case_no": "MM-0007",
+                "evidence": [
+                  {"id": "card_offer", "label": "The Offer"},
+                  {"id": "card_ledger", "label": "The Ledger"},
+                  {"id": "card_alibi", "label": "The Alibi"},
+                  {"id": "card_witness", "label": "The Surprise Witness"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

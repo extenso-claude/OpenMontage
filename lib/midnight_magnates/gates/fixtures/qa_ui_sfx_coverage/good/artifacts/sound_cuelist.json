@@ -1,0 +1,10 @@
+{
+  "_note": "Each high-priority UI cue's covering SFX onsets ON its event frame: pin_drop.wav onset 11.72s vs pin event 11.70s (delta 0.02s); card_whoosh.wav onset 12.42s vs card event 12.40s (delta 0.02s); card_chime.wav uses a -120ms transient_offset_ms so its onset (27.32 - 0.12 = 27.20s) lands on the pop event at 27.18s (delta 0.02s); pin_tock.wav onset 104.00s vs pin event 103.98s (delta 0.02s). All within the 0.08s frame-lock for impulsive one-shots.",
+  "cues": [
+    { "id": "music_bed", "category": "music", "asset": "music_bed_main.mp3", "t_in": 0.0, "t_out": 200.0 },
+    { "id": "pin_drop_12s",   "category": "sfx", "asset": "pin_drop.wav",    "t_in": 11.72, "t_out": 12.35, "anchor_phrase": "lands in", "loudness_lufs": -16.0, "bed_lufs_at": -22.0 },
+    { "id": "card_whoosh_12s","category": "sfx", "asset": "card_whoosh.wav", "t_in": 12.42, "t_out": 13.22, "anchor_phrase": "His name is", "loudness_lufs": -15.0, "bed_lufs_at": -22.0 },
+    { "id": "card_chime_27s", "category": "sfx", "asset": "card_chime.wav",  "t_in": 27.32, "t_out": 28.22, "transient_offset_ms": -120, "anchor_phrase": "John Wilkes", "loudness_lufs": -15.0, "bed_lufs_at": -22.0 },
+    { "id": "pin_tock_104s",  "category": "sfx", "asset": "pin_tock.wav",    "t_in": 104.0, "t_out": 104.6, "anchor_phrase": "stops at", "loudness_lufs": -16.0, "bed_lufs_at": -22.0 }
+  ]
+}

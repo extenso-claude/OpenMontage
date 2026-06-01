@@ -1,0 +1,38 @@
+{
+  "chapter_id": "ch01_boardroom",
+  "chapter_index": 1,
+  "title_display": "The Boardroom",
+  "year_range": [1865],
+  "duration_s": 70,
+  "setting": {
+    "location_name": "Magnate boardroom, night",
+    "set_dressing": ["long oak table", "gas lamps", "ledger stacks"],
+    "scene_anchors": [
+      {"region_id": "boardroom_left_chair", "label": "the empty chair at the head"},
+      {"region_id": "boardroom_ledger", "label": "the open ledger, center table"}
+    ]
+  },
+  "outgoing_state": {
+    "scene_tier": "scene",
+    "active_subjects": ["subj_magnate"],
+    "year_display": 1865,
+    "time_of_day": "night"
+  },
+  "phases": [
+    {
+      "phase_id": "p0_scene",
+      "phase_kind": "scene_establish",
+      "duration_s": 70,
+      "beats": [
+        {
+          "beat_id": "b0",
+          "start_anchor": {"phrase": "the boardroom"},
+          "end_anchor": {"phrase": "the ledger"},
+          "layers": [
+            {"layer": "L7", "primitive": "character_card", "asset_id": "portrait_magnate", "placement": "on_action", "spatial_target": {"region_id": "boardroom_left_chair"}}
+          ]
+        }
+      ]
+    }
+  ]
+}

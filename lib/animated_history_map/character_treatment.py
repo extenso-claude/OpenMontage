@@ -34,8 +34,17 @@ WHEN TO USE WHICH (documented in skills/core/character-treatments.md):
 
 This module is import-only support: it owns the treatment vocabulary, the slot
 geometry per treatment, the >=30% threshold, and the cutout-resolution helper.
-The compiler imports `bbox_for_treatment` / `resolve_hero_cutout`; the gate
-imports the same constants so the rule and the renderer can never drift.
+The gate (qa_character_presence) imports these constants.
+
+NOTE (2026-05-31): the compiler does NOT import or honor this module today. It
+places every character card at SLOT_LOWER_LEFT (compiler._bbox_for) regardless of
+any declared treatment, and `_build_cue` drops a declared `treatment` from the
+emitted cue. So the HERO_CUTOUT / FULL_SCREEN treatments are currently UNREACHABLE,
+and bbox_for_treatment / resolve_hero_cutout / classify_bbox / SLOT_HERO_CUTOUT /
+SLOT_FULL_SCREEN have no live caller — the rule and the renderer CAN and DO drift.
+A character card passes the gate only via the LOWER_CORNER scene-anchor / basemap-
+credit path. Wiring the compiler to honor `treatment` (and to propagate the
+declaration into the cue) is a tracked build task.
 """
 
 from __future__ import annotations
@@ -148,8 +157,10 @@ def resolve_hero_cutout(
     pixel counts, stroke), augmented with the resolved treatment + frame-height
     fraction so the caller/compiler can assert the sprite clears the hero floor.
 
-    This is the single integration point the compiler calls when a character
-    beat declares treatment == HERO_CUTOUT.
+    This is the integration point the compiler SHOULD call when a character beat
+    declares treatment == HERO_CUTOUT. NOTE (2026-05-31): the compiler does NOT
+    call it today (wiring is a pending build task), so this helper currently has
+    no live caller.
     """
     from .cutout import cutout  # local import: rembg/onnxruntime is heavy
 

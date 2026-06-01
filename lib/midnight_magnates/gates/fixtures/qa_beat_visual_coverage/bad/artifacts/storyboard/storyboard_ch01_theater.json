@@ -1,0 +1,38 @@
+{
+  "chapter_id": "ch01_theater",
+  "chapter_index": 1,
+  "duration_s": 45,
+  "outgoing_state": {
+    "basemap_tier": "urban",
+    "active_pins": ["pin_fords_theatre"],
+    "year_display": 1865
+  },
+  "phases": [
+    {
+      "phase_id": "p_characters",
+      "phase_kind": "characters",
+      "duration_s": 25,
+      "beats": [
+        {
+          "beat_id": "b_actor",
+          "intent": "Introduce the famous actor — but NOTHING happens off the map (dead air).",
+          "start_anchor": {"phrase": "On stage"},
+          "end_anchor": {"phrase": "household name"},
+          "layers": [
+            {"layer": "L0", "primitive": "camera_hold"},
+            {"layer": "L4", "primitive": "pin_pulse_breath", "anchor_id": "pin_fords_theatre"}
+          ]
+        },
+        {
+          "beat_id": "b_play",
+          "intent": "The comedy line — also uncovered, plays as a static map.",
+          "start_anchor": {"phrase": "The play"},
+          "end_anchor": {"phrase": "coming"},
+          "layers": [
+            {"layer": "L0", "primitive": "camera_hold"}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "chapter_id": "ch01_theater",
+  "chapter_index": 1,
+  "duration_s": 45,
+  "outgoing_state": {
+    "basemap_tier": "urban",
+    "active_pins": ["pin_fords_theatre"],
+    "year_display": 1865
+  },
+  "phases": [
+    {
+      "phase_id": "p_characters",
+      "phase_kind": "characters",
+      "duration_s": 25,
+      "beats": [
+        {
+          "beat_id": "b_actor",
+          "intent": "Introduce the famous actor — covered by an off-map portrait sequence.",
+          "start_anchor": {"phrase": "On stage"},
+          "end_anchor": {"phrase": "household name"},
+          "layers": [
+            {"layer": "L0", "primitive": "camera_hold"},
+            {"layer": "L6", "primitive": "panel_illustration", "params": {"caption": "the most famous actor in America"}}
+          ]
+        },
+        {
+          "beat_id": "b_play",
+          "intent": "The comedy ticket / playbill — covered by an archival panel.",
+          "start_anchor": {"phrase": "The play"},
+          "end_anchor": {"phrase": "coming"},
+          "layers": [
+            {"layer": "L6", "primitive": "panel_archival", "params": {"caption": "Our American Cousin — playbill"}}
+          ]
+        }
+      ]
+    }
+  ]
+}

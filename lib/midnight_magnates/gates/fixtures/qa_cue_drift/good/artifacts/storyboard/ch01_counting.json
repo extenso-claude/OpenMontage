@@ -1,0 +1,46 @@
+{
+  "chapter_id": "ch01_counting",
+  "duration_s": 40,
+  "vo_start_offset_in_master_s": 0,
+  "outgoing_state": {},
+  "phases": [
+    {
+      "phase_id": "p1",
+      "phase_kind": "cold_open",
+      "duration_s": 40,
+      "beats": [
+        {
+          "beat_id": "b01_open",
+          "shot_scale": "micro",
+          "animation_tier": "2d",
+          "start_anchor": {
+            "phrase": "the clerk"
+          },
+          "end_anchor": {
+            "phrase": "single line"
+          },
+          "layers": [
+            {
+              "layer": "L1",
+              "primitive": "face_closeup",
+              "params": {
+                "text": "the clerk"
+              }
+            },
+            {
+              "layer": "L2",
+              "primitive": "panel_illustration",
+              "time_distinct": true,
+              "cue_anchor": {
+                "phrase": "the ledger"
+              },
+              "params": {
+                "text": "the ledger"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "chapter_id": "ch01_attempt",
+  "chapter_index": 1,
+  "title_display": "The Attempt",
+  "year_range": [1835],
+  "duration_s": 60,
+  "vo_start_offset_in_master_s": 45,
+  "incoming_state": {
+    "basemap_tier": "continental",
+    "active_pins": ["pin_washington_dc"],
+    "year_display": 1835
+  },
+  "outgoing_state": {
+    "basemap_tier": "urban",
+    "active_pins": ["pin_washington_dc"],
+    "year_display": 1835
+  },
+  "phases": [
+    {
+      "phase_id": "p0_characters",
+      "phase_kind": "characters",
+      "duration_s": 30,
+      "beats": [
+        {
+          "beat_id": "b0_lawrence",
+          "intent": "Introduce the assailant on his name.",
+          "start_anchor": {"phrase": "Richard Lawrence"},
+          "end_anchor": {"phrase": "raised a pistol"},
+          "layers": [
+            {"layer": "L5", "primitive": "character_card", "asset_id": "portrait_lawrence"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p1_climax",
+      "phase_kind": "climax",
+      "duration_s": 30,
+      "beats": [
+        {
+          "beat_id": "b1_misfire",
+          "intent": "Freeze on the misfire. This beat is correctly anchored (both phrases are spoken inside ch01's window) — it exists to prove the bad fixture's single failure is isolated to the ch00 fallback-without-reason bug, not a stray not-found.",
+          "start_anchor": {"phrase": "the weapon misfired"},
+          "end_anchor": {"phrase": "fell silent"},
+          "layers": [
+            {"layer": "L8", "primitive": "gunshot_freeze"}
+          ]
+        }
+      ]
+    }
+  ]
+}

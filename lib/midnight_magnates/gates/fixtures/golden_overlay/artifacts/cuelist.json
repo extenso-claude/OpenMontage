@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "channel": "grandpa_huxley",
+  "source_video": "source.mp4",
+  "cues": [
+    {
+      "id": "card_marcus",
+      "kind": "photo_card",
+      "t_in": 1.1,
+      "t_out": 6.0,
+      "bbox": {"x": 80, "y": 540, "w": 480, "h": 400},
+      "anchor_phrase": "marcus aurelius",
+      "text": "Marcus Aurelius",
+      "treatment": "hero_cutout",
+      "asset_id": "marcus_aurelius_portrait",
+      "sourcing": {"searched_copyright": true, "license": "PD", "source_url": "https://commons.wikimedia.org/wiki/File:MSR-RamMfA-2007.jpg"}
+    },
+    {
+      "id": "lt_meditations",
+      "kind": "lower_third",
+      "t_in": 3.9,
+      "t_out": 7.0,
+      "bbox": {"x": 620, "y": 980, "w": 740, "h": 80},
+      "anchor_phrase": "meditations",
+      "text": "His Meditations"
+    },
+    {
+      "id": "clip_danube",
+      "kind": "clip",
+      "t_in": 6.2,
+      "t_out": 9.0,
+      "bbox": {"x": 700, "y": 180, "w": 520, "h": 360},
+      "anchor_phrase": "danube",
+      "frame": "library",
+      "grade": "grade_crushed_warm",
+      "audio_role": "vo-over",
+      "asset_id": "danube_winter_clip",
+      "sourcing": {"searched_copyright": true, "license": "IA-PD", "source_url": "https://archive.org/details/danube"}
+    }
+  ]
+}
+

@@ -1,0 +1,22 @@
+{
+  "cues": [
+    {"id": "ch01_b0.pin.0", "kind": "pin_drop", "layer": 5, "start_s": 2.0, "end_s": 6.0, "placement": "on_action", "spatial_target": {"anchor_id": "dc_white_house"}, "anchor_color": [235, 90, 70]},
+
+    {"id": "ch01_b1.card.0", "kind": "character_card", "layer": 7, "start_s": 8.0, "end_s": 16.0, "placement": "on_action", "spatial_target": {"region_id": "boardroom_left_chair"}},
+
+    {"id": "ch01_b2.stamp.0", "kind": "concept_stamp", "layer": 8, "start_s": 18.0, "end_s": 22.0, "placement": "on_action", "spatial_target": {"target_px": [960, 540]}},
+
+    {"id": "ch01_b3.flash.0", "kind": "flash_burst", "layer": 9, "start_s": 24.0, "end_s": 24.4, "placement": "on_action"},
+
+    {"id": "ch01_b3.glow.0", "kind": "glow_region", "layer": 4, "start_s": 25.0, "end_s": 29.0, "placement": "on_action", "spatial_target": {"target_px": [400, 300, 220, 160]}},
+
+    {"id": "ch01.year", "kind": "year_card_update", "layer": 2, "start_s": 0.5, "end_s": 69.5, "text": "1865"},
+    {"id": "ch01.badge", "kind": "chapter_subject_badge_swap", "layer": 2, "start_s": 0.5, "end_s": 69.5},
+    {"id": "ch01.cite", "kind": "source_citation", "layer": 10, "start_s": 30.0, "end_s": 34.0, "text": "LoC, 1865"},
+    {"id": "ch01.timecode", "kind": "time_stamp", "layer": 10, "start_s": 40.0, "end_s": 44.0, "text": "April 14"},
+
+    {"id": "ch01.title_chrome", "kind": "chapter_title", "layer": 4, "start_s": 0.0, "end_s": 4.0, "placement": "chrome", "text": "Washington, 1865", "bbox": {"x": 200, "y": 80, "w": 640, "h": 120}},
+
+    {"id": "ch01.sfx", "kind": "sfx_accent", "layer": 0, "start_s": 24.0, "end_s": 24.2, "is_audio": true}
+  ]
+}

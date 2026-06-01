@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "channel": "midnight_magnates",
+  "source_video": "renders/locked_source.mp4",
+  "cues": [
+    {"id": "clip_parade_1942", "kind": "clip", "t_in": 12.0, "t_out": 20.0, "anchor_phrase": "the wehrmacht marched", "frame": "surveillance", "grade": "grade_cyan_orange", "audio_role": "vo-pause", "bbox": {"x": 360, "y": 140, "w": 1200, "h": 800}},
+    {"id": "clip_press_conf", "kind": "clip", "t_in": 30.0, "t_out": 38.0, "anchor_phrase": "the bank held a press conference", "frame": "tv-vintage", "grade": "grade_cyan_orange", "audio_role": "vo-over", "bbox": {"x": 360, "y": 140, "w": 1200, "h": 800}},
+
+    {"id": "lt_chapter_one", "kind": "lower_third", "text": "Chapter One — 1942", "t_in": 2.0, "t_out": 8.0, "anchor_phrase": "it began in winter", "bbox": {"x": 120, "y": 900, "w": 700, "h": 120}},
+    {"id": "card_vault_stat", "kind": "stat_card", "text": "$2.1 billion", "t_in": 22.0, "t_out": 28.0, "anchor_phrase": "two point one billion dollars", "bbox": {"x": 1200, "y": 700, "w": 560, "h": 260}},
+    {"id": "card_bishop", "kind": "photo_card", "text": "Bishop Marcinkus", "t_in": 40.0, "t_out": 46.0, "anchor_phrase": "the archbishop took over", "bbox": {"x": 100, "y": 620, "w": 420, "h": 360}},
+
+    {"id": "title_intro", "kind": "chapter_title", "text": "The Vatican Bank", "t_in": 0.0, "t_out": 2.0, "anchor_phrase": "this is the story", "bbox": {"x": 200, "y": 80, "w": 1000, "h": 180}}
+  ]
+}

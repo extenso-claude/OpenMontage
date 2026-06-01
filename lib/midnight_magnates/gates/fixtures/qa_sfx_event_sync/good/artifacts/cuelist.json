@@ -1,0 +1,10 @@
+{
+  "_note": "GOOD visual cuelist. The muzzle-flash event (ch01.b07.muzzle_flash.0) and the card-slam event (ch01.b04.character_card_pop.0) and the pin event (ch01.b02.pin_drop.2) are the visual events the impulsive SFX in sound_cuelist.json bind to via event_cue_id. start_s on each is the frame the transient must hit.",
+  "cues": [
+    { "id": "ch01.b01.year_card_update.0",    "kind": "year_card_update",    "layer": 2, "start_s": 0.0,    "end_s": 11.62 },
+    { "id": "ch01.b02.pin_drop.2",            "kind": "pin_drop",            "layer": 4, "start_s": 11.70,  "end_s": 24.10, "anchor_px": 960, "anchor_py": 540 },
+    { "id": "ch01.b04.character_card_pop.0",  "kind": "character_card_pop",  "layer": 6, "start_s": 27.18,  "end_s": 40.77 },
+    { "id": "ch01.b07.muzzle_flash.0",        "kind": "gunshot_freeze",      "layer": 9, "start_s": 44.00,  "end_s": 47.00 },
+    { "id": "ch01.b09.map_label.1",           "kind": "map_label",           "layer": 3, "start_s": 60.00,  "end_s": 66.00 }
+  ]
+}

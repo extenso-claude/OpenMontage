@@ -1,0 +1,16 @@
+{
+  "chapter_id": "ch01",
+  "phases": [
+    {
+      "phase_id": "p1_face_beat",
+      "beats": [
+        {
+          "beat_id": "b01_grief",
+          "animation_tier": "2d",
+          "start_anchor": {"phrase": "the buggy rolled toward the theatre"},
+          "end_anchor": {"phrase": "and stopped at the entrance"}
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "voice": {
+    "voice_id": "Ashley",
+    "delivery_mode": "CREATIVE",
+    "model_id": "inworld-tts-2"
+  },
+  "segments": [
+    {
+      "id": "seg_01_hook",
+      "text_markup": "[grave, measured] The year is eighteen sixty-five. <break time=\"650ms\"/>\nAcross a nation still bleeding from war, [breathe] a single shot would change EVERYTHING.\n<break time=\"800ms\"/> No one in that theater knew it yet."
+    },
+    {
+      "id": "seg_02_context",
+      "text_markup": "Washington had survived the war.\nLincoln had survived the war.\n<break time=\"1s\"/> But survival, it turned out, was not the same as safety."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "channel": "midnight_magnates",
+  "source_video": "source/locked_master.mp4",
+  "cues": [
+    {
+      "id": "c1_title_card",
+      "kind": "title_card",
+      "t_in": 1.0,
+      "t_out": 6.0,
+      "anchor_phrase": "the vatican bank",
+      "bbox": {"x": 360, "y": 120, "w": 1200, "h": 220}
+    },
+    {
+      "id": "av1_narrator_intro",
+      "kind": "avatar",
+      "t_in": 10.0,
+      "t_out": 18.0,
+      "anchor_phrase": "in nineteen eighty two",
+      "treatment": "pip_circle_lower_right",
+      "asset": "renders/wan/av1_narrator_intro_wan.mp4",
+      "audio_cut_start_s": 2.5,
+      "avatar_video_offset_s": 7.0,
+      "fade_in": 0.4,
+      "fade_out": 0.4
+    },
+    {
+      "id": "av2_closing_remark",
+      "kind": "avatar",
+      "t_in": 42.250,
+      "t_out": 51.000,
+      "anchor_phrase": "no one was ever charged",
+      "treatment": "pip_rrect_lower_left",
+      "asset": "renders/wan/av2_closing_remark_wan.mp4",
+      "audio_cut_start_s": 0.0,
+      "avatar_video_offset_s": 42.250,
+      "fade_in": 0.5,
+      "fade_out": 0.5,
+      "ffmpeg_args": [
+        "ffmpeg", "-y", "-loglevel", "error",
+        "-ss", "42.250",
+        "-i", "renders/wan/av2_closing_remark_wan.mp4",
+        "-frames:v", "1",
+        "out.png"
+      ]
+    }
+  ]
+}

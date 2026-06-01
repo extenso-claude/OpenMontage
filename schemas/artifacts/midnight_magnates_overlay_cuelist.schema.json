@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "openmontage/artifacts/midnight_magnates_overlay_cuelist",
+  "title": "Sleep Network Overlay — Visual Cuelist",
+  "description": "artifacts/cuelist.json — the visual overlay cuelist that drives every render / placement / drift gate (qa_card_bounds, qa_element_overlap, qa_min_hold, qa_cue_lifecycle, qa_source_collision, qa_clip_no_extra_chyron, qa_card_timing, qa_asset_coverage, qa_asset_sourcing). anchor_phrase is the Whisper timing spine; a non-dropped cue without it is a silent hole the drift gates cannot catch, so the schema requires it. additionalProperties stays open so the compiler may carry extra per-cue fields, but every known field is type-checked.",
+  "type": "object",
+  "required": ["cues"],
+  "properties": {
+    "version": { "type": "string" },
+    "channel": { "type": "string", "description": "grandpa_huxley | midnight_magnates | sleepy_biographer | ..." },
+    "source_video": { "type": "string", "description": "path to the locked source MP4 the overlay rides on" },
+    "cues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "t_in", "t_out"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": { "type": "string", "description": "photo_card | lower_third | chart | map | animation | clip | avatar | chapter_title | stat_card | reveal | ... (gates classify by kind/prefix)" },
+          "t_in": { "type": "number", "minimum": 0 },
+          "t_out": { "type": "number", "minimum": 0 },
+          "bbox": {
+            "type": "object",
+            "description": "pixel geometry in a 1920x1080 canvas, top-left origin. Optional — only visual cues with geometry carry it (qa_card_bounds / qa_element_overlap).",
+            "required": ["x", "y", "w", "h"],
+            "properties": {
+              "x": { "type": "number" },
+              "y": { "type": "number" },
+              "w": { "type": "number", "minimum": 0 },
+              "h": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": true
+          },
+          "anchor_phrase": { "type": "string", "description": "a contiguous word-run in the source Whisper transcript this cue fires on (the timing spine)" },
+          "fallback_absolute_s": { "type": "number", "description": "numeric fallback time when anchor_phrase cannot resolve (drift gates accept it instead of NOT_FOUND)" },
+          "text": { "type": "string", "description": "burned-in text (drives qa_min_hold reading-time)" },
+          "treatment": { "type": "string", "description": "render treatment for the cue (e.g. hero_cutout, lower_third, chapter_title_with_plate)" },
+          "frame": { "type": "string", "description": "approved clip-treatment frame name (clip cues only)" },
+          "grade": { "type": "string", "description": "locked clip-treatment grade applied (clip / image cues)" },
+          "audio_role": { "type": "string", "enum": ["vo-pause", "vo-over", "mixed"], "description": "clip audio handling (clip cues)" },
+          "event_cue_id": { "type": "string", "description": "the visual event id an impulsive SFX binds to (qa_sfx_event_sync, from the sound cuelist)" },
+          "asset_id": { "type": "string" },
+          "asset_path": { "type": "string" },
+          "sourcing": {
+            "type": "object",
+            "description": "provenance for qa_asset_sourcing — proves the copyright / potential-copyright space was searched, or documents an AI generation.",
+            "properties": {
+              "searched_copyright": { "type": "boolean" },
+              "generation_reason": { "type": "string" },
+              "license": { "type": "string" },
+              "source_url": { "type": "string" }
+            },
+            "additionalProperties": true
+          },
+          "_dropped": { "type": "boolean", "description": "true if this cue was intentionally scrapped (coverage gate sees a documented drop, not a silent hole)" },
+          "scrap_reason": { "type": ["string", "null"] }
+        },
+        "allOf": [
+          {
+            "if": { "not": { "properties": { "_dropped": { "const": true } }, "required": ["_dropped"] } },
+            "then": { "required": ["anchor_phrase"] }
+          }
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

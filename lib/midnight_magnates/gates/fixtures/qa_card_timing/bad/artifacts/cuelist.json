@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "channel": "midnight_magnates",
+  "source_video": "source/locked.mp4",
+  "cues": [
+    {
+      "id": "stat_not_in_vo",
+      "kind": "stat_card",
+      "treatment": "stat_card",
+      "anchor_phrase": "the gettysburg address",
+      "t_in": 4.00,
+      "t_out": 7.00,
+      "text": "Four score and seven years"
+    },
+    {
+      "id": "stat_orphan_entry",
+      "kind": "card",
+      "treatment": "center_card",
+      "anchor_phrase": "raised a pistol",
+      "t_in": 3.00,
+      "t_out": 5.50,
+      "text": "First attempted presidential assassination"
+    },
+    {
+      "id": "lt_lingering",
+      "kind": "lower_third",
+      "treatment": "lower_third_anchored",
+      "anchor_phrase": "Richard Lawrence",
+      "t_in": 8.00,
+      "t_out": 20.00,
+      "text": "Richard Lawrence — would-be assassin"
+    }
+  ]
+}
