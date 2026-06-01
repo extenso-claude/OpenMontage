@@ -24,12 +24,20 @@ produced by this pipeline):
   into the middle of a chapter, where measured ~= declared but no boundary precedes
   it.) The opening chapter (declared ~ 0) is exempt — it has no preceding chapter.
 
-Rule (fail):
-  * For each storyboard chapter that DECLARES vo_start_offset_in_master_s:
-      - master_offset_mismatch : |measured - declared| > TOL_S
+Rule:
+  * BLOCKING fail — for each chapter that DECLARES vo_start_offset_in_master_s:
+      - master_offset_mismatch : |measured - declared| > TOL_S (the offset lands in a
+                                 silence/gap, or the whole chapter is slid off the master)
       - offset_past_vo         : declared is after the last VO word
-      - offset_mid_utterance   : declared > GAP_MIN_S but no >= GAP_MIN_S gap precedes
-                                 the chapter's first word (offset slid mid-chapter)
+  * ADVISORY warn (NEVER blocks):
+      - offset_mid_utterance   : declared > GAP_MIN_S but no >= GAP_MIN_S silence
+                                 precedes the chapter's first word. For a section-assembled
+                                 VO (separate recordings) this flags a possibly-slid offset;
+                                 for a single continuous read chaptered at sentence
+                                 boundaries it is EXPECTED and harmless (a contiguous chapter
+                                 is legal) — so it warns, never fails. The blocking
+                                 master_offset_mismatch check already verified the offset
+                                 lands on a real word.
   * A chapter that does not declare the offset is not policed (the field is optional).
 
 A gate that cannot run must never silently pass:
@@ -189,12 +197,14 @@ def check(project_dir: Path, args: Namespace) -> List[Finding]:
             before = [s for s in starts if s < measured - 1e-6]
             if before and (measured - before[-1]) < GAP_MIN_S:
                 findings.append(Finding(
-                    "fail", "offset_mid_utterance",
-                    f"declared vo_start_offset_in_master_s {declared:.2f}s lands inside "
-                    f"continuous speech (previous master word at {before[-1]:.2f}s, only "
-                    f"{measured - before[-1]:.2f}s gap < {GAP_MIN_S:.2f}s) — a real "
-                    f"chapter boundary shows a silence, so the offset is slid into the "
-                    f"middle of a chapter",
+                    "warn", "offset_mid_utterance",
+                    f"declared vo_start_offset_in_master_s {declared:.2f}s lands "
+                    f"{measured - before[-1]:.2f}s after the previous master word "
+                    f"({before[-1]:.2f}s), with no >= {GAP_MIN_S:.2f}s inter-chapter "
+                    f"silence — ADVISORY: if the VO is section-assembled this may be a "
+                    f"slid offset; if it is one continuous read chaptered at sentence "
+                    f"boundaries it is expected (the offset already verified to land on a "
+                    f"real word). Does not block.",
                     where=chap))
 
     return findings

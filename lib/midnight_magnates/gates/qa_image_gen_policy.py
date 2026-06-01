@@ -62,18 +62,26 @@ from ._contract import Finding, GateInputError, load_json, run_cli
 # to once EVERY non-alphanumeric character is stripped: "DALL-E"/"DALL·E"/"dall_e"
 # /"dall e" -> "dalle"; "Mid Journey"/"mid-journey" -> "midjourney"; "Imagen 3"
 # -> "imagen3"; "Stable Diffusion XL" -> "stablediffusionxl" (alias of "sdxl").
+# Stored as canonical (separator-free, lowercase) PREFIXES. Matching is by prefix
+# (below), so a version/variant suffix can't smuggle a banned generator past the
+# gate: "recraft_v3"->"recraftv3" startswith "recraft"; "FLUX.1"->"flux1" startswith
+# "flux"; "dall-e-3"->"dalle3" startswith "dalle"; "midjourney_v6" startswith
+# "midjourney"/"mj"; "Imagen 4.0"->"imagen40" startswith "imagen"; "sd3"/"sdxl-turbo"
+# startswith "sd3"/"sdxl". nano_banana ("nanobanana") starts with NONE of these, so
+# the permitted generator is never misclassified.
 FORBIDDEN_GENERATORS = frozenset(
     {
         "recraft",
         "flux",
         "dalle",
-        "imagen",      # bare "imagen" / "Imagen"
-        "imagen3",     # "Imagen 3" -> "imagen3" (separators stripped, not collapsed)
-        "imagen4",     # "Imagen 4"
-        "midjourney",  # "Mid Journey" / "mid-journey" -> "midjourney"
+        "imagen",        # covers imagen3 / imagen4 / "Imagen 4.0" by prefix
+        "midjourney",
+        "mj",            # midjourney short form (mj, mjv6)
         "sdxl",
-        "stablediffusion",    # "Stable Diffusion" -> "stablediffusion"
-        "stablediffusionxl",  # "Stable Diffusion XL" -> "stablediffusionxl"
+        "sd3",
+        "sd2",
+        "sd15",
+        "stablediffusion",  # covers "Stable Diffusion XL/3" by prefix
     }
 )
 
@@ -148,7 +156,10 @@ def check(project_dir: Path, args: Namespace) -> List[Finding]:
             continue
 
         # Half 1: an outright-forbidden AI image generator is an immediate fail.
-        if generator in FORBIDDEN_GENERATORS:
+        # PREFIX match (not exact set membership) so a version/variant suffix
+        # ("recraft_v3", "FLUX.1", "dalle3", "midjourney_v6") cannot slip through.
+        # nano_banana ("nanobanana") starts with none of the forbidden prefixes.
+        if any(generator == f or generator.startswith(f) for f in FORBIDDEN_GENERATORS):
             findings.append(Finding(
                 "fail", "forbidden_generator",
                 "asset '{0}' was produced by AI image generator '{1}', which "

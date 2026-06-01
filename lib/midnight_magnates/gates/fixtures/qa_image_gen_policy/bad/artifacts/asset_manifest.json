@@ -15,7 +15,7 @@
       "id": "booth_escape_route_inset",
       "kind": "illustration",
       "path": "assets/scenes/booth_escape_recraft.png",
-      "note": "BUG: produced with Recraft — a forbidden AI image generator (MM permits only nano_banana)",
+      "note": "BUG: produced with Recraft \u2014 a forbidden AI image generator (MM permits only nano_banana)",
       "provenance": {
         "generator": "recraft",
         "model": "recraft-v4.1-vector",
@@ -26,7 +26,7 @@
       "id": "ford_theatre_dalle_plate",
       "kind": "illustration",
       "path": "assets/scenes/ford_theatre_dalle.png",
-      "note": "BUG: separator-bearing forbidden name — 'DALL-E' must canonicalize to 'dalle' and FAIL; a collapse-to-'_' scheme (dall_e) wrongly let this through (RULE-4 hole).",
+      "note": "BUG: separator-bearing forbidden name \u2014 'DALL-E' must canonicalize to 'dalle' and FAIL; a collapse-to-'_' scheme (dall_e) wrongly let this through (RULE-4 hole).",
       "provenance": {
         "generator": "DALL-E",
         "model": "dall-e-3",
@@ -37,7 +37,7 @@
       "id": "booth_portrait_midjourney",
       "kind": "illustration",
       "path": "assets/scenes/booth_midjourney.png",
-      "note": "BUG: spaced forbidden name — 'Mid Journey' must canonicalize to 'midjourney' and FAIL.",
+      "note": "BUG: spaced forbidden name \u2014 'Mid Journey' must canonicalize to 'midjourney' and FAIL.",
       "provenance": {
         "generator": "Mid Journey",
         "model": "v6",
@@ -51,6 +51,24 @@
       "provenance": {
         "generator": "freesound",
         "license": "CC0"
+      }
+    },
+    {
+      "id": "gen_FLUX_1",
+      "path": "x.png",
+      "category": "portrait",
+      "provenance": {
+        "generator": "FLUX.1",
+        "generation_reason": "x"
+      }
+    },
+    {
+      "id": "gen_recraft_v3",
+      "path": "x.png",
+      "category": "portrait",
+      "provenance": {
+        "generator": "recraft_v3",
+        "generation_reason": "x"
       }
     }
   ]

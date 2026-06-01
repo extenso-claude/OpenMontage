@@ -1,0 +1,16 @@
+{
+  "scene_t0_master_s": 72.5,
+  "beat_id": "b01_reopen",
+  "chapter_id": "ch02_reopen",
+  "animation_tier": "2d",
+  "key_moments": [
+    {
+      "local_t": 0.0,
+      "vo_anchor_phrase": "the sealed orders"
+    },
+    {
+      "local_t": 1.5,
+      "vo_anchor_phrase": "once again"
+    }
+  ]
+}

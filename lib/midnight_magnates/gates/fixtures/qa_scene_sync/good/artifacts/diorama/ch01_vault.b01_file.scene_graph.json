@@ -1,0 +1,16 @@
+{
+  "scene_t0_master_s": 1.0,
+  "beat_id": "b01_file",
+  "chapter_id": "ch01_vault",
+  "animation_tier": "2d",
+  "key_moments": [
+    {
+      "local_t": 0.0,
+      "vo_anchor_phrase": "the clerk"
+    },
+    {
+      "local_t": 1.5,
+      "vo_anchor_phrase": "the sealed orders"
+    }
+  ]
+}

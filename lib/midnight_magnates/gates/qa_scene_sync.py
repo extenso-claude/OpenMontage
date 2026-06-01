@@ -145,6 +145,38 @@ def _resolve_run_start(
     return None
 
 
+def _scope_stream(stream: List[Tuple[str, float]], lo: float, hi: float
+                  ) -> List[Tuple[str, float]]:
+    """Restrict the master word stream to a chapter's [lo, hi) window. full.json is
+    ONE master transcript; scoping makes a recurring vo_anchor_phrase resolve to THIS
+    chapter's occurrence (matching the compiler + qa_cue_drift/qa_drift). An empty
+    window falls back to the full stream rather than forcing a spurious anchor_not_found."""
+    scoped = [(tok, t) for (tok, t) in stream if lo <= t < hi]
+    return scoped or stream
+
+
+def _chapter_windows(project_dir: Path) -> Dict[str, Tuple[float, float]]:
+    """{chapter_id (or file stem): (lo, hi)} master windows from each storyboard's
+    vo_start_offset_in_master_s + duration_s, keyed exactly as _load_storyboard_beats
+    derives chapter_id, for scoping moment resolution per chapter."""
+    sb_dir = project_dir / "artifacts" / "storyboard"
+    out: Dict[str, Tuple[float, float]] = {}
+    if not sb_dir.is_dir():
+        return out
+    for p in sorted(sb_dir.glob("*.json")):
+        data = load_json(p)
+        if not isinstance(data, dict):
+            continue
+        cid = data.get("chapter_id")
+        cid = str(cid) if isinstance(cid, str) and cid.strip() else p.stem
+        off = data.get("vo_start_offset_in_master_s")
+        lo = float(off) if _is_number(off) else 0.0
+        dur = data.get("duration_s")
+        hi = (lo + float(dur)) if _is_number(dur) else float("inf")
+        out[cid] = (lo, hi)
+    return out
+
+
 def _load_storyboard_beats(project_dir: Path) -> List[Tuple[str, str, dict]]:
     """Return [(chapter_id, beat_id, beat_dict), ...] across all storyboards.
 
@@ -365,6 +397,7 @@ def _check_graph_moments(
 def check(project_dir: Path, args: Namespace) -> List[Finding]:
     stream = _load_whisper(project_dir)
     beats = _load_storyboard_beats(project_dir)
+    windows = _chapter_windows(project_dir)
     graphs = _load_scene_graphs(project_dir)
     by_chapter_beat, by_beat_only = _index_graphs_by_beat(graphs)
 
@@ -389,10 +422,16 @@ def check(project_dir: Path, args: Namespace) -> List[Finding]:
                 where=where))
             continue
 
+        # Scope moment resolution to THIS beat's chapter window so a recurring
+        # vo_anchor_phrase binds to this chapter's occurrence (matching the compiler's
+        # C7 scope + qa_cue_drift/qa_drift), not the first occurrence anywhere.
+        lo, hi = windows.get(chapter_id, (0.0, float("inf")))
+        scoped = _scope_stream(stream, lo, hi)
+
         beat_is_face = isinstance(beat.get("emotion_face"), dict)
         for fname, graph in matched:
             findings.extend(_check_graph_moments(
-                fname, graph, beat_is_face, stream, where))
+                fname, graph, beat_is_face, scoped, where))
 
     return findings
 

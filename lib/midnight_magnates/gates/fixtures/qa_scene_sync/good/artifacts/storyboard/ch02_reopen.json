@@ -1,7 +1,7 @@
 {
-  "chapter_id": "ch02_harbor",
+  "chapter_id": "ch02_reopen",
   "duration_s": 40,
-  "vo_start_offset_in_master_s": 40,
+  "vo_start_offset_in_master_s": 70,
   "outgoing_state": {},
   "phases": [
     {
@@ -10,24 +10,24 @@
       "duration_s": 40,
       "beats": [
         {
-          "beat_id": "b01_seal",
+          "beat_id": "b01_reopen",
           "shot_scale": "micro",
-          "animation_tier": "2d",
           "start_anchor": {
-            "phrase": "the captain"
+            "phrase": "the sealed orders"
           },
           "end_anchor": {
-            "phrase": "set sail"
+            "phrase": "once again"
           },
           "layers": [
             {
               "layer": "L1",
               "primitive": "face_medium",
               "params": {
-                "text": "the captain"
+                "text": "x"
               }
             }
-          ]
+          ],
+          "animation_tier": "2d"
         }
       ]
     }

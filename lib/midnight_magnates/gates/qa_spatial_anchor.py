@@ -241,6 +241,33 @@ def _is_visible(cue: dict) -> bool:
     return True
 
 
+def _has_top_level_placement(cue: dict, anchor_ids: Set[str]) -> bool:
+    """True if the cue carries a resolvable PLACEMENT the compiler stamps at the TOP
+    LEVEL (not inside a spatial_target dict).
+
+    The compiler places map-anchored cues (pin_drop / pin_pulse_breath / pin_dimming /
+    map_sprite / map_label / migration_arrow / all_presidents_pins) via a top-level
+    anchor_id resolved to anchor_px/anchor_py, a route polyline (path_px), or a resolved
+    pin roster (pins_px) — NOT a spatial_target dict. Those cues ARE placed; recognizing
+    the compiler's real placement contract stops the gate false-failing every pin /
+    label / arrow / roster as cue_unplaced (it flagged 44 cues on the reference project).
+    """
+    apx, apy = cue.get("anchor_px"), cue.get("anchor_py")
+    if (_is_number(apx) and _is_number(apy)
+            and 0 <= float(apx) <= FRAME_W and 0 <= float(apy) <= FRAME_H):
+        return True
+    aid = cue.get("anchor_id")
+    if isinstance(aid, str) and aid.strip() and aid in anchor_ids:
+        return True
+    path_px = cue.get("path_px")
+    if isinstance(path_px, list) and len(path_px) >= 1:
+        return True
+    pins_px = cue.get("pins_px")
+    if isinstance(pins_px, list) and len(pins_px) >= 1:
+        return True
+    return False
+
+
 def check(project_dir: Path, args: Namespace) -> List[Finding]:
     data = load_json(project_dir / "artifacts" / "cuelist.json")
     cues = data.get("cues")
@@ -275,33 +302,48 @@ def check(project_dir: Path, args: Namespace) -> List[Finding]:
 
         target = cue.get("spatial_target")
 
-        # No spatial_target on a visible, non-chrome cue -> unplaced. Event-FX
-        # kinds get a sharper message (they MUST react to a place).
-        if not isinstance(target, dict):
-            if kind_str in EVENT_FX_KINDS:
+        # A declared spatial_target must resolve to a pixel/region.
+        if isinstance(target, dict):
+            resolved, reason = _resolve_target(target, anchor_ids, region_ids)
+            if not resolved:
                 findings.append(Finding(
-                    "fail", "cue_unplaced",
-                    "event-FX cue {0!r} has no spatial_target and is not "
-                    "placement:\"chrome\" — it would fire over empty frame "
-                    "(must declare anchor_id / region_id / target_px)".format(
-                        kind_str or "?"),
-                    where=cid))
-            else:
-                findings.append(Finding(
-                    "fail", "cue_unplaced",
-                    "visible action cue (kind={0!r}, placement={1!r}) has no "
-                    "spatial_target and is not placement:\"chrome\" — nothing "
-                    "tells the renderer WHERE it lands".format(
-                        kind_str or "?", placement_str or "on_action"),
+                    "fail", "unresolved_target",
+                    "spatial_target does not resolve: {0}".format(reason),
                     where=cid))
             continue
 
-        # A declared spatial_target must resolve to a pixel/region.
-        resolved, reason = _resolve_target(target, anchor_ids, region_ids)
-        if not resolved:
+        # No spatial_target dict — but the compiler places map-anchored cues
+        # (pins / labels / arrows / rosters) via TOP-LEVEL anchor_id -> anchor_px/py,
+        # path_px, or pins_px. Accept that as a resolved placement.
+        if _has_top_level_placement(cue, anchor_ids):
+            continue
+
+        # A top-level anchor_id that does NOT resolve is an unresolved target.
+        aid = cue.get("anchor_id")
+        if isinstance(aid, str) and aid.strip():
             findings.append(Finding(
                 "fail", "unresolved_target",
-                "spatial_target does not resolve: {0}".format(reason),
+                "top-level anchor_id {0!r} is not in positions.json anchors — it does "
+                "not resolve to a map pixel".format(aid),
+                where=cid))
+            continue
+
+        # Nothing places it. Event-FX kinds get a sharper message.
+        if kind_str in EVENT_FX_KINDS:
+            findings.append(Finding(
+                "fail", "cue_unplaced",
+                "event-FX cue {0!r} has no spatial_target and is not "
+                "placement:\"chrome\" — it would fire over empty frame "
+                "(must declare anchor_id / region_id / target_px)".format(
+                    kind_str or "?"),
+                where=cid))
+        else:
+            findings.append(Finding(
+                "fail", "cue_unplaced",
+                "visible action cue (kind={0!r}, placement={1!r}) has no resolvable "
+                "placement (no spatial_target, no top-level anchor_id/anchor_px, no "
+                "path_px/pins_px) — nothing tells the renderer WHERE it lands".format(
+                    kind_str or "?", placement_str or "on_action"),
                 where=cid))
 
     return findings

@@ -1,33 +1,33 @@
 {
-  "chapter_id": "ch02_harbor",
+  "chapter_id": "ch01_vault",
   "duration_s": 40,
-  "vo_start_offset_in_master_s": 40,
+  "vo_start_offset_in_master_s": 0,
   "outgoing_state": {},
   "phases": [
     {
       "phase_id": "p1",
-      "phase_kind": "scene_establish",
+      "phase_kind": "cold_open",
       "duration_s": 40,
       "beats": [
         {
-          "beat_id": "b01_seal",
+          "beat_id": "b01_file",
           "shot_scale": "micro",
-          "animation_tier": "2d",
           "start_anchor": {
-            "phrase": "the captain"
+            "phrase": "the clerk"
           },
           "end_anchor": {
-            "phrase": "set sail"
+            "phrase": "the sealed orders"
           },
           "layers": [
             {
               "layer": "L1",
-              "primitive": "face_medium",
+              "primitive": "face_closeup",
               "params": {
-                "text": "the captain"
+                "text": "x"
               }
             }
-          ]
+          ],
+          "animation_tier": "2d"
         }
       ]
     }
